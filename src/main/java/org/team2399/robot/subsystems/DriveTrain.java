@@ -1,8 +1,8 @@
 package org.team2399.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -14,30 +14,44 @@ public class DriveTrain extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	PWMTalonSRX leftTalon1 = new PWMTalonSRX(1);
-	PWMTalonSRX leftTalon2 = new PWMTalonSRX(2);
-	PWMTalonSRX rightTalon1 = new PWMTalonSRX(3);
-	PWMTalonSRX rightTalon2 = new PWMTalonSRX(4);
-	TalonSRX test = new TalonSRX(5);
+	TalonSRX leftFrontTalon = new TalonSRX(8);
+	TalonSRX leftMiddleTalon = new TalonSRX(7);
+	TalonSRX leftBackTalon = new TalonSRX(3);
 	
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+	TalonSRX rightFrontTalon = new TalonSRX(1);
+	TalonSRX rightMiddleTalon = new TalonSRX(2);
+	TalonSRX rightBackTalon = new TalonSRX(5);
+
+    public void Drivetrain() {
+    	follow(leftMiddleTalon, leftFrontTalon);
+		follow(leftBackTalon, leftFrontTalon);
+		follow(rightMiddleTalon, rightFrontTalon);
+		follow(rightBackTalon, rightFrontTalon);
     }
     
     public void defaultCommand(Command c) {
     	setDefaultCommand(c);
     }
     
-    public DriveTrain() {
-    	
-    }
+    public static void follow(TalonSRX follower, TalonSRX leader) {
+//		follower.changeControlMode(TalonSRX.TalonControlMode.Follower);
+//		follower.set(leader.getDeviceID());
+
+    	follower.set(ControlMode.Follower, leader.getDeviceID());
+	}
     
     public void tankDrive(double leftPercent, double rightPercent) {
-    	leftTalon1.set(leftPercent);
-    	leftTalon2.set(leftPercent);
-		rightTalon1.set(rightPercent);
-		rightTalon2.set(rightPercent);
-    }
+		
+		double leftSideSpeed = leftPercent * -1;
+		double rightSideSpeed = rightPercent;
+		
+		leftFrontTalon.set(ControlMode.PercentOutput, leftSideSpeed);
+		rightFrontTalon.set(ControlMode.PercentOutput, rightSideSpeed);
+		
+	}
+
+	@Override
+	protected void initDefaultCommand() {
+	}
 }
 
