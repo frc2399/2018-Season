@@ -23,10 +23,7 @@ public class DriveTrain extends Subsystem {
 	TalonSRX rightBackTalon = new TalonSRX(5);
 
     public void Drivetrain() {
-    	follow(leftMiddleTalon, leftFrontTalon);
-		follow(leftBackTalon, leftFrontTalon);
-		follow(rightMiddleTalon, rightFrontTalon);
-		follow(rightBackTalon, rightFrontTalon);
+    	
     }
     
     public void defaultCommand(Command c) {
@@ -48,6 +45,24 @@ public class DriveTrain extends Subsystem {
 		leftFrontTalon.set(ControlMode.PercentOutput, leftSideSpeed);
 		rightFrontTalon.set(ControlMode.PercentOutput, rightSideSpeed);
 		
+		follow(leftMiddleTalon, leftFrontTalon);
+		follow(leftBackTalon, leftFrontTalon);
+		follow(rightMiddleTalon, rightFrontTalon);
+		follow(rightBackTalon, rightFrontTalon);
+	}
+    
+public void kajDrive(double forward, double turn) {
+		
+		double leftSideSpeed = -1 * (forward + turn * Math.abs(forward));
+		double rightSideSpeed = (forward - turn * Math.abs(forward));
+		
+		leftFrontTalon.set(ControlMode.PercentOutput, leftSideSpeed);
+		rightFrontTalon.set(ControlMode.PercentOutput, rightSideSpeed);
+		
+		follow(leftMiddleTalon, leftFrontTalon);
+		follow(leftBackTalon, leftFrontTalon);
+		follow(rightMiddleTalon, rightFrontTalon);
+		follow(rightBackTalon, rightFrontTalon);
 	}
 
 	@Override
