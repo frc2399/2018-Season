@@ -19,6 +19,7 @@ public class KajDrive extends Command {
     	this.dt = dt;
     	this.oi = oi;
     	requires(this.dt);
+		setInterruptible(true);
     }
     // Called just before this Command runs the first time
     protected void initialize() {

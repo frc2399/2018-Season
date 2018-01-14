@@ -53,8 +53,8 @@ public class DriveTrain extends Subsystem {
     
 public void kajDrive(double forward, double turn) {
 		
-		double leftSideSpeed = -1 * (forward + turn * Math.abs(forward));
-		double rightSideSpeed = (forward - turn * Math.abs(forward));
+		double leftSideSpeed = -1 * (forward + turn * (0.5 + 0.5 * Math.abs(forward)));
+		double rightSideSpeed = (forward - turn * (0.5 + 0.5 * Math.abs(forward)));
 		
 		leftFrontTalon.set(ControlMode.PercentOutput, leftSideSpeed);
 		rightFrontTalon.set(ControlMode.PercentOutput, rightSideSpeed);

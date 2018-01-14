@@ -9,8 +9,11 @@ package org.team2399.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+
+import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
 import org.team2399.robot.subsystems.DriveTrain;
+import org.team2399.robot.subsystems.Shifter;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -20,8 +23,9 @@ import org.team2399.robot.subsystems.DriveTrain;
  * project.
  */
 public class Robot extends TimedRobot {
-	public static OI oi;
-	public static DriveTrain dt;
+	private DriveTrain dt;
+	private OI oi;
+	private Shifter sh;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -29,9 +33,12 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		oi = new OI();
 		dt = new DriveTrain();
+		sh = new Shifter();
+		oi = new OI(sh, dt);
+		
 		dt.defaultCommand(new TankDrive(dt, oi));
+		sh.defaultCommand(new Shift(sh, Shift.State.SLOW));
 	}
 
 	/**

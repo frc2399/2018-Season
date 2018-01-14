@@ -7,7 +7,15 @@
 
 package org.team2399.robot;
 
+import org.team2399.robot.commands.KajDrive;
+import org.team2399.robot.commands.Shift;
+import org.team2399.robot.commands.TankDrive;
+import org.team2399.robot.subsystems.DriveTrain;
+import org.team2399.robot.subsystems.Shifter;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -42,7 +50,9 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 	
-	Joystick stick = new Joystick(0);
+	Joystick stick;
+	Button button7, button8;
+	Button button9, button10;
 	
 	public double getLeftStickY() {
 		return stick.getRawAxis(1) * -1;
@@ -58,5 +68,23 @@ public class OI {
 	
 	public double getRightStickX() {
 		return stick.getRawAxis(2);
+	}
+	
+	public OI(Shifter sh, DriveTrain dt) {
+		stick = new Joystick(0);
+		
+		
+		button7 = new JoystickButton(stick, 7);
+		button8 = new JoystickButton(stick, 8);
+		
+		button9 = new JoystickButton(stick, 9);
+		button10 = new JoystickButton(stick, 10);
+		
+		button7.whenPressed(new Shift(sh, Shift.State.SLOW));
+		button8.whenPressed(new Shift(sh, Shift.State.FAST));
+		
+		button9.whenPressed(new TankDrive(dt, this));
+		button10.whenPressed(new KajDrive(dt, this));
+		
 	}
 }
