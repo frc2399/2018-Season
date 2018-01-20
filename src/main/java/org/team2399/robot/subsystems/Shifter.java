@@ -11,7 +11,7 @@ public class Shifter extends Subsystem {
 	private DoubleSolenoid solenoid;
 	
 	public Shifter() {
-		solenoid = new DoubleSolenoid(RobotMap.PCM_ADDRESS, RobotMap.SHIFTER_SlOW_SOLENOID_PORT, RobotMap.SHIFTER_FAST_SOLENOID_PORT);
+		solenoid = new DoubleSolenoid(RobotMap.CAN.PCM, RobotMap.PCM.SHIFTER_SlOW, RobotMap.PCM.SHIFTER_FAST);
 	}
 	
 	public void setShifterSlow() {

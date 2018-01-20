@@ -1,5 +1,7 @@
 package org.team2399.robot.subsystems;
 
+import org.team2399.robot.RobotMap;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -31,33 +33,16 @@ public class DriveTrain extends Subsystem {
     }
     
     public static void follow(TalonSRX follower, TalonSRX leader) {
-//		follower.changeControlMode(TalonSRX.TalonControlMode.Follower);
-//		follower.set(leader.getDeviceID());
-
     	follower.set(ControlMode.Follower, leader.getDeviceID());
 	}
     
-    public void tankDrive(double leftPercent, double rightPercent) {
+    public void drivePercent(double leftPercent, double rightPercent) {
 		
-		double leftSideSpeed = leftPercent * -1;
-		double rightSideSpeed = rightPercent;
+		double leftPercentForward = leftPercent * RobotMap.Physical.DriveTrain.LEFT_FORWARD;
+		double rightPercentForward = rightPercent * RobotMap.Physical.DriveTrain.RIGHT_FORWARD;
 		
-		leftFrontTalon.set(ControlMode.PercentOutput, leftSideSpeed);
-		rightFrontTalon.set(ControlMode.PercentOutput, rightSideSpeed);
-		
-		follow(leftMiddleTalon, leftFrontTalon);
-		follow(leftBackTalon, leftFrontTalon);
-		follow(rightMiddleTalon, rightFrontTalon);
-		follow(rightBackTalon, rightFrontTalon);
-	}
-    
-public void kajDrive(double forward, double turn) {
-		
-		double leftSideSpeed = -1 * (forward + turn * (0.5 + 0.5 * Math.abs(forward)));
-		double rightSideSpeed = (forward - turn * (0.5 + 0.5 * Math.abs(forward)));
-		
-		leftFrontTalon.set(ControlMode.PercentOutput, leftSideSpeed);
-		rightFrontTalon.set(ControlMode.PercentOutput, rightSideSpeed);
+		leftFrontTalon.set(ControlMode.PercentOutput, leftPercentForward);
+		rightFrontTalon.set(ControlMode.PercentOutput, rightPercentForward);
 		
 		follow(leftMiddleTalon, leftFrontTalon);
 		follow(leftBackTalon, leftFrontTalon);

@@ -27,7 +27,13 @@ public class KajDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	dt.kajDrive(oi.getLeftStickY(), oi.getRightStickX());
+    	double forward = oi.getLeftStickY();
+    	double turn = oi.getRightStickX();
+    	
+    	double leftSideSpeed = (forward + turn * (0.5 + 0.5 * Math.abs(forward)));
+		double rightSideSpeed = (forward - turn * (0.5 + 0.5 * Math.abs(forward)));
+		
+		dt.drivePercent(leftSideSpeed, rightSideSpeed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
