@@ -8,6 +8,7 @@
 package org.team2399.robot;
 
 import org.team2399.robot.commands.KajDrive;
+import org.team2399.robot.commands.PIDTest;
 import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
 import org.team2399.robot.subsystems.DriveTrain;
@@ -53,6 +54,7 @@ public class OI {
 	Joystick stick;
 	Button button7, button8;
 	Button button9, button10;
+	Button button4;
 	
 	public double getLeftStickY() {
 		return stick.getRawAxis(1) * -1;
@@ -73,12 +75,13 @@ public class OI {
 	public OI(Shifter sh, DriveTrain dt) {
 		stick = new Joystick(0);
 		
-		
 		button7 = new JoystickButton(stick, 7);
 		button8 = new JoystickButton(stick, 8);
 		
 		button9 = new JoystickButton(stick, 9);
 		button10 = new JoystickButton(stick, 10);
+		
+		button4 = new JoystickButton(stick, 4);
 		
 		button7.whenPressed(new Shift(sh, Shift.State.SLOW));
 		button8.whenPressed(new Shift(sh, Shift.State.FAST));
@@ -86,5 +89,6 @@ public class OI {
 		button9.whenPressed(new TankDrive(dt, this));
 		button10.whenPressed(new KajDrive(dt, this));
 		
+		button4.whenPressed(new PIDTest(dt, this));
 	}
 }
