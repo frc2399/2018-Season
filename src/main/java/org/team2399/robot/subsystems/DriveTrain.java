@@ -5,53 +5,74 @@ import org.team2399.robot.RobotMap;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
 public class DriveTrain extends Subsystem {
 	
-	private TalonSRX leftFrontTalon = new TalonSRX(8);
-	private TalonSRX leftMiddleTalon = new TalonSRX(7);
-	private TalonSRX leftBackTalon = new TalonSRX(3);
+	private static final double DRIVETRAIN_KD = 15.0;
+	private static final double DRIVETRAIN_KI = 0.001;
+	private static final double DRIVETRAIN_KP = 0.3;
+	private static final double DRIVETRAIN_KF = 0.33;
 	
-	private TalonSRX rightFrontTalon = new TalonSRX(1);
-	private TalonSRX rightMiddleTalon = new TalonSRX(2);
-	private TalonSRX rightBackTalon = new TalonSRX(5);
+	private static final double DRIVETRAIN_FAST_KP = 0.15;
+	private static final double DRIVETRAIN_FAST_KI = 0.001;
+	private static final double DRIVETRAIN_FAST_KD = 0;
+	private static final double DRIVETRAIN_FAST_KF = 0.13;
 	
-    public void DriveTrain() {
-
-    	// timeout constants
-    	leftFrontTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-    	rightFrontTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-    	leftFrontTalon.setSensorPhase(true);
-    	rightFrontTalon.setSensorPhase(true);
+	
+	private static final int CAN_TIMEOUT = 0;
+	
+	
+	private TalonSRX leftFrontTalon;
+	private TalonSRX leftMiddleTalon;
+	private TalonSRX leftBackTalon;
+	
+	private TalonSRX rightFrontTalon;
+	private TalonSRX rightMiddleTalon;
+	private TalonSRX rightBackTalon;
+	
+    public DriveTrain() {
+    	
+    	leftFrontTalon = new TalonSRX(8);
+    	leftMiddleTalon = new TalonSRX(7);
+    	leftBackTalon = new TalonSRX(3);
+    	
+    	rightFrontTalon = new TalonSRX(1);
+    	rightMiddleTalon = new TalonSRX(2);
+    	rightBackTalon = new TalonSRX(5);
     	
     	// timeout constants
-		leftFrontTalon.configNominalOutputForward(0, 10);
-		leftFrontTalon.configNominalOutputReverse(0, 10);
-		leftFrontTalon.configPeakOutputForward(1, 10);
-		leftFrontTalon.configPeakOutputReverse(-1, 10);
+    	leftFrontTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, CAN_TIMEOUT);
+    	rightFrontTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, CAN_TIMEOUT);
+    	leftFrontTalon.setSensorPhase(false);
+    	rightFrontTalon.setSensorPhase(false);
+    	
+    	// timeout constants
+		leftFrontTalon.configNominalOutputForward(0, CAN_TIMEOUT);
+		leftFrontTalon.configNominalOutputReverse(0, CAN_TIMEOUT);
+		leftFrontTalon.configPeakOutputForward(1, CAN_TIMEOUT);
+		leftFrontTalon.configPeakOutputReverse(-1, CAN_TIMEOUT);
 
-		leftFrontTalon.config_kF(0, 0.5, 10);
-		leftFrontTalon.config_kP(0, 0.5, 10);
-		leftFrontTalon.config_kI(0, 0.0015, 10);
-		leftFrontTalon.config_kD(0, 0.0, 10);
+		leftFrontTalon.config_kF(0, DRIVETRAIN_KF, CAN_TIMEOUT);
+		leftFrontTalon.config_kP(0, DRIVETRAIN_KP, CAN_TIMEOUT);
+		leftFrontTalon.config_kI(0, DRIVETRAIN_KI, CAN_TIMEOUT);
+		leftFrontTalon.config_kD(0, DRIVETRAIN_KD, CAN_TIMEOUT);
 		
-		rightFrontTalon.configNominalOutputForward(0, 10);
-		rightFrontTalon.configNominalOutputReverse(0, 10);
-		rightFrontTalon.configPeakOutputForward(1, 10);
-		rightFrontTalon.configPeakOutputReverse(-1, 10);
+		rightFrontTalon.configNominalOutputForward(0, CAN_TIMEOUT);
+		rightFrontTalon.configNominalOutputReverse(0, CAN_TIMEOUT);
+		rightFrontTalon.configPeakOutputForward(1, CAN_TIMEOUT);
+		rightFrontTalon.configPeakOutputReverse(-1, CAN_TIMEOUT);
 
-		rightFrontTalon.config_kF(0, 0.5, 10);
-		rightFrontTalon.config_kP(0, 0.5, 10);
-		rightFrontTalon.config_kI(0, 0.0015, 10);
-		rightFrontTalon.config_kD(0, 0.0, 10);
+		rightFrontTalon.config_kF(0, DRIVETRAIN_KF, CAN_TIMEOUT);
+		rightFrontTalon.config_kP(0, DRIVETRAIN_KP, CAN_TIMEOUT);
+		rightFrontTalon.config_kI(0, DRIVETRAIN_KI, CAN_TIMEOUT);
+		rightFrontTalon.config_kD(0, DRIVETRAIN_KD, CAN_TIMEOUT);
     }
     
     public void defaultCommand(Command c) {
@@ -87,6 +108,12 @@ public class DriveTrain extends Subsystem {
 		follow(leftBackTalon, leftFrontTalon);
 		follow(rightMiddleTalon, rightFrontTalon);
 		follow(rightBackTalon, rightFrontTalon);
+		
+		double[] left = {leftVelocityForward, leftFrontTalon.getSelectedSensorVelocity(0)};
+		double[] right = {rightVelocityForward, rightFrontTalon.getSelectedSensorVelocity(0)};
+		
+		SmartDashboard.putNumberArray("left", left);
+		SmartDashboard.putNumberArray("right", right);
     }
 
 	@Override
