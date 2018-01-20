@@ -7,6 +7,8 @@
 
 package org.team2399.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
@@ -39,6 +41,8 @@ public class Robot extends TimedRobot {
 		
 		dt.defaultCommand(new TankDrive(dt, oi));
 		sh.defaultCommand(new Shift(sh, Shift.State.SLOW));
+		UsbCamera cam = CameraServer.getInstance().startAutomaticCapture();
+		cam.setResolution(160, 120);
 	}
 
 	/**
