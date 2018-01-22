@@ -17,6 +17,7 @@ import org.team2399.robot.subsystems.Shifter;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.DriveBasic;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -51,44 +52,73 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 	
-	Joystick stick;
+	Joystick gamepad;
+	
+	Joystick joyLeft;
+	Joystick joyRight;
+	
+	Button[] joyLeftButtons;
+	Button[] joyRightButtons;
+	
 	Button button7, button8;
 	Button button9, button10;
-	Button button4;
+	Button button4, button3;
 	
 	public double getLeftStickY() {
-		return stick.getRawAxis(1) * -1;
+//		return gamepad.getRawAxis(1) * -1;
+		return joyLeft.getRawAxis(1) * -1;
 	}
 	
 	public double getRightStickY() {
-		return stick.getRawAxis(3) * -1;
+//		return gamepad.getRawAxis(3) * -1;
+		return joyRight.getRawAxis(1) * -1;
 	}
 	
 	public double getLeftStickX() {
-		return stick.getRawAxis(0);
+//		return gamepad.getRawAxis(0);
+		return joyLeft.getRawAxis(0);
 	}
 	
 	public double getRightStickX() {
-		return stick.getRawAxis(2);
+//		return gamepad.getRawAxis(2);
+//		return joyRight.getRawAxis(0);
+		return joyLeft.getRawAxis(2);
 	}
 	
 	public OI(Shifter sh, DriveTrain dt) {
-		stick = new Joystick(0);
+		joyLeft = new Joystick(1);
+		joyRight = new Joystick(2);
 		
-		button7 = new JoystickButton(stick, 7);
-		button8 = new JoystickButton(stick, 8);
+		joyLeftButtons = new Button[13];
+		for(int i = 1; i < joyLeftButtons.length; i++) {
+			joyLeftButtons[i] = new JoystickButton(joyLeft, i);
+		}
 		
-		button9 = new JoystickButton(stick, 9);
-		button10 = new JoystickButton(stick, 10);
+		joyLeftButtons[3].whenPressed(new Shift(sh, Shift.State.SLOW));
+		joyLeftButtons[4].whenPressed(new Shift(sh, Shift.State.FAST));
 		
-		button4 = new JoystickButton(stick, 4);
+		joyLeftButtons[5].whenPressed(new TankDrive(dt, this));
+		joyLeftButtons[6].whenPressed(new KajDrive(dt, this));
 		
-		button7.whenPressed(new Shift(sh, Shift.State.SLOW));
-		button8.whenPressed(new Shift(sh, Shift.State.FAST));
+//		gamepad = new Joystick(0);
+//		
+//		button7 = new JoystickButton(gamepad, 7);
+//		button8 = new JoystickButton(gamepad, 8);
+//		
+//		button9 = new JoystickButton(gamepad, 9);
+//		button10 = new JoystickButton(gamepad, 10);
+//		
+//		button3 = new JoystickButton(gamepad, 3);
+//		button4 = new JoystickButton(gamepad, 4);
+//		
+//		button7.whenPressed(new Shift(sh, Shift.State.SLOW));
+//		button8.whenPressed(new Shift(sh, Shift.State.FAST));
+//		
+//		button9.whenPressed(new TankDrive(dt, this));
+//		button10.whenPressed(new KajDrive(dt, this));
+//		
+//		button4.whenPressed(new PIDTest(dt, this));
+//		button3.whenPressed(new DriveBasic(dt));
 		
-		button9.whenPressed(new TankDrive(dt, this));
-		button10.whenPressed(new KajDrive(dt, this));
-		
-		button4.whenPressed(new PIDTest(dt, this));
 	}
 }
