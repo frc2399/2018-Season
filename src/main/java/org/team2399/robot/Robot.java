@@ -27,6 +27,10 @@ import org.team2399.robot.subsystems.Shifter;
  * project.
  */
 public class Robot extends TimedRobot {
+	private static final double NETWORK_TABLE_UPDATE_RATE = 1.0/20;
+	private static final int CAMERA_HEIGHT = 120;
+	private static final int CAMERA_WIDTH = 160;
+	
 	private DriveTrain dt;
 	private OI oi;
 	private Shifter sh;
@@ -44,9 +48,9 @@ public class Robot extends TimedRobot {
 		dt.defaultCommand(new TankDrive(dt, oi));
 		sh.defaultCommand(new Shift(sh, Shift.State.SLOW));
 		UsbCamera cam = CameraServer.getInstance().startAutomaticCapture();
-		cam.setResolution(160, 120);
+		cam.setResolution(CAMERA_WIDTH, CAMERA_HEIGHT);
 		
-		NetworkTableInstance.getDefault().setUpdateRate(1.0/50);
+		NetworkTableInstance.getDefault().setUpdateRate(NETWORK_TABLE_UPDATE_RATE);
 		
 	}
 
