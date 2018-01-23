@@ -11,6 +11,8 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 
 import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
@@ -43,6 +45,9 @@ public class Robot extends TimedRobot {
 		sh.defaultCommand(new Shift(sh, Shift.State.SLOW));
 		UsbCamera cam = CameraServer.getInstance().startAutomaticCapture();
 		cam.setResolution(160, 120);
+		
+		NetworkTableInstance.getDefault().setUpdateRate(1.0/50);
+		
 	}
 
 	/**
