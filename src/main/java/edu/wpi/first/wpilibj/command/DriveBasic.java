@@ -6,16 +6,35 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class DriveBasic extends Command {
 
-	private static final int MAX_VELOCITY = 75;
+	private static final double MAX_VELOCITY = 70;
+	private static final double MAX_ACCELERATION_TIME = 1.5;
+	private static final double MAX_ACCELERATION_DISTANCE = MAX_VELOCITY * MAX_ACCELERATION_TIME / 2;
+		
 	private Timer timer;
 	private DriveTrain dt;
 	private boolean isFinished;
 	
-	public DriveBasic(DriveTrain dt) {
+	private double coastDistance;
+	private double accelerationDistance;
+	private double totalDistance;
+
+	
+	public DriveBasic(DriveTrain dt, double dist) {
 		timer = new Timer();
 		this.dt = dt;
 		requires(dt);
-		isFinished = false;
+		isFinished = false;	
+		
+		totalDistance = dist;
+		
+		if(totalDistance > MAX_ACCELERATION_DISTANCE * 2) {
+			accelerationDistance = MAX_ACCELERATION_DISTANCE; 
+			coastDistance = totalDistance - MAX_ACCELERATION_DISTANCE;
+		} else {
+			accelerationDistance = totalDistance / 2;
+			coastDistance = 0;
+		}
+
 	}
 	
 	@Override
@@ -32,18 +51,26 @@ public class DriveBasic extends Command {
 	@Override
 	protected void execute() {
 		double time = timer.get();
-		if (time < 1.5) {
-			dt.driveVelocity(time * MAX_VELOCITY / 1.5, time * MAX_VELOCITY / 1.5);
-		} else if (time < 2.5) {
-			dt.driveVelocity(MAX_VELOCITY, MAX_VELOCITY);
-		} else if (time < 4) {
-			dt.driveVelocity((4 - time) * MAX_VELOCITY / 1.5, (4 - time) * MAX_VELOCITY / 1.5);
-		} else if (time < 6){
-			dt.driveVelocity(0, 0);
+		
+		double accelerationTime = Math.sqrt(2 * accelerationDistance / (MAX_VELOCITY / MAX_ACCELERATION_TIME));
+		double coastTime = coastDistance / MAX_VELOCITY;
+		
+		double beginDeceleration = accelerationTime + coastTime;
+		double endTime = accelerationTime * 2 + coastTime;
+		double velocity = 0;
+		
+		if (time < accelerationTime) {
+			velocity = time * MAX_VELOCITY / MAX_ACCELERATION_TIME;
+		} else if (time < beginDeceleration) {
+			velocity = MAX_VELOCITY;
+		} else if (time < endTime) {
+			velocity = (endTime - time) * MAX_VELOCITY / MAX_ACCELERATION_TIME;
 		} else {
-			dt.driveVelocity(0, 0);
+			velocity = 0;
 			isFinished = true;
 		}
+		
+		dt.driveVelocity(velocity, velocity);
 	}
 
 	@Override
