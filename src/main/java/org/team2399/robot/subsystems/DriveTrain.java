@@ -52,6 +52,11 @@ public class DriveTrain extends Subsystem {
     	rightMiddleTalon = new TalonSRX(2);
     	rightBackTalon = new TalonSRX(5);
     	
+		follow(leftMiddleTalon, leftFrontTalon);
+		follow(leftBackTalon, leftFrontTalon);
+		follow(rightMiddleTalon, rightFrontTalon);
+		follow(rightBackTalon, rightFrontTalon);
+    	
     	// timeout constants
     	leftFrontTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, CAN_TIMEOUT);
     	rightFrontTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, CAN_TIMEOUT);
@@ -100,11 +105,7 @@ public class DriveTrain extends Subsystem {
 		
 		leftFrontTalon.set(ControlMode.PercentOutput, leftPercentForward);
 		rightFrontTalon.set(ControlMode.PercentOutput, rightPercentForward);
-		
-		follow(leftMiddleTalon, leftFrontTalon);
-		follow(leftBackTalon, leftFrontTalon);
-		follow(rightMiddleTalon, rightFrontTalon);
-		follow(rightBackTalon, rightFrontTalon);
+	
 	}
     
     public double toInPerSecFromNativeTalon(double talonNative) {
@@ -121,11 +122,6 @@ public class DriveTrain extends Subsystem {
 		
 		leftFrontTalon.set(ControlMode.Velocity, desiredLeftVelocityForward);
 		rightFrontTalon.set(ControlMode.Velocity, desiredRightVelocityForward);
-		
-		follow(leftMiddleTalon, leftFrontTalon);
-		follow(leftBackTalon, leftFrontTalon);
-		follow(rightMiddleTalon, rightFrontTalon);
-		follow(rightBackTalon, rightFrontTalon);
 		
 		double actualLeftVelocityForward = leftFrontTalon.getSelectedSensorVelocity(0);
 		double actualRightVelocityForward = rightFrontTalon.getSelectedSensorVelocity(0);
