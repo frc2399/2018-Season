@@ -65,6 +65,8 @@ public class DriveBasic extends Command {
 			velocity = MAX_VELOCITY;
 		} else if (time < endTime) {
 			velocity = (endTime - time) * MAX_VELOCITY / MAX_ACCELERATION_TIME;
+		} else if (time < endTime + 1) {
+			velocity = 0;
 		} else {
 			velocity = 0;
 			isFinished = true;
