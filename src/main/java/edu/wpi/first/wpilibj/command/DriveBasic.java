@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class DriveBasic extends Command {
 
-	private static final double MAX_VELOCITY = 70;
+	private static final double MAX_VELOCITY = 100;
 	private static final double MAX_ACCELERATION_TIME = 1.5;
 	private static final double MAX_ACCELERATION_DISTANCE = MAX_VELOCITY * MAX_ACCELERATION_TIME / 2;
 		
