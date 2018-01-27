@@ -29,7 +29,7 @@ public class DriveBasic extends Command {
 		
 		if(totalDistance > MAX_ACCELERATION_DISTANCE * 2) {
 			accelerationDistance = MAX_ACCELERATION_DISTANCE; 
-			coastDistance = totalDistance - MAX_ACCELERATION_DISTANCE;
+			coastDistance = totalDistance - MAX_ACCELERATION_DISTANCE * 2;
 		} else {
 			accelerationDistance = totalDistance / 2;
 			coastDistance = 0;
