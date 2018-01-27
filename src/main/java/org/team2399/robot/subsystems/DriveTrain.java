@@ -25,9 +25,9 @@ public class DriveTrain extends Subsystem {
 	private static final double DRIVETRAIN_KF = 0.33;
 	
 	private static final double DRIVETRAIN_FAST_KP = 0.8;
-	private static final double DRIVETRAIN_FAST_KI = 0.0005;
-	private static final double DRIVETRAIN_FAST_KD = 10;
-	private static final double DRIVETRAIN_FAST_KF = 0.13;
+	private static final double DRIVETRAIN_FAST_KI = 0.004;
+	private static final double DRIVETRAIN_FAST_KD = 1.5;
+	private static final double DRIVETRAIN_FAST_KF = 0.1;
 	
 	
 	private static final int CAN_TIMEOUT = 0;
