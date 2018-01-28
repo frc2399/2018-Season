@@ -14,6 +14,8 @@ import org.team2399.robot.commands.TankDrive;
 import org.team2399.robot.subsystems.DriveTrain;
 import org.team2399.robot.subsystems.Shifter;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -85,7 +87,7 @@ public class OI {
 //		return joyLeft.getRawAxis(2);
 	}
 	
-	public OI(Shifter sh, DriveTrain dt) {
+	public OI(Shifter sh, DriveTrain dt, AHRS navx) {
 		
 		gamepad = new Joystick(0);
 //		joyLeft = new Joystick(1);
@@ -120,8 +122,8 @@ public class OI {
 		button10.whenPressed(new KajDrive(dt, this));
 		
 		button4.whileHeld(new PIDTest(dt, this));
-		button3.whenPressed(new DriveBasic(dt, 175.0));
-		button1.whenPressed(new DriveBasic(dt, 100.0));
+		button3.whenPressed(new DriveBasic(dt, sh, navx, 175.0));
+		button1.whenPressed(new DriveBasic(dt, sh, navx, 100.0));
 		
 	}
 }

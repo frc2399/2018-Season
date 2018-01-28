@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
 		
 		dt = new DriveTrain();
 		sh = new Shifter();
-		oi = new OI(sh, dt);
+		oi = new OI(sh, dt, navx);
 		
 		dt.defaultCommand(new TankDrive(dt, oi));
 		sh.defaultCommand(new Shift(sh, Shift.State.SLOW));

@@ -1,6 +1,9 @@
 package edu.wpi.first.wpilibj.command;
 
 import org.team2399.robot.subsystems.DriveTrain;
+import org.team2399.robot.subsystems.Shifter;
+
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Timer;
 
@@ -11,18 +14,26 @@ public class DriveBasic extends Command {
 	private static final double MAX_ACCELERATION_DISTANCE = MAX_VELOCITY * MAX_ACCELERATION_TIME / 2;
 		
 	private Timer timer;
+	private Shifter sh;
 	private DriveTrain dt;
+	private AHRS navx;
 	private boolean isFinished;
 	
 	private double coastDistance;
 	private double accelerationDistance;
 	private double totalDistance;
+	
+	private double startAngle;
 
 	
-	public DriveBasic(DriveTrain dt, double dist) {
+	public DriveBasic(DriveTrain dt, Shifter sh, AHRS navx, double dist) {
 		timer = new Timer();
 		this.dt = dt;
+		this.sh = sh;
+		this.navx = navx;
+		
 		requires(dt);
+		requires(sh);
 		isFinished = false;	
 		
 		totalDistance = dist;
@@ -45,6 +56,8 @@ public class DriveBasic extends Command {
 	@Override
 	protected void initialize() {
 		timer.start();
+		sh.setShifterFast();
+		startAngle = navx.getAngle();
 		isFinished = false;
 	}
 
@@ -58,6 +71,8 @@ public class DriveBasic extends Command {
 		double beginDeceleration = accelerationTime + coastTime;
 		double endTime = accelerationTime * 2 + coastTime;
 		double velocity = 0;
+		double relativeAngle = navx.getAngle() - startAngle;
+		double velocityDifference = 0;
 		
 		if (time < accelerationTime) {
 			velocity = time * MAX_VELOCITY / MAX_ACCELERATION_TIME;
@@ -72,7 +87,20 @@ public class DriveBasic extends Command {
 			isFinished = true;
 		}
 		
-		dt.driveVelocity(velocity, velocity);
+		
+		velocityDifference = relativeAngle * .75 * Math.abs(velocity) / (MAX_VELOCITY * .3);		
+		dt.driveVelocity(velocity - velocityDifference, velocity + velocityDifference);	
+		
+		
+		/**
+		 * if gyro is clockwise/right angle = positive
+		 * 		put more power to right, less to left
+		 * 
+		 * if gryo is counter clockwise/left angle = negative
+		 * 		put more power to left, less to right
+		 */
+		
+		
 	}
 
 	@Override
