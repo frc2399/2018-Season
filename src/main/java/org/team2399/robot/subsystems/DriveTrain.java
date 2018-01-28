@@ -46,6 +46,8 @@ public class DriveTrain extends Subsystem {
 	private TalonSRX rightMiddleTalon;
 	private TalonSRX rightBackTalon;
 	
+	private double fuzz;
+	
     public DriveTrain() {
     	
     	leftFrontTalon = new TalonSRX(8);
@@ -92,6 +94,8 @@ public class DriveTrain extends Subsystem {
 		desiredRightVelPrev = 0;
 		actualLeftVelPrev = 0;
 		actualRightVelPrev = 0;
+		
+		fuzz = 0.001;
     }
     
     public void defaultCommand(Command c) {
@@ -122,7 +126,9 @@ public class DriveTrain extends Subsystem {
     }
 
     public void driveVelocity(double leftVelocity, double rightVelocity) {
-		double desiredLeftVelocityForward = toNativeTalonFromInPerSec(leftVelocity) * RobotMap.Physical.DriveTrain.LEFT_FORWARD ;
+		flipFuzz();
+    	
+    	double desiredLeftVelocityForward = toNativeTalonFromInPerSec(leftVelocity) * RobotMap.Physical.DriveTrain.LEFT_FORWARD ;
 		double desiredRightVelocityForward = toNativeTalonFromInPerSec(rightVelocity) * RobotMap.Physical.DriveTrain.RIGHT_FORWARD;
 		
 		leftFrontTalon.set(ControlMode.Velocity, desiredLeftVelocityForward);
@@ -131,8 +137,8 @@ public class DriveTrain extends Subsystem {
 		double actualLeftVelocityForward = leftFrontTalon.getSelectedSensorVelocity(0);
 		double actualRightVelocityForward = rightFrontTalon.getSelectedSensorVelocity(0);
 		
-		double[] leftVelocityArr = {desiredLeftVelocityForward, actualLeftVelocityForward};
-		double[] rightVelocityArr = {desiredRightVelocityForward, actualRightVelocityForward};
+		double[] leftVelocityArr = {desiredLeftVelocityForward, actualLeftVelocityForward, fuzz};
+		double[] rightVelocityArr = {desiredRightVelocityForward, actualRightVelocityForward, fuzz};
 		
 		SmartDashboard.putNumberArray("leftVelocity", leftVelocityArr);
 		SmartDashboard.putNumberArray("rightVelocity", rightVelocityArr);
@@ -145,8 +151,8 @@ public class DriveTrain extends Subsystem {
 		double actualRightAccel = actualRightVelocityForward - actualRightVelPrev;
 		
 		
-		double[] leftAccelArr = {desiredLeftAccel, actualLeftAccel};
-		double[] rightAccelArr = {desiredRightAccel, actualRightAccel};
+		double[] leftAccelArr = {desiredLeftAccel, actualLeftAccel, fuzz};
+		double[] rightAccelArr = {desiredRightAccel, actualRightAccel, fuzz};
 		
 		SmartDashboard.putNumberArray("leftAccel",  leftAccelArr);
 		SmartDashboard.putNumberArray("rightAccel", rightAccelArr);
@@ -158,8 +164,10 @@ public class DriveTrain extends Subsystem {
 		actualLeftVelPrev = actualLeftVelocityForward;
 		actualRightVelPrev = actualRightVelocityForward;
 		
-		
-		
+    }
+    
+    private void flipFuzz() {
+    	fuzz *= -1;
     }
 
 	@Override

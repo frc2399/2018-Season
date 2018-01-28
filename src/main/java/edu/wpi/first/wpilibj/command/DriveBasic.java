@@ -6,6 +6,7 @@ import org.team2399.robot.subsystems.Shifter;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveBasic extends Command {
 
@@ -24,6 +25,8 @@ public class DriveBasic extends Command {
 	private double totalDistance;
 	
 	private double startAngle;
+	
+	private double fuzz;
 
 	
 	public DriveBasic(DriveTrain dt, Shifter sh, AHRS navx, double dist) {
@@ -59,10 +62,12 @@ public class DriveBasic extends Command {
 		sh.setShifterFast();
 		startAngle = navx.getAngle();
 		isFinished = false;
+		fuzz = .001;
 	}
 
 	@Override
 	protected void execute() {
+		flipFuzz();
 		double time = timer.get();
 		
 		double accelerationTime = Math.sqrt(2 * accelerationDistance / (MAX_VELOCITY / MAX_ACCELERATION_TIME));
@@ -73,6 +78,10 @@ public class DriveBasic extends Command {
 		double velocity = 0;
 		double relativeAngle = navx.getAngle() - startAngle;
 		double velocityDifference = 0;
+		
+		double relativeAngleArr[] = {relativeAngle, fuzz};
+		
+		SmartDashboard.putNumberArray("relativeAngle", relativeAngleArr);
 		
 		if (time < accelerationTime) {
 			velocity = time * MAX_VELOCITY / MAX_ACCELERATION_TIME;
@@ -87,6 +96,11 @@ public class DriveBasic extends Command {
 			isFinished = true;
 		}
 		
+		
+		double angleRate = navx.getRate();
+		double angleRateArr[] = {angleRate, fuzz};
+		
+		SmartDashboard.putNumberArray("angleRate", angleRateArr);
 		
 		velocityDifference = relativeAngle * .75 * Math.abs(velocity) / (MAX_VELOCITY * .3);		
 		dt.driveVelocity(velocity - velocityDifference, velocity + velocityDifference);	
@@ -113,4 +127,8 @@ public class DriveBasic extends Command {
 		timer.stop();
 	}
 
+	private void flipFuzz() {
+		fuzz *= -1;
+	}
+	
 }
