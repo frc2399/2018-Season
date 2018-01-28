@@ -18,6 +18,9 @@ import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
 import org.team2399.robot.subsystems.DriveTrain;
 import org.team2399.robot.subsystems.Shifter;
+import edu.wpi.first.wpilibj.SPI.Port;
+
+import com.kauailabs.navx.frc.AHRS;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,6 +37,7 @@ public class Robot extends TimedRobot {
 	private DriveTrain dt;
 	private OI oi;
 	private Shifter sh;
+	private AHRS navx;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -41,6 +45,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		navx = new AHRS(Port.kMXP);
+		
 		dt = new DriveTrain();
 		sh = new Shifter();
 		oi = new OI(sh, dt);
