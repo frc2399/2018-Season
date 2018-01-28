@@ -13,6 +13,7 @@ public class DriveBasic extends Command {
 	private static final double MAX_VELOCITY = 100;
 	private static final double MAX_ACCELERATION_TIME = 1.5;
 	private static final double MAX_ACCELERATION_DISTANCE = MAX_VELOCITY * MAX_ACCELERATION_TIME / 2;
+	private static final double SCALE = (175.0/168.0);
 		
 	private Timer timer;
 	private Shifter sh;
@@ -39,7 +40,7 @@ public class DriveBasic extends Command {
 		requires(sh);
 		isFinished = false;	
 		
-		totalDistance = dist;
+		totalDistance = dist * SCALE;
 		
 		if(totalDistance > MAX_ACCELERATION_DISTANCE * 2) {
 			accelerationDistance = MAX_ACCELERATION_DISTANCE; 
