@@ -1,4 +1,4 @@
-package edu.wpi.first.wpilibj.command;
+package org.team2399.robot.commands;
 
 import org.team2399.robot.subsystems.DriveTrain;
 import org.team2399.robot.subsystems.Shifter;
@@ -6,6 +6,7 @@ import org.team2399.robot.subsystems.Shifter;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveBasic extends Command {

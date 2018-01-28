@@ -7,6 +7,7 @@
 
 package org.team2399.robot;
 
+import org.team2399.robot.commands.DriveBasic;
 import org.team2399.robot.commands.KajDrive;
 import org.team2399.robot.commands.PIDTest;
 import org.team2399.robot.commands.Shift;
@@ -19,7 +20,6 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.command.DriveBasic;
 
 /**
  * This class is the glue that binds the controls on the physical operator
