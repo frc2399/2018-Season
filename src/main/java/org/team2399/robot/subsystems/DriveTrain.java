@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveTrain extends Subsystem {
 	
+	
+	private static final double CLOSED_LOOP_VOLTAGE_SATURATION = 10;
 	private static final int WHEEL_DIAMETER = 4;
 	private static final int ENCODER_TICKS_PER_REVOLUTION = 4096;
 	private static final double GEAR_RATIO = 24.0 / 60.0;
@@ -89,6 +91,24 @@ public class DriveTrain extends Subsystem {
 		rightFrontTalon.config_kP(0, DRIVETRAIN_FAST_KP, CAN_TIMEOUT);
 		rightFrontTalon.config_kI(0, DRIVETRAIN_FAST_KI, CAN_TIMEOUT);
 		rightFrontTalon.config_kD(0, DRIVETRAIN_FAST_KD, CAN_TIMEOUT);
+		
+		leftFrontTalon.configVoltageCompSaturation(CLOSED_LOOP_VOLTAGE_SATURATION, CAN_TIMEOUT);
+		leftFrontTalon.enableVoltageCompensation(true);
+		
+		leftMiddleTalon.configVoltageCompSaturation(CLOSED_LOOP_VOLTAGE_SATURATION, CAN_TIMEOUT);
+		leftMiddleTalon.enableVoltageCompensation(true);
+		
+		leftBackTalon.configVoltageCompSaturation(CLOSED_LOOP_VOLTAGE_SATURATION, CAN_TIMEOUT);
+		leftBackTalon.enableVoltageCompensation(true);
+		
+		rightFrontTalon.configVoltageCompSaturation(CLOSED_LOOP_VOLTAGE_SATURATION, CAN_TIMEOUT);
+		rightFrontTalon.enableVoltageCompensation(true);
+		
+		rightMiddleTalon.configVoltageCompSaturation(CLOSED_LOOP_VOLTAGE_SATURATION, CAN_TIMEOUT);
+		rightMiddleTalon.enableVoltageCompensation(true);
+		
+		rightBackTalon.configVoltageCompSaturation(CLOSED_LOOP_VOLTAGE_SATURATION, CAN_TIMEOUT);
+		rightBackTalon.enableVoltageCompensation(true);
 		
 		desiredLeftVelPrev = 0;
 		desiredRightVelPrev = 0;
