@@ -105,7 +105,7 @@ public class DriveBasic extends Command {
 		SmartDashboard.putNumberArray("angleRate", angleRateArr);
 		
 		velocityDifference = relativeAngle * .75 * Math.abs(velocity) / (MAX_VELOCITY * .3);		
-		dt.driveVelocity(velocity - velocityDifference, velocity + velocityDifference);	
+		dt.driveVelocity(velocity - velocityDifference, velocity + velocityDifference);
 		
 		
 		/**
