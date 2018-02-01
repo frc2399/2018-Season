@@ -54,10 +54,12 @@ public class Robot extends TimedRobot {
 		
 		dt.defaultCommand(new TankDrive(dt, oi));
 		sh.defaultCommand(new Shift(sh, Shift.State.SLOW));
-		UsbCamera cam = CameraServer.getInstance().startAutomaticCapture();
-		cam.setResolution(CAMERA_WIDTH, CAMERA_HEIGHT);
+//		UsbCamera cam = CameraServer.getInstance().startAutomaticCapture();
+//		cam.setResolution(CAMERA_WIDTH, CAMERA_HEIGHT);
 		
 		NetworkTableInstance.getDefault().setUpdateRate(NETWORK_TABLE_UPDATE_RATE);
+		
+		SmartDashboard.putData(dt);
 		
 	}
 
