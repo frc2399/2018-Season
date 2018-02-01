@@ -122,7 +122,7 @@ public class OI {
 		button9.whenPressed(new TankDrive(dt, this));
 		button10.whenPressed(new KajDrive(dt, this));
 		
-	//	button4.whenPressed(new TurnAngle(dt, sh, navx, 90));
+		button4.whenPressed(new TurnAngle(dt, sh, navx, 90));
 		button3.whenPressed(new DriveBasic(dt, sh, navx, 175.0));
 		button1.whenPressed(new DriveBasic(dt, sh, navx, 100.0));
 		
