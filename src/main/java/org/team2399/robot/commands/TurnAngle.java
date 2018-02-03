@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TurnAngle extends Command {
 
+	private static final double MAX_I_CONTRIB = 0.25;
 	private static final double P_GAIN = 0.01;
 	private static final double I_GAIN = 0.01;
 	private static final double D_GAIN = 0.35;
@@ -19,6 +20,7 @@ public class TurnAngle extends Command {
 	private double tempP;
 	private double tempI;
 	private double tempD;
+	private double tempMaxIContrib;
 	// 243
 	private static final int ANGULAR_RATE = 120;
 	private Timer timer;
@@ -51,6 +53,7 @@ public class TurnAngle extends Command {
 		SmartDashboard.putNumber("pGain", P_GAIN);
 		SmartDashboard.putNumber("iGain", I_GAIN);
 		SmartDashboard.putNumber("dGain", D_GAIN);
+		SmartDashboard.putNumber("maxIContrib", MAX_I_CONTRIB);
 	}
 
 	@Override
@@ -79,6 +82,7 @@ public class TurnAngle extends Command {
 		tempP = SmartDashboard.getNumber("pGain", P_GAIN);
 		tempI = SmartDashboard.getNumber("iGain", I_GAIN);
 		tempD = SmartDashboard.getNumber("dGain", D_GAIN);
+		tempMaxIContrib = SmartDashboard.getNumber("maxIContrib", MAX_I_CONTRIB);
 		
 	//super.initialize();
 	}
@@ -111,11 +115,13 @@ public class TurnAngle extends Command {
 		double errorDifference = angleError - prevError;
 		double pContrib = angleError * tempP;
 		double iContrib = errorSum * tempI;
-		if (iContrib > 0.25) {
-			iContrib = 0.25;
+		if (iContrib > tempMaxIContrib) {
+			iContrib = tempMaxIContrib;
+			errorSum = iContrib / tempI;
 		}
-		if (iContrib < -0.25) {
-			iContrib = -0.25;
+		if (iContrib < -tempMaxIContrib) {
+			iContrib = -tempMaxIContrib;
+			errorSum = iContrib / tempI;
 		}
 		double dContrib = errorDifference * tempD;
 		double percent = pContrib + iContrib + dContrib;
