@@ -27,6 +27,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+	private static final double DEADBAND_WIDTH = 0.1;
+
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
 	//// joystick.
@@ -68,24 +70,35 @@ public class OI {
 	Button button4, button3, button1;
 	
 	public double getLeftStickY() {
-		return gamepad.getRawAxis(1) * -1;
+		return deadBand(gamepad.getRawAxis(1) * -1, DEADBAND_WIDTH);
 //		return joyLeft.getRawAxis(1) * -1;
 	}
 	
 	public double getRightStickY() {
-		return gamepad.getRawAxis(3) * -1;
+		return deadBand(gamepad.getRawAxis(3) * -1, DEADBAND_WIDTH);
 //		return joyRight.getRawAxis(1) * -1;
 	}
 	
 	public double getLeftStickX() {
-		return gamepad.getRawAxis(0);
+		return deadBand(gamepad.getRawAxis(0), DEADBAND_WIDTH);
 //		return joyLeft.getRawAxis(0);
 	}
 	
 	public double getRightStickX() {
-		return gamepad.getRawAxis(2);
+		return deadBand(gamepad.getRawAxis(2), DEADBAND_WIDTH);
 //		return joyRight.getRawAxis(0);
 //		return joyLeft.getRawAxis(2);
+	}
+	
+	public static double deadBand(double num, double width) {
+		double slope = 1.0 / (1.0 - width);
+		if (num >= width) {
+			return slope * (num - width);
+		} else if(num <= -width) {
+			return slope * (num + width);
+		} else {
+			return 0;
+		}
 	}
 	
 	public OI(Shifter sh, DriveTrain dt, AHRS navx) {
@@ -123,8 +136,11 @@ public class OI {
 		button10.whenPressed(new KajDrive(dt, this));
 		
 		button4.whenPressed(new TurnAngle(dt, sh, navx, 90, TurnAngle.EndAngleMeaning.LESS_THAN_180));
-		button3.whenPressed(new DriveBasic(dt, sh, navx, 175.0));
-		button1.whenPressed(new DriveBasic(dt, sh, navx, 100.0));
+		button3.whenPressed(new TurnAngle(dt, sh, navx, 90, TurnAngle.EndAngleMeaning.ABSOLUTE));
+		button1.whenPressed(new TurnAngle(dt, sh, navx, 90, TurnAngle.EndAngleMeaning.RELATIVE));
+		
+//		button3.whenPressed(new DriveBasic(dt, sh, navx, 175.0));
+//		button1.whenPressed(new DriveBasic(dt, sh, navx, 100.0));
 		
 	}
 }
