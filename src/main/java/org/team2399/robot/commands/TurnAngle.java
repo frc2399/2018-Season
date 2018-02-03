@@ -22,7 +22,7 @@ public class TurnAngle extends Command {
 	private double tempD;
 	private double tempMaxIContrib;
 	// 243
-	private static final int ANGULAR_RATE = 120;
+	private static final int ANGULAR_RATE = 240;
 	private Timer timer;
 	private Shifter sh;
 	private DriveTrain dt;
