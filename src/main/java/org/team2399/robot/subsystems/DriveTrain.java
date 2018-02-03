@@ -4,6 +4,7 @@ import org.team2399.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -48,6 +49,8 @@ public class DriveTrain extends Subsystem {
 	private TalonSRX rightMiddleTalon;
 	private TalonSRX rightBackTalon;
 	
+	private TalonSRX[] allTalons;
+	
 	private double fuzz;
 	
     public DriveTrain() {
@@ -59,6 +62,9 @@ public class DriveTrain extends Subsystem {
     	rightFrontTalon = new TalonSRX(1);
     	rightMiddleTalon = new TalonSRX(2);
     	rightBackTalon = new TalonSRX(5);
+    	
+    	TalonSRX[] allTalons = {leftFrontTalon, leftMiddleTalon, leftBackTalon, rightFrontTalon, rightMiddleTalon, rightBackTalon};
+    	this.allTalons = allTalons;
     	
 		follow(leftMiddleTalon, leftFrontTalon);
 		follow(leftBackTalon, leftFrontTalon);
@@ -92,23 +98,8 @@ public class DriveTrain extends Subsystem {
 		rightFrontTalon.config_kI(0, DRIVETRAIN_FAST_KI, CAN_TIMEOUT);
 		rightFrontTalon.config_kD(0, DRIVETRAIN_FAST_KD, CAN_TIMEOUT);
 		
-		leftFrontTalon.configVoltageCompSaturation(CLOSED_LOOP_VOLTAGE_SATURATION, CAN_TIMEOUT);
-		leftFrontTalon.enableVoltageCompensation(true);
-		
-		leftMiddleTalon.configVoltageCompSaturation(CLOSED_LOOP_VOLTAGE_SATURATION, CAN_TIMEOUT);
-		leftMiddleTalon.enableVoltageCompensation(true);
-		
-		leftBackTalon.configVoltageCompSaturation(CLOSED_LOOP_VOLTAGE_SATURATION, CAN_TIMEOUT);
-		leftBackTalon.enableVoltageCompensation(true);
-		
-		rightFrontTalon.configVoltageCompSaturation(CLOSED_LOOP_VOLTAGE_SATURATION, CAN_TIMEOUT);
-		rightFrontTalon.enableVoltageCompensation(true);
-		
-		rightMiddleTalon.configVoltageCompSaturation(CLOSED_LOOP_VOLTAGE_SATURATION, CAN_TIMEOUT);
-		rightMiddleTalon.enableVoltageCompensation(true);
-		
-		rightBackTalon.configVoltageCompSaturation(CLOSED_LOOP_VOLTAGE_SATURATION, CAN_TIMEOUT);
-		rightBackTalon.enableVoltageCompensation(true);
+		enableVoltageComp();
+		brakeMode();
 		
 		desiredLeftVelPrev = 0;
 		desiredRightVelPrev = 0;
@@ -184,6 +175,31 @@ public class DriveTrain extends Subsystem {
 		actualLeftVelPrev = actualLeftVelocityForward;
 		actualRightVelPrev = actualRightVelocityForward;
 		
+    }
+    
+    public void enableVoltageComp() {
+    	for(TalonSRX talon : allTalons) {
+    		talon.configVoltageCompSaturation(CLOSED_LOOP_VOLTAGE_SATURATION, CAN_TIMEOUT);
+    		talon.enableVoltageCompensation(true);
+    	}
+    }
+    
+    public void disableVoltageComp() {
+    	for(TalonSRX talon : allTalons) {
+    		talon.enableVoltageCompensation(false);
+    	}
+    }
+    
+    public void brakeMode() {
+    	for(TalonSRX talon : allTalons) {
+    		talon.setNeutralMode(NeutralMode.Brake);
+    	}
+    }
+    
+    public void coastMode() {
+    	for(TalonSRX talon : allTalons) {
+    		talon.setNeutralMode(NeutralMode.Coast);
+    	}
     }
     
     private void flipFuzz() {

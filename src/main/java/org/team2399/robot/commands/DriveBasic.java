@@ -60,6 +60,9 @@ public class DriveBasic extends Command {
 
 	@Override
 	protected void initialize() {
+		dt.enableVoltageComp();
+    	dt.brakeMode();
+		
 		timer.start();
 		sh.setShifterFast();
 		startAngle = navx.getAngle();
