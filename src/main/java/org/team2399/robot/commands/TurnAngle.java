@@ -1,5 +1,6 @@
 package org.team2399.robot.commands;
 
+import org.team2399.robot.Utility;
 import org.team2399.robot.subsystems.DriveTrain;
 import org.team2399.robot.subsystems.Shifter;
 
@@ -27,9 +28,10 @@ public class TurnAngle extends Command {
 	private Shifter sh;
 	private DriveTrain dt;
 	private AHRS navx;
-	private boolean isFinished;
 	private double startAngle;
+	private double inputAngle;
 	private double endAngle;
+	private double endTime;
 	private double angularVelocity;
 	
 	private double fuzz;
@@ -37,28 +39,106 @@ public class TurnAngle extends Command {
 	private double prevError;
 	private double errorSum;
 	
-	public TurnAngle(DriveTrain dt, Shifter sh, AHRS navx, double endAngle) {
+	private EndAngleMeaning strategy;
+	
+	public TurnAngle(DriveTrain dt, Shifter sh, AHRS navx, double inputAngle, EndAngleMeaning strat) {
 		timer = new Timer();
 		this.dt = dt;
 		this.sh = sh;
 		this.navx = navx;
-		this.endAngle = endAngle;
+		this.inputAngle = inputAngle;
+		strategy = strat;
 		
 //		setInterruptible(true);
 		
 		requires(dt);
 		requires(sh);
-		isFinished = false;
 		
 		SmartDashboard.putNumber("pGain", P_GAIN);
 		SmartDashboard.putNumber("iGain", I_GAIN);
 		SmartDashboard.putNumber("dGain", D_GAIN);
 		SmartDashboard.putNumber("maxIContrib", MAX_I_CONTRIB);
 	}
+	
+	public enum EndAngleMeaning
+	{
+		/**
+		 * go to exact angle, no extra math or logic
+		 * @author rebec
+		 *
+		 */
+		ABSOLUTE {
+			@Override
+			double endAngle(double startAngle, double inputAngle) {
+				return inputAngle;
+			}
+
+			@Override
+			public void test() {				
+			}
+		},
+		/**
+		 * angle relative to current angle
+		 * @author rebec
+		 *
+		 */
+		RELATIVE {
+			@Override
+			double endAngle(double startAngle, double inputAngle) {
+				return startAngle + inputAngle;
+			}
+
+			@Override
+			public void test() {
+			}
+		},
+		/**
+		 * always rotate less than 180 degrees to correct heading
+		 * @author rebec
+		 *
+		 */
+		LESS_THAN_180 {
+			
+			/**
+			 * @param startAngle
+			 * @param inputAngle is less than 360 and greater than 0
+			 * @return endAngle
+			 */
+			@Override
+			double endAngle(double startAngle, double inputAngle) {
+				double relativeTurn = inputAngle - (startAngle % 360);
+				
+				double oppositeTurnError;
+				if (relativeTurn < 0) {
+					oppositeTurnError = relativeTurn + 360;
+				} else {
+					oppositeTurnError = relativeTurn - 360;
+				}
+				
+				if (Math.abs(relativeTurn) < Math.abs(oppositeTurnError)) {
+					return relativeTurn + startAngle;	
+				} else {
+					return oppositeTurnError + startAngle;
+				}
+			}
+			
+			public void test()
+			{
+				System.out.println(endAngle(360 * 4, 90) == 360 * 4 + 90);
+				System.out.println(endAngle(360 * 4, -90) == 360 * 4 - 90);
+				System.out.println(endAngle(360 * 4, -180) == 360 * 4 + 180);
+				System.out.println(endAngle(360 * 4, -270) == 360 * 4 + 90);
+				System.out.println(endAngle(360 * 3 + 20, 90) == 360 * 3 + 90);
+			}
+		};
+		
+		abstract double endAngle(double startAngle, double inputAngle);
+		public abstract void test();
+	}
 
 	@Override
 	protected boolean isFinished() {
-		return isFinished;
+		return timer.get() > endTime && Utility.inRange(navx.getAngle(), endAngle, 1) && Utility.inRange(navx.getRate(), 0, .1);
 	}
 
 	@Override
@@ -67,13 +147,14 @@ public class TurnAngle extends Command {
 		sh.setShifterFast();
 		startAngle = navx.getAngle();
 		
+		endAngle = strategy.endAngle(startAngle, inputAngle);
+		
 		if (endAngle > startAngle) {
 			angularVelocity = ANGULAR_RATE;
 		} else {
 			angularVelocity = ANGULAR_RATE * -1;
 		} 
-				
-		isFinished = false;
+		
 		fuzz = .001;
 		
 		prevError = 0;
@@ -83,6 +164,8 @@ public class TurnAngle extends Command {
 		tempI = SmartDashboard.getNumber("iGain", I_GAIN);
 		tempD = SmartDashboard.getNumber("dGain", D_GAIN);
 		tempMaxIContrib = SmartDashboard.getNumber("maxIContrib", MAX_I_CONTRIB);
+		
+		endTime = (endAngle - startAngle) / angularVelocity;
 		
 	//super.initialize();
 	}
@@ -103,11 +186,11 @@ public class TurnAngle extends Command {
 //		SmartDashboard.putNumberArray("relativeAngleTurn", relativeAngleArr);
 //		SmartDashboard.putNumberArray("angleTurnRate", angleRateArr);
 		
+		// what the angle should be at the current time
 		double desiredAngle = angularVelocity * time + startAngle;
 		
 		if (time > endTime) {
 			desiredAngle = endAngle;
-//			isFinished = true;
 		}
 		
 		double angleError = desiredAngle - currentAngle;
@@ -135,10 +218,6 @@ public class TurnAngle extends Command {
 		
 		double percentArr[] = {pContrib, iContrib, dContrib, fuzz};
 		SmartDashboard.putNumberArray("percent", percentArr);
-		
-		if( time > 10) {
-			isFinished = true;
-		}
 		
 		
 		// must stay at end
