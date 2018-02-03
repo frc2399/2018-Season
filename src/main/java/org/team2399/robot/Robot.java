@@ -46,7 +46,16 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		navx = new AHRS(Port.kMXP);
+		navx = new AHRS(Port.kMXP);	
+		while(navx.isCalibrating()) {
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		navx.reset();
 		
 		dt = new DriveTrain();
 		sh = new Shifter();
@@ -103,7 +112,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
-		
 	}
 
 	/**
