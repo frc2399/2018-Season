@@ -32,8 +32,8 @@ public class KajDrive extends Command {
     	double forward = oi.getLeftStickY();
     	double turn = oi.getRightStickX();
     	
-    	double leftSideSpeed = (forward + turn * (0.5 + 0.5 * Math.abs(forward)));
-		double rightSideSpeed = (forward - turn * (0.5 + 0.5 * Math.abs(forward)));
+    	double leftSideSpeed = (forward + turn * (0.25 + 0.75 * Math.abs(forward)));
+		double rightSideSpeed = (forward - turn * (0.25 + 0.75 * Math.abs(forward)));
 		
 		dt.drivePercent(leftSideSpeed, rightSideSpeed);
     }
