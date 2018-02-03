@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
+import org.team2399.robot.commands.KajDrive;
 import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
 import org.team2399.robot.subsystems.DriveTrain;
@@ -61,7 +62,7 @@ public class Robot extends TimedRobot {
 		sh = new Shifter();
 		oi = new OI(sh, dt, navx);
 		
-		dt.defaultCommand(new TankDrive(dt, oi));
+		dt.defaultCommand(new KajDrive(dt, oi));
 		sh.defaultCommand(new Shift(sh, Shift.State.SLOW));
 //		UsbCamera cam = CameraServer.getInstance().startAutomaticCapture();
 //		cam.setResolution(CAMERA_WIDTH, CAMERA_HEIGHT);
