@@ -53,6 +53,7 @@ public class Robot extends TimedRobot {
 				Thread.sleep(50);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
+				Thread.currentThread().interrupt();
 				e.printStackTrace();
 			}
 		}
