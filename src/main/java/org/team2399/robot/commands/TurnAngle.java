@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TurnAngle extends Command {
 
-	private static final double P_GAIN = 0.02;
-	private static final double I_GAIN = 0.001;
-	private static final double D_GAIN = 0.1;
+	private static final double P_GAIN = 0.01;
+	private static final double I_GAIN = 0.01;
+	private static final double D_GAIN = 0.35;
 
 	
 	private double tempP;
