@@ -1,6 +1,7 @@
 package org.team2399.robot.commands;
 
 import org.team2399.robot.OI;
+import org.team2399.robot.Utility;
 import org.team2399.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -29,11 +30,28 @@ public class KajDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double forward = oi.getLeftStickY();
-    	double turn = oi.getRightStickX();
-    	
-    	double leftSideSpeed = (forward + turn * (0.25 + 0.75 * Math.abs(forward)));
-		double rightSideSpeed = (forward - turn * (0.25 + 0.75 * Math.abs(forward)));
+	    	double forward = oi.getLeftStickY();
+	    	double turn = oi.getRightStickX();
+	    	
+	    	double leftSideSpeed = (forward + turn * (Math.abs(forward)));
+		double rightSideSpeed = (forward - turn * (Math.abs(forward)));
+		
+		if(Utility.inRange(forward, 0, OI.DEADBAND_WIDTH * 2))
+		{
+			leftSideSpeed = turn/ 2;
+			rightSideSpeed = -turn / 2;
+		}
+			
+		
+		if (oi.getLeftShoulder()) {
+			leftSideSpeed = -1;
+			rightSideSpeed = 1;
+		}
+		
+		if (oi.getRightShoulder()) {
+			leftSideSpeed = 1;
+			rightSideSpeed = -1;
+		}
 		
 		dt.drivePercent(leftSideSpeed, rightSideSpeed);
     }

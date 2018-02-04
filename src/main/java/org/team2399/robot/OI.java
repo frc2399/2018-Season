@@ -88,6 +88,12 @@ public class OI {
 		return deadBand(gamepad.getRawAxis(2), DEADBAND_WIDTH);
 //		return joyRight.getRawAxis(0);
 //		return joyLeft.getRawAxis(2);
+	public boolean getLeftShoulder() {
+		return gamepad.getRawButton(5);
+	}
+	
+	public boolean getRightShoulder() {
+		return gamepad.getRawButton(6);
 	}
 	
 	public static double deadBand(double num, double width) {
