@@ -7,7 +7,7 @@
 
 package org.team2399.robot;
 
-import org.team2399.robot.commands.DriveBasic;
+import org.team2399.robot.commands.DriveDistance;
 import org.team2399.robot.commands.KajDrive;
 import org.team2399.robot.commands.PIDTest;
 import org.team2399.robot.commands.Shift;

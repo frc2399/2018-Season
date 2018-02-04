@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class DriveBasic extends Command {
+public class DriveDistance extends Command {
 
 	private static final double MAX_VELOCITY = 100;
 	private static final double MAX_ACCELERATION_TIME = 1.5;
@@ -31,7 +31,7 @@ public class DriveBasic extends Command {
 	private double fuzz;
 
 	
-	public DriveBasic(DriveTrain dt, Shifter sh, AHRS navx, double dist) {
+	public DriveDistance(DriveTrain dt, Shifter sh, AHRS navx, double dist) {
 		timer = new Timer();
 		this.dt = dt;
 		this.sh = sh;
