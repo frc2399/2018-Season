@@ -66,8 +66,10 @@ public class Robot extends TimedRobot {
 		
 		dt.defaultCommand(new KajDrive(dt, oi));
 		sh.defaultCommand(new Shift(sh, Shift.State.SLOW));
-//		UsbCamera cam = CameraServer.getInstance().startAutomaticCapture();
-//		cam.setResolution(CAMERA_WIDTH, CAMERA_HEIGHT);
+		UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture();
+		UsbCamera cam2 = CameraServer.getInstance().startAutomaticCapture();
+		cam1.setResolution(CAMERA_WIDTH, CAMERA_HEIGHT);
+		cam2.setResolution(CAMERA_WIDTH, CAMERA_HEIGHT);
 		
 		NetworkTableInstance.getDefault().setUpdateRate(NETWORK_TABLE_UPDATE_RATE);
 		
