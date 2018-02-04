@@ -9,6 +9,7 @@ package org.team2399.robot;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -131,4 +132,20 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 	}
+
+	@Override
+	protected void loopFunc() {
+		
+		try {
+			super.loopFunc();
+		} catch (Throwable t) {
+			DriverStation.reportError("Unhandled exception: " + t.toString(),
+			          t.getStackTrace());
+			
+			System.exit(1);
+		}
+		
+	}
+	
+	
 }
