@@ -12,6 +12,7 @@ import org.team2399.robot.commands.KajDrive;
 import org.team2399.robot.commands.PIDTest;
 import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
+import org.team2399.robot.commands.TestGroup;
 import org.team2399.robot.commands.TurnAngle;
 import org.team2399.robot.subsystems.DriveTrain;
 import org.team2399.robot.subsystems.Shifter;
@@ -70,24 +71,26 @@ public class OI {
 	Button button4, button3, button1;
 	
 	public double getLeftStickY() {
-		return deadBand(gamepad.getRawAxis(1) * -1, DEADBAND_WIDTH);
-//		return joyLeft.getRawAxis(1) * -1;
+//		return deadBand(gamepad.getRawAxis(1) * -1, DEADBAND_WIDTH);
+		return joyLeft.getRawAxis(1) * -1;
 	}
 	
 	public double getRightStickY() {
-		return deadBand(gamepad.getRawAxis(3) * -1, DEADBAND_WIDTH);
-//		return joyRight.getRawAxis(1) * -1;
+//		return deadBand(gamepad.getRawAxis(3) * -1, DEADBAND_WIDTH);
+		return joyRight.getRawAxis(1) * -1;
 	}
 	
 	public double getLeftStickX() {
-		return deadBand(gamepad.getRawAxis(0), DEADBAND_WIDTH);
-//		return joyLeft.getRawAxis(0);
+//		return deadBand(gamepad.getRawAxis(0), DEADBAND_WIDTH);
+		return joyLeft.getRawAxis(0);
 	}
 	
 	public double getRightStickX() {
-		return deadBand(gamepad.getRawAxis(2), DEADBAND_WIDTH);
-//		return joyRight.getRawAxis(0);
-//		return joyLeft.getRawAxis(2);
+//		return deadBand(gamepad.getRawAxis(2), DEADBAND_WIDTH);
+//		return joyRight.getRawAxis(2);
+		return joyLeft.getRawAxis(2);
+	}
+	
 	public boolean getLeftShoulder() {
 		return gamepad.getRawButton(5);
 	}
@@ -110,43 +113,51 @@ public class OI {
 	public OI(Shifter sh, DriveTrain dt, AHRS navx) {
 		
 		gamepad = new Joystick(0);
-//		joyLeft = new Joystick(1);
-//		joyRight = new Joystick(2);
+		joyLeft = new Joystick(1);
+		joyRight = new Joystick(2);
+		
+		joyLeftButtons = new Button[13];
+		for(int i = 1; i < joyLeftButtons.length; i++) {
+			joyLeftButtons[i] = new JoystickButton(joyLeft, i);
+		}
+		
+		joyLeftButtons[3].whenPressed(new Shift(sh, Shift.State.SLOW));
+		joyLeftButtons[4].whenPressed(new Shift(sh, Shift.State.FAST));
+		
+		joyLeftButtons[5].whenPressed(new TankDrive(dt, this));
+		joyLeftButtons[6].whenPressed(new KajDrive(dt, this));
+		
+		joyLeftButtons[12].whenPressed(new TurnAngle(dt, sh, navx, 90, TurnAngle.EndAngleMeaning.RELATIVE));
+		joyLeftButtons[11].whenPressed(new TurnAngle(dt, sh, navx, -90, TurnAngle.EndAngleMeaning.RELATIVE));
+		
+		joyLeftButtons[9].whenPressed(new DriveDistance(dt, sh, navx, 40.0));
+		joyLeftButtons[10].whenPressed(new DriveDistance(dt, sh, navx, 100.0));
+		
+		joyLeftButtons[8].whenPressed(new TestGroup(dt, sh, navx));
+		
+//		button7 = new JoystickButton(gamepad, 7);
+//		button8 = new JoystickButton(gamepad, 8);
 //		
-//		joyLeftButtons = new Button[13];
-//		for(int i = 1; i < joyLeftButtons.length; i++) {
-//			joyLeftButtons[i] = new JoystickButton(joyLeft, i);
-//		}
-		
-//		joyLeftButtons[3].whenPressed(new Shift(sh, Shift.State.SLOW));
-//		joyLeftButtons[4].whenPressed(new Shift(sh, Shift.State.FAST));
+//		button9 = new JoystickButton(gamepad, 9);
+//		button10 = new JoystickButton(gamepad, 10);
 //		
-//		joyLeftButtons[5].whenPressed(new TankDrive(dt, this));
-//		joyLeftButtons[6].whenPressed(new KajDrive(dt, this));
-		
-		
-		button7 = new JoystickButton(gamepad, 7);
-		button8 = new JoystickButton(gamepad, 8);
-		
-		button9 = new JoystickButton(gamepad, 9);
-		button10 = new JoystickButton(gamepad, 10);
-		
-		button3 = new JoystickButton(gamepad, 3);
-		button4 = new JoystickButton(gamepad, 4);
-		button1 = new JoystickButton(gamepad, 1);
-		
-		button7.whenPressed(new Shift(sh, Shift.State.SLOW));
-		button8.whenPressed(new Shift(sh, Shift.State.FAST));
-		
-		button9.whenPressed(new TankDrive(dt, this));
-		button10.whenPressed(new KajDrive(dt, this));
-		
-		button4.whenPressed(new TurnAngle(dt, sh, navx, 90, TurnAngle.EndAngleMeaning.LESS_THAN_180));
-		button3.whenPressed(new TurnAngle(dt, sh, navx, 90, TurnAngle.EndAngleMeaning.ABSOLUTE));
-		button1.whenPressed(new TurnAngle(dt, sh, navx, 90, TurnAngle.EndAngleMeaning.RELATIVE));
-		
+//		button3 = new JoystickButton(gamepad, 3);
+//		button4 = new JoystickButton(gamepad, 4);
+//		button1 = new JoystickButton(gamepad, 1);
+//		
+//		button7.whenPressed(new Shift(sh, Shift.State.SLOW));
+//		button8.whenPressed(new Shift(sh, Shift.State.FAST));
+//		
+//		button9.whenPressed(new TankDrive(dt, this));
+//		button10.whenPressed(new KajDrive(dt, this));
+//		
+//		button4.whenPressed(new TurnAngle(dt, sh, navx, 90, TurnAngle.EndAngleMeaning.LESS_THAN_180));
+//		button3.whenPressed(new TurnAngle(dt, sh, navx, 90, TurnAngle.EndAngleMeaning.ABSOLUTE));
+//		button1.whenPressed(new TurnAngle(dt, sh, navx, 90, TurnAngle.EndAngleMeaning.RELATIVE));
+//		
 //		button3.whenPressed(new DriveBasic(dt, sh, navx, 175.0));
 //		button1.whenPressed(new DriveBasic(dt, sh, navx, 100.0));
 		
+	
 	}
 }
