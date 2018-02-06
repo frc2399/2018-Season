@@ -15,6 +15,7 @@ import org.team2399.robot.commands.TankDrive;
 import org.team2399.robot.commands.TestGroup;
 import org.team2399.robot.commands.TurnAngle;
 import org.team2399.robot.commands.intake.GrabCube;
+import org.team2399.robot.commands.intake.OpenArms;
 import org.team2399.robot.subsystems.DriveTrain;
 import org.team2399.robot.subsystems.Intake;
 import org.team2399.robot.subsystems.Shifter;
@@ -93,6 +94,14 @@ public class OI {
 		return joyLeft.getRawAxis(2);
 	}
 	
+	public double getLeftThrottle() {
+		return (joyLeft.getRawAxis(3) * -1 + 1) / 2;
+	}
+	
+	public double getRightThrottle() {
+		return (joyRight.getRawAxis(3) * -1 + 1) / 2;
+	}
+	
 	public boolean getLeftShoulder() {
 		return gamepad.getRawButton(5);
 	}
@@ -138,6 +147,7 @@ public class OI {
 		joyLeftButtons[8].whenPressed(new TestGroup(dt, sh, navx));
 		
 		joyLeftButtons[1].whileHeld(new GrabCube(in));
+		joyLeftButtons[2].whenPressed(new OpenArms(in));
 		
 //		button7 = new JoystickButton(gamepad, 7);
 //		button8 = new JoystickButton(gamepad, 8);
