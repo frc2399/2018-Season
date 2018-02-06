@@ -14,7 +14,9 @@ import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
 import org.team2399.robot.commands.TestGroup;
 import org.team2399.robot.commands.TurnAngle;
+import org.team2399.robot.commands.intake.GrabCube;
 import org.team2399.robot.subsystems.DriveTrain;
+import org.team2399.robot.subsystems.Intake;
 import org.team2399.robot.subsystems.Shifter;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -110,7 +112,7 @@ public class OI {
 		}
 	}
 	
-	public OI(Shifter sh, DriveTrain dt, AHRS navx) {
+	public OI(Shifter sh, DriveTrain dt, Intake in, AHRS navx) {
 		
 		gamepad = new Joystick(0);
 		joyLeft = new Joystick(1);
@@ -134,6 +136,8 @@ public class OI {
 		joyLeftButtons[10].whenPressed(new DriveDistance(dt, sh, navx, 100.0));
 		
 		joyLeftButtons[8].whenPressed(new TestGroup(dt, sh, navx));
+		
+		joyLeftButtons[1].whileHeld(new GrabCube(in));
 		
 //		button7 = new JoystickButton(gamepad, 7);
 //		button8 = new JoystickButton(gamepad, 8);

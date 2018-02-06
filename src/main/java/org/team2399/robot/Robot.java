@@ -20,6 +20,7 @@ import org.team2399.robot.commands.KajDrive;
 import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
 import org.team2399.robot.subsystems.DriveTrain;
+import org.team2399.robot.subsystems.Intake;
 import org.team2399.robot.subsystems.Shifter;
 import edu.wpi.first.wpilibj.SPI.Port;
 
@@ -40,6 +41,7 @@ public class Robot extends TimedRobot {
 	private DriveTrain dt;
 	private OI oi;
 	private Shifter sh;
+	private Intake in;
 	private AHRS navx;
 
 	/**
@@ -62,7 +64,8 @@ public class Robot extends TimedRobot {
 		
 		dt = new DriveTrain();
 		sh = new Shifter();
-		oi = new OI(sh, dt, navx);
+		in = new Intake();
+		oi = new OI(sh, dt, in, navx);
 		
 		dt.defaultCommand(new KajDrive(dt, oi));
 		sh.defaultCommand(new Shift(sh, Shift.State.SLOW));
@@ -74,7 +77,7 @@ public class Robot extends TimedRobot {
 		NetworkTableInstance.getDefault().setUpdateRate(NETWORK_TABLE_UPDATE_RATE);
 		
 		SmartDashboard.putData(dt);
-		
+		SmartDashboard.putData(in);
 	}
 
 	/**
