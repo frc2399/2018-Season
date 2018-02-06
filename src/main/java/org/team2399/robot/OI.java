@@ -14,6 +14,7 @@ import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
 import org.team2399.robot.commands.TestGroup;
 import org.team2399.robot.commands.TurnAngle;
+import org.team2399.robot.commands.intake.EjectCube;
 import org.team2399.robot.commands.intake.GrabCube;
 import org.team2399.robot.commands.intake.OpenArms;
 import org.team2399.robot.subsystems.DriveTrain;
@@ -148,6 +149,7 @@ public class OI {
 		
 		joyLeftButtons[1].whileHeld(new GrabCube(in));
 		joyLeftButtons[2].whenPressed(new OpenArms(in));
+		joyLeftButtons[5].whileHeld(new EjectCube(in, this));
 		
 //		button7 = new JoystickButton(gamepad, 7);
 //		button8 = new JoystickButton(gamepad, 8);
