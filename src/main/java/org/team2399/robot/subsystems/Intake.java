@@ -19,8 +19,8 @@ public class Intake extends Subsystem{
 		leftTalon = new TalonSRX(10);
 	//	rightTalon = new TalonSRX(0);
 		
-		extender = new DoubleSolenoid(RobotMap.CAN.PCM, 5, 4);
-		grabber = new DoubleSolenoid(RobotMap.CAN.PCM, 1, 0);
+		extender = new DoubleSolenoid(RobotMap.CAN.PCM, RobotMap.PCM.EXTENDER_OUT, RobotMap.PCM.EXTENDER_IN);
+		grabber = new DoubleSolenoid(RobotMap.CAN.PCM, RobotMap.PCM.GRABBER_OUT, RobotMap.PCM.GRABBER_IN);
 	}
 	
 	// forward is positive, backwards is negative, -1 to 1
