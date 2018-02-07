@@ -22,6 +22,10 @@ public class RobotMap {
 	public static class PCM {
 		public static final int SHIFTER_SlOW = 2;
 		public static final int SHIFTER_FAST = 3;
+		public static final int EXTENDER_OUT = 5;
+		public static final int EXTENDER_IN = 4;
+		public static final int GRABBER_OUT = 1;
+		public static final int GRABBER_IN = 0;
 	}
 	
 	public static class Physical {

@@ -43,6 +43,8 @@ public class Robot extends TimedRobot {
 	private Shifter sh;
 	private Intake in;
 	private AHRS navx;
+	
+	final int NAVX_SLEEPMILLISECONDS = 50;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -53,7 +55,7 @@ public class Robot extends TimedRobot {
 		navx = new AHRS(Port.kMXP);	
 		while(navx.isCalibrating()) {
 			try {
-				Thread.sleep(50);
+				Thread.sleep(NAVX_SLEEPMILLISECONDS);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				Thread.currentThread().interrupt();

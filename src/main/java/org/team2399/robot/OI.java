@@ -34,34 +34,6 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
 	public static final double DEADBAND_WIDTH = 0.1;
-
-	//// CREATING BUTTONS
-	// One type of button is a joystick button which is any button on a
-	//// joystick.
-	// You create one by telling it which joystick it's on and which button
-	// number it is.
-	// Joystick stick = new Joystick(port);
-	// Button button = new JoystickButton(stick, buttonNumber);
-
-	// There are a few additional built in buttons you can use. Additionally,
-	// by subclassing Button you can create custom triggers and bind those to
-	// commands the same as any other Button.
-
-	//// TRIGGERING COMMANDS WITH BUTTONS
-	// Once you have a button, it's trivial to bind it to a button in one of
-	// three ways:
-
-	// Start the command when the button is pressed and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenPressed(new ExampleCommand());
-
-	// Run the command while the button is being held down and interrupt it once
-	// the button is released.
-	// button.whileHeld(new ExampleCommand());
-
-	// Start the command when the button is released and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenReleased(new ExampleCommand());
 	
 	Joystick gamepad;
 	
@@ -74,6 +46,9 @@ public class OI {
 	Button button7, button8;
 	Button button9, button10;
 	Button button4, button3, button1;
+	
+	final int THROTTLEAXIS =3;
+	
 	
 	public double getLeftStickY() {
 //		return deadBand(gamepad.getRawAxis(1) * -1, DEADBAND_WIDTH);
@@ -97,11 +72,11 @@ public class OI {
 	}
 	
 	public double getLeftThrottle() {
-		return (joyLeft.getRawAxis(3) * -1 + 1) / 2;
+		return (joyLeft.getRawAxis(THROTTLEAXIS) * -1 + 1) / 2;
 	}
 	
 	public double getRightThrottle() {
-		return (joyRight.getRawAxis(3) * -1 + 1) / 2;
+		return (joyRight.getRawAxis(THROTTLEAXIS) * -1 + 1) / 2;
 	}
 	
 	public boolean getLeftShoulder() {
@@ -159,28 +134,6 @@ public class OI {
 		joyRightButtons[3].whileHeld(new EjectCube(in, this));
 		joyRightButtons[4].whenPressed(new ExtendRetract(in));
 		
-//		button7 = new JoystickButton(gamepad, 7);
-//		button8 = new JoystickButton(gamepad, 8);
-//		
-//		button9 = new JoystickButton(gamepad, 9);
-//		button10 = new JoystickButton(gamepad, 10);
-//		
-//		button3 = new JoystickButton(gamepad, 3);
-//		button4 = new JoystickButton(gamepad, 4);
-//		button1 = new JoystickButton(gamepad, 1);
-//		
-//		button7.whenPressed(new Shift(sh, Shift.State.SLOW));
-//		button8.whenPressed(new Shift(sh, Shift.State.FAST));
-//		
-//		button9.whenPressed(new TankDrive(dt, this));
-//		button10.whenPressed(new KajDrive(dt, this));
-//		
-//		button4.whenPressed(new TurnAngle(dt, sh, navx, 90, TurnAngle.EndAngleMeaning.LESS_THAN_180));
-//		button3.whenPressed(new TurnAngle(dt, sh, navx, 90, TurnAngle.EndAngleMeaning.ABSOLUTE));
-//		button1.whenPressed(new TurnAngle(dt, sh, navx, 90, TurnAngle.EndAngleMeaning.RELATIVE));
-//		
-//		button3.whenPressed(new DriveBasic(dt, sh, navx, 175.0));
-//		button1.whenPressed(new DriveBasic(dt, sh, navx, 100.0));
 		
 	
 	}
