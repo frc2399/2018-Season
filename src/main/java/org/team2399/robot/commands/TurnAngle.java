@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TurnAngle extends Command {
 
+	private static final double ANGLE_RATE_TOLERANCE = .1;
+	private static final double ANGLE_TOLERANCE = 1;
 	private static final double MAX_I_CONTRIB = 0.3;
 	private static final double P_GAIN = 0.03;
 	private static final double I_GAIN = 0.02;
@@ -138,7 +140,7 @@ public class TurnAngle extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return timer.get() > endTime && Utility.inRange(navx.getAngle(), endAngle, 1) && Utility.inRange(navx.getRate(), 0, .1);
+		return timer.get() > endTime && Utility.inRange(navx.getAngle(), endAngle, ANGLE_TOLERANCE) && Utility.inRange(navx.getRate(), 0, ANGLE_RATE_TOLERANCE);
 	}
 
 	@Override

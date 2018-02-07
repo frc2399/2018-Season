@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveDistance extends Command {
 
-	private static final double MAX_VELOCITY = 100;
-	private static final double MAX_ACCELERATION_TIME = 1.5;
-	private static final double MAX_ACCELERATION_DISTANCE = MAX_VELOCITY * MAX_ACCELERATION_TIME / 2;
+	private static final double MAX_VELOCITY_IN_S = 100;
+	private static final double MAX_ACCELERATION_TIME_SEC = 1.5;
+	private static final double MAX_ACCELERATION_DISTANCE_IN = MAX_VELOCITY_IN_S * MAX_ACCELERATION_TIME_SEC / 2;
 	private static final double SCALE = (175.0/168.0);
 		
 	private Timer timer;
@@ -43,9 +43,9 @@ public class DriveDistance extends Command {
 		
 		totalDistance = dist * SCALE;
 		
-		if(totalDistance > MAX_ACCELERATION_DISTANCE * 2) {
-			accelerationDistance = MAX_ACCELERATION_DISTANCE; 
-			coastDistance = totalDistance - MAX_ACCELERATION_DISTANCE * 2;
+		if(totalDistance > MAX_ACCELERATION_DISTANCE_IN * 2) {
+			accelerationDistance = MAX_ACCELERATION_DISTANCE_IN; 
+			coastDistance = totalDistance - MAX_ACCELERATION_DISTANCE_IN * 2;
 		} else {
 			accelerationDistance = totalDistance / 2;
 			coastDistance = 0;
@@ -75,8 +75,8 @@ public class DriveDistance extends Command {
 		flipFuzz();
 		double time = timer.get();
 		
-		double accelerationTime = Math.sqrt(2 * accelerationDistance / (MAX_VELOCITY / MAX_ACCELERATION_TIME));
-		double coastTime = coastDistance / MAX_VELOCITY;
+		double accelerationTime = Math.sqrt(2 * accelerationDistance / (MAX_VELOCITY_IN_S / MAX_ACCELERATION_TIME_SEC));
+		double coastTime = coastDistance / MAX_VELOCITY_IN_S;
 		
 		double beginDeceleration = accelerationTime + coastTime;
 		double endTime = accelerationTime * 2 + coastTime;
@@ -89,11 +89,11 @@ public class DriveDistance extends Command {
 		SmartDashboard.putNumberArray("relativeAngle", relativeAngleArr);
 		
 		if (time < accelerationTime) {
-			velocity = time * MAX_VELOCITY / MAX_ACCELERATION_TIME;
+			velocity = time * MAX_VELOCITY_IN_S / MAX_ACCELERATION_TIME_SEC;
 		} else if (time < beginDeceleration) {
-			velocity = MAX_VELOCITY;
+			velocity = MAX_VELOCITY_IN_S;
 		} else if (time < endTime) {
-			velocity = (endTime - time) * MAX_VELOCITY / MAX_ACCELERATION_TIME;
+			velocity = (endTime - time) * MAX_VELOCITY_IN_S / MAX_ACCELERATION_TIME_SEC;
 		} else if (time < endTime + 1) {
 			velocity = 0;
 		} else {
@@ -107,7 +107,7 @@ public class DriveDistance extends Command {
 		
 		SmartDashboard.putNumberArray("angleRate", angleRateArr);
 		
-		velocityDifference = relativeAngle * .75 * Math.abs(velocity) / (MAX_VELOCITY * .3);		
+		velocityDifference = relativeAngle * .75 * Math.abs(velocity) / (MAX_VELOCITY_IN_S * .3);		
 		dt.driveVelocity(velocity - velocityDifference, velocity + velocityDifference);
 		
 		
