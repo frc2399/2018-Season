@@ -13,14 +13,18 @@ public class Intake extends Subsystem{
 
 	private TalonSRX leftTalon, rightTalon;
 	private DoubleSolenoid extender, grabber;
+	public boolean isExtended;
 	
 	//factor later
 	public Intake() {
 		leftTalon = new TalonSRX(10);
 	//	rightTalon = new TalonSRX(0);
 		
-		extender = new DoubleSolenoid(RobotMap.CAN.PCM, 5, 4);
-		grabber = new DoubleSolenoid(RobotMap.CAN.PCM, 1, 0);
+		// change channels
+		extender = new DoubleSolenoid(RobotMap.CAN.PCM, 1, 0);
+		grabber = new DoubleSolenoid(RobotMap.CAN.PCM, 5, 4);
+		
+		isExtended = false;
 	}
 	
 	// forward is positive, backwards is negative, -1 to 1
@@ -31,10 +35,12 @@ public class Intake extends Subsystem{
 	
 	public void extend() {
 		extender.set(DoubleSolenoid.Value.kForward);
+		isExtended = true;
 	}
 	
 	public void retract() {
 		extender.set(DoubleSolenoid.Value.kReverse);
+		isExtended = false;
 	}
 	
 	public void grab() {

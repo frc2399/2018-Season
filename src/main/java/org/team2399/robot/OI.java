@@ -15,6 +15,7 @@ import org.team2399.robot.commands.TankDrive;
 import org.team2399.robot.commands.TestGroup;
 import org.team2399.robot.commands.TurnAngle;
 import org.team2399.robot.commands.intake.EjectCube;
+import org.team2399.robot.commands.intake.ExtendRetract;
 import org.team2399.robot.commands.intake.GrabCube;
 import org.team2399.robot.commands.intake.OpenArms;
 import org.team2399.robot.subsystems.DriveTrain;
@@ -128,9 +129,14 @@ public class OI {
 		joyLeft = new Joystick(1);
 		joyRight = new Joystick(2);
 		
-		joyLeftButtons = new Button[13];
+		joyLeftButtons = new Button[joyLeft.getButtonCount() + 1];
 		for(int i = 1; i < joyLeftButtons.length; i++) {
 			joyLeftButtons[i] = new JoystickButton(joyLeft, i);
+		}
+		
+		joyRightButtons = new Button[joyRight.getButtonCount() + 1];
+		for(int i = 1; i < joyRightButtons.length; i++) {
+			joyRightButtons[i] = new JoystickButton(joyRight, i);
 		}
 		
 		joyLeftButtons[3].whenPressed(new Shift(sh, Shift.State.SLOW));
@@ -149,7 +155,9 @@ public class OI {
 		
 		joyLeftButtons[1].whileHeld(new GrabCube(in));
 		joyLeftButtons[2].whenPressed(new OpenArms(in));
-		joyLeftButtons[5].whileHeld(new EjectCube(in, this));
+		
+		joyRightButtons[3].whileHeld(new EjectCube(in, this));
+		joyRightButtons[4].whenPressed(new ExtendRetract(in));
 		
 //		button7 = new JoystickButton(gamepad, 7);
 //		button8 = new JoystickButton(gamepad, 8);
