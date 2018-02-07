@@ -27,7 +27,7 @@ public class EjectCube extends Command{
 
 	@Override
 	protected void execute() {
-		in.setSpeed(oi.getLeftThrottle());
+		in.setSpeed(oi.getRightThrottle());
 	}
 
 	@Override
