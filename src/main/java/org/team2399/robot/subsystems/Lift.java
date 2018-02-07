@@ -10,12 +10,6 @@ public class Lift extends Subsystem {
 		
 	}
 	
-	@Override
-	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	 @Override
 	public void periodic() {
 		// TODO Auto-generated method stub
@@ -28,6 +22,12 @@ public class Lift extends Subsystem {
 
 	public void defaultCommand(Command c) {
 	    	setDefaultCommand(c);
-	    }
+	}
+	
+	@Override
+	protected void initDefaultCommand() {
+		// TODO Auto-generated method stub
+		
+	}
 	 
 }
