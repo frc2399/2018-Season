@@ -5,14 +5,13 @@ import org.team2399.robot.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class EjectCube extends Command{
+public class ExtendRetract extends Command{
 
-	Intake in;
-	OI oi;
+	private Intake in;
+	private boolean isExtended;
 	
-	public EjectCube(Intake in, OI oi) {
+	public ExtendRetract(Intake in) {
 		this.in = in;
-		this.oi = oi;
 		requires(this.in);
 	}
 	
@@ -23,21 +22,25 @@ public class EjectCube extends Command{
 
 	@Override
 	protected void initialize() {
+		isExtended = in.isExtended;
 	}
 
 	@Override
 	protected void execute() {
-		in.setSpeed(oi.getRightThrottle());
+		if(isExtended) {
+			in.retract();
+		}
+		if(!isExtended){
+			in.extend();
+		}
 	}
 
 	@Override
 	protected void end() {
-		in.setSpeed(0);
 	}
 
 	@Override
 	protected void interrupted() {
-		in.setSpeed(0);
 	}
 
 }
