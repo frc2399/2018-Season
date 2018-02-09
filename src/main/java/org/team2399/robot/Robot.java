@@ -11,6 +11,7 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
@@ -21,6 +22,7 @@ import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
 import org.team2399.robot.subsystems.DriveTrain;
 import org.team2399.robot.subsystems.Intake;
+import org.team2399.robot.subsystems.Lift;
 import org.team2399.robot.subsystems.Shifter;
 import edu.wpi.first.wpilibj.SPI.Port;
 
@@ -42,7 +44,11 @@ public class Robot extends TimedRobot {
 	private OI oi;
 	private Shifter sh;
 	private Intake in;
+	private Lift li;
 	private AHRS navx;
+	private AutoChooser auto;
+	
+	Command autoCommand;
 	
 	final int NAVX_SLEEPMILLISECONDS = 50;
 
@@ -68,6 +74,7 @@ public class Robot extends TimedRobot {
 		sh = new Shifter();
 		in = new Intake();
 		oi = new OI(sh, dt, in, navx);
+		auto = new AutoChooser(oi, dt, sh, navx, li, in);
 		
 		dt.defaultCommand(new KajDrive(dt, oi));
 		sh.defaultCommand(new Shift(sh, Shift.State.SLOW));
@@ -80,6 +87,8 @@ public class Robot extends TimedRobot {
 		
 		SmartDashboard.putData(dt);
 		SmartDashboard.putData(in);
+		
+		auto.test();
 	}
 
 	/**
@@ -109,7 +118,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-
 	}
 
 	/**
