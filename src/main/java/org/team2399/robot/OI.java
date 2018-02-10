@@ -53,22 +53,26 @@ public class OI {
 	public double getLeftStickY() {
 //		return deadBand(gamepad.getRawAxis(1) * -1, DEADBAND_WIDTH);
 		return joyLeft.getRawAxis(1) * -1;
+//		return gamepad.getRawAxis(1) * -1; 
 	}
 	
 	public double getRightStickY() {
 //		return deadBand(gamepad.getRawAxis(3) * -1, DEADBAND_WIDTH);
 		return joyRight.getRawAxis(1) * -1;
+//		return gamepad.getRawAxis(3) * -1; 
 	}
 	
 	public double getLeftStickX() {
 //		return deadBand(gamepad.getRawAxis(0), DEADBAND_WIDTH);
 		return joyLeft.getRawAxis(0);
+//		return gamepad.getRawAxis(0); 
 	}
 	
 	public double getRightStickX() {
 //		return deadBand(gamepad.getRawAxis(2), DEADBAND_WIDTH);
-//		return joyRight.getRawAxis(2);
-		return joyLeft.getRawAxis(2);
+		return joyRight.getRawAxis(0);
+//		return joyLeft.getRawAxis(2);
+//		return gamepad.getRawAxis(2); 
 	}
 	
 	public double getLeftThrottle() {
@@ -134,7 +138,16 @@ public class OI {
 		joyRightButtons[3].whileHeld(new EjectCube(in, this));
 		joyRightButtons[4].whenPressed(new ExtendRetract(in));
 		
-		
-	
+//		button7 = new JoystickButton(gamepad, 7); 
+//	    button8 = new JoystickButton(gamepad, 8); 
+//	     
+//	    button9 = new JoystickButton(gamepad, 9); 
+//	    button10 = new JoystickButton(gamepad, 10); 
+//	     
+//	    button7.whenPressed(new Shift(sh, Shift.State.SLOW)); 
+//	    button8.whenPressed(new Shift(sh, Shift.State.FAST)); 
+//	     
+//	    button9.whenPressed(new TankDrive(dt, this)); 
+//	    button10.whenPressed(new KajDrive(dt, this));
 	}
 }
