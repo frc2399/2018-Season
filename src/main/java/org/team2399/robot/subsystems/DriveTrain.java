@@ -4,8 +4,11 @@ import org.team2399.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.IMotorController;
+import com.ctre.phoenix.motorcontrol.IMotorControllerEnhanced;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -41,62 +44,62 @@ public class DriveTrain extends Subsystem {
 	private double actualRightVelPrev;
 	
 	
-	private TalonSRX leftFrontTalon;
-	private TalonSRX leftMiddleTalon;
-	private TalonSRX leftBackTalon;
+	private IMotorControllerEnhanced leftFront;
+	private IMotorController leftMiddle;
+	private IMotorController leftBack;
 	
-	private TalonSRX rightFrontTalon;
-	private TalonSRX rightMiddleTalon;
-	private TalonSRX rightBackTalon;
+	private IMotorControllerEnhanced rightFront;
+	private IMotorController rightMiddle;
+	private IMotorController rightBack;
 	
-	private TalonSRX[] allTalons;
+	private IMotorController[] allMotorControllers;
 	
 	private double fuzz;
 	
     public DriveTrain() {
     	
-    	leftFrontTalon = new TalonSRX(8);
-    	leftMiddleTalon = new TalonSRX(7);
-    	leftBackTalon = new TalonSRX(3);
+    	leftFront = new TalonSRX(8);
+    	leftMiddle = new VictorSPX(7);
+    	leftBack = new VictorSPX(3);
     	
-    	rightFrontTalon = new TalonSRX(1);
-    	rightMiddleTalon = new TalonSRX(2);
-    	rightBackTalon = new TalonSRX(5);
+    	rightFront = new TalonSRX(1);
+    	rightMiddle = new VictorSPX(2);
+    	rightBack = new VictorSPX(5);
     	
-    	TalonSRX[] allTalons = {leftFrontTalon, leftMiddleTalon, leftBackTalon, rightFrontTalon, rightMiddleTalon, rightBackTalon};
-    	this.allTalons = allTalons;
+    	IMotorController[] allMotorControllers = {leftFront, leftMiddle, leftBack, rightFront, rightMiddle, rightBack};
+    	this.allMotorControllers = allMotorControllers;
     	
-		follow(leftMiddleTalon, leftFrontTalon);
-		follow(leftBackTalon, leftFrontTalon);
-		follow(rightMiddleTalon, rightFrontTalon);
-		follow(rightBackTalon, rightFrontTalon);
-    	
-    	// timeout constants
-    	leftFrontTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, CAN_TIMEOUT);
-    	rightFrontTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, CAN_TIMEOUT);
-    	leftFrontTalon.setSensorPhase(false);
-    	rightFrontTalon.setSensorPhase(false);
+		leftMiddle.follow(leftFront);
+		leftBack.follow(leftFront);
+		rightMiddle.follow(rightFront);
+		rightBack.follow(rightFront);
     	
     	// timeout constants
-		leftFrontTalon.configNominalOutputForward(0, CAN_TIMEOUT);
-		leftFrontTalon.configNominalOutputReverse(0, CAN_TIMEOUT);
-		leftFrontTalon.configPeakOutputForward(1, CAN_TIMEOUT);
-		leftFrontTalon.configPeakOutputReverse(-1, CAN_TIMEOUT);
+    	leftFront.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, CAN_TIMEOUT);
+    	rightFront.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, CAN_TIMEOUT);
+    	leftFront.setSensorPhase(false);
+    	rightFront.setSensorPhase(false);
+    	
+    	// timeout constants
+		leftFront.configNominalOutputForward(0, CAN_TIMEOUT);
+		leftFront.configNominalOutputReverse(0, CAN_TIMEOUT);
+		leftFront.configPeakOutputForward(1, CAN_TIMEOUT);
+		leftFront.configPeakOutputReverse(-1, CAN_TIMEOUT);
 
-		leftFrontTalon.config_kF(0, DRIVETRAIN_FAST_KF, CAN_TIMEOUT);
-		leftFrontTalon.config_kP(0, DRIVETRAIN_FAST_KP, CAN_TIMEOUT);
-		leftFrontTalon.config_kI(0, DRIVETRAIN_FAST_KI, CAN_TIMEOUT);
-		leftFrontTalon.config_kD(0, DRIVETRAIN_FAST_KD, CAN_TIMEOUT);
+		leftFront.config_kF(0, DRIVETRAIN_FAST_KF, CAN_TIMEOUT);
+		leftFront.config_kP(0, DRIVETRAIN_FAST_KP, CAN_TIMEOUT);
+		leftFront.config_kI(0, DRIVETRAIN_FAST_KI, CAN_TIMEOUT);
+		leftFront.config_kD(0, DRIVETRAIN_FAST_KD, CAN_TIMEOUT);
 		
-		rightFrontTalon.configNominalOutputForward(0, CAN_TIMEOUT);
-		rightFrontTalon.configNominalOutputReverse(0, CAN_TIMEOUT);
-		rightFrontTalon.configPeakOutputForward(1, CAN_TIMEOUT);
-		rightFrontTalon.configPeakOutputReverse(-1, CAN_TIMEOUT);
+		rightFront.configNominalOutputForward(0, CAN_TIMEOUT);
+		rightFront.configNominalOutputReverse(0, CAN_TIMEOUT);
+		rightFront.configPeakOutputForward(1, CAN_TIMEOUT);
+		rightFront.configPeakOutputReverse(-1, CAN_TIMEOUT);
 
-		rightFrontTalon.config_kF(0, DRIVETRAIN_FAST_KF, CAN_TIMEOUT);
-		rightFrontTalon.config_kP(0, DRIVETRAIN_FAST_KP, CAN_TIMEOUT);
-		rightFrontTalon.config_kI(0, DRIVETRAIN_FAST_KI, CAN_TIMEOUT);
-		rightFrontTalon.config_kD(0, DRIVETRAIN_FAST_KD, CAN_TIMEOUT);
+		rightFront.config_kF(0, DRIVETRAIN_FAST_KF, CAN_TIMEOUT);
+		rightFront.config_kP(0, DRIVETRAIN_FAST_KP, CAN_TIMEOUT);
+		rightFront.config_kI(0, DRIVETRAIN_FAST_KI, CAN_TIMEOUT);
+		rightFront.config_kD(0, DRIVETRAIN_FAST_KD, CAN_TIMEOUT);
 		
 		enableVoltageComp();
 		brakeMode();
@@ -113,17 +116,13 @@ public class DriveTrain extends Subsystem {
     	setDefaultCommand(c);
     }
     
-    public static void follow(TalonSRX follower, TalonSRX leader) {
-    	follower.set(ControlMode.Follower, leader.getDeviceID());
-	}
-    
     public void drivePercent(double leftPercent, double rightPercent) {
 		
 		double leftPercentForward = leftPercent * RobotMap.Physical.DriveTrain.LEFT_FORWARD;
 		double rightPercentForward = rightPercent * RobotMap.Physical.DriveTrain.RIGHT_FORWARD;
 		
-		leftFrontTalon.set(ControlMode.PercentOutput, leftPercentForward);
-		rightFrontTalon.set(ControlMode.PercentOutput, rightPercentForward);
+		leftFront.set(ControlMode.PercentOutput, leftPercentForward);
+		rightFront.set(ControlMode.PercentOutput, rightPercentForward);
 	
 	}
     
@@ -142,11 +141,11 @@ public class DriveTrain extends Subsystem {
     	double desiredLeftVelocityForward = toNativeTalonFromInPerSec(leftVelocity) * RobotMap.Physical.DriveTrain.LEFT_FORWARD ;
 		double desiredRightVelocityForward = toNativeTalonFromInPerSec(rightVelocity) * RobotMap.Physical.DriveTrain.RIGHT_FORWARD;
 		
-		leftFrontTalon.set(ControlMode.Velocity, desiredLeftVelocityForward);
-		rightFrontTalon.set(ControlMode.Velocity, desiredRightVelocityForward);
+		leftFront.set(ControlMode.Velocity, desiredLeftVelocityForward);
+		rightFront.set(ControlMode.Velocity, desiredRightVelocityForward);
 		
-		double actualLeftVelocityForward = leftFrontTalon.getSelectedSensorVelocity(0);
-		double actualRightVelocityForward = rightFrontTalon.getSelectedSensorVelocity(0);
+		double actualLeftVelocityForward = leftFront.getSelectedSensorVelocity(0);
+		double actualRightVelocityForward = rightFront.getSelectedSensorVelocity(0);
 		
 		double[] leftVelocityArr = {desiredLeftVelocityForward, actualLeftVelocityForward, fuzz};
 		double[] rightVelocityArr = {desiredRightVelocityForward, actualRightVelocityForward, fuzz};
@@ -178,26 +177,26 @@ public class DriveTrain extends Subsystem {
     }
     
     public void enableVoltageComp() {
-    	for(TalonSRX talon : allTalons) {
+    	for(IMotorController talon : allMotorControllers) {
     		talon.configVoltageCompSaturation(CLOSED_LOOP_VOLTAGE_SATURATION, CAN_TIMEOUT);
     		talon.enableVoltageCompensation(true);
     	}
     }
     
     public void disableVoltageComp() {
-    	for(TalonSRX talon : allTalons) {
+    	for(IMotorController talon : allMotorControllers) {
     		talon.enableVoltageCompensation(false);
     	}
     }
     
     public void brakeMode() {
-    	for(TalonSRX talon : allTalons) {
+    	for(IMotorController talon : allMotorControllers) {
     		talon.setNeutralMode(NeutralMode.Brake);
     	}
     }
     
     public void coastMode() {
-    	for(TalonSRX talon : allTalons) {
+    	for(IMotorController talon : allMotorControllers) {
     		talon.setNeutralMode(NeutralMode.Coast);
     	}
     }
