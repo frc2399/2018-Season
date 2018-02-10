@@ -11,6 +11,7 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -59,6 +60,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		navx = new AHRS(Port.kMXP);	
+		Timer timer = new Timer();
+		timer.start();
 		while(navx.isCalibrating()) {
 			try {
 				Thread.sleep(NAVX_SLEEPMILLISECONDS);
@@ -66,6 +69,9 @@ public class Robot extends TimedRobot {
 				// TODO Auto-generated catch block
 				Thread.currentThread().interrupt();
 				e.printStackTrace();
+			}
+			if(timer.get() >= 5.0) {
+				break;
 			}
 		}
 		navx.reset();
