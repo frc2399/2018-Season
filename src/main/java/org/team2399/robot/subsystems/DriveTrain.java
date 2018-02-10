@@ -58,13 +58,13 @@ public class DriveTrain extends Subsystem {
 	
     public DriveTrain() {
     	
-    	leftFront = new TalonSRX(8);
-    	leftMiddle = new VictorSPX(7);
-    	leftBack = new VictorSPX(3);
+    	leftFront = new TalonSRX(14);
+    	leftMiddle = new VictorSPX(13);
+    	leftBack = new VictorSPX(15);
     	
-    	rightFront = new TalonSRX(1);
-    	rightMiddle = new VictorSPX(2);
-    	rightBack = new VictorSPX(5);
+    	rightFront = new TalonSRX(21);
+    	rightMiddle = new VictorSPX(20);
+    	rightBack = new VictorSPX(22);
     	
     	IMotorController[] allMotorControllers = {leftFront, leftMiddle, leftBack, rightFront, rightMiddle, rightBack};
     	this.allMotorControllers = allMotorControllers;
