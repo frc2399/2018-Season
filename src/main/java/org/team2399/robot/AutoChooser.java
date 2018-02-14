@@ -35,17 +35,17 @@ public class AutoChooser {
 	
 	private Map<AutoState, Command> map;
 	
-	public AutoChooser(OI oi, DriveTrain dt, Shifter sh, AHRS navx, Lift li, Intake in, Console con) {		
+	public AutoChooser(OI oi, DriveTrain dt, Shifter sh, AHRS navx, Lift li, Intake in) {		
 		
 		map = new HashMap<>();
-		map.put(new AutoState(Position.LEFT, Scoring.SWITCH, "LL"), new LeftOwnedSwitch(oi, dt, sh, navx, li, in, con));
-		map.put(new AutoState(Position.LEFT, Scoring.SWITCH, "LR"), new LeftOwnedSwitch(oi, dt, sh, navx, li, in, con));
-		map.put(new AutoState(Position.LEFT, Scoring.SWITCH, "RL"), new LeftUnownedSwitch(oi, dt, sh, navx, li, in, con));
-		map.put(new AutoState(Position.LEFT, Scoring.SWITCH, "RR"), new LeftUnownedSwitch(oi, dt, sh, navx, li, in, con));
-		map.put(new AutoState(Position.LEFT, Scoring.SCALE, "LL"), new LeftOwnedScale(oi, dt, sh, navx, li, in, con));
-		map.put(new AutoState(Position.LEFT, Scoring.SCALE, "LR"), new LeftUnownedScale(oi, dt, sh, navx, li, in, con));
-		map.put(new AutoState(Position.LEFT, Scoring.SCALE, "RL"), new LeftOwnedScale(oi, dt, sh, navx, li, in, con));
-		map.put(new AutoState(Position.LEFT, Scoring.SCALE, "RR"), new LeftUnownedScale(oi, dt, sh, navx, li, in, con));
+		map.put(new AutoState(Position.LEFT, Scoring.SWITCH, "LL"), new LeftOwnedSwitch(oi, dt, sh, navx, li, in));
+		map.put(new AutoState(Position.LEFT, Scoring.SWITCH, "LR"), new LeftOwnedSwitch(oi, dt, sh, navx, li, in));
+		map.put(new AutoState(Position.LEFT, Scoring.SWITCH, "RL"), new LeftUnownedSwitch(oi, dt, sh, navx, li, in));
+		map.put(new AutoState(Position.LEFT, Scoring.SWITCH, "RR"), new LeftUnownedSwitch(oi, dt, sh, navx, li, in));
+		map.put(new AutoState(Position.LEFT, Scoring.SCALE, "LL"), new LeftOwnedScale(oi, dt, sh, navx, li, in));
+		map.put(new AutoState(Position.LEFT, Scoring.SCALE, "LR"), new LeftUnownedScale(oi, dt, sh, navx, li, in));
+		map.put(new AutoState(Position.LEFT, Scoring.SCALE, "RL"), new LeftOwnedScale(oi, dt, sh, navx, li, in));
+		map.put(new AutoState(Position.LEFT, Scoring.SCALE, "RR"), new LeftUnownedScale(oi, dt, sh, navx, li, in));
 		map.put(new AutoState(Position.LEFT, Scoring.AUTO_LEFT, "LL"), new LeftAuto(oi, dt, sh, navx, li, in));
 		map.put(new AutoState(Position.LEFT, Scoring.AUTO_LEFT, "LR"), new LeftAuto(oi, dt, sh, navx, li, in));
 		map.put(new AutoState(Position.LEFT, Scoring.AUTO_LEFT, "RL"), new LeftAuto(oi, dt, sh, navx, li, in));
@@ -55,14 +55,14 @@ public class AutoChooser {
 		map.put(new AutoState(Position.LEFT, Scoring.AUTO_RIGHT, "RL"), new LeftAuto(oi, dt, sh, navx, li, in));
 		map.put(new AutoState(Position.LEFT, Scoring.AUTO_RIGHT, "RR"), new LeftAuto(oi, dt, sh, navx, li, in));
 		
-		map.put(new AutoState(Position.RIGHT, Scoring.SWITCH, "LL"), new RightUnownedSwitch(oi, dt, sh, navx, li, in, con));
-		map.put(new AutoState(Position.RIGHT, Scoring.SWITCH, "LR"), new RightUnownedSwitch(oi, dt, sh, navx, li, in, con));
-		map.put(new AutoState(Position.RIGHT, Scoring.SWITCH, "RL"), new RightOwnedSwitch(oi, dt, sh, navx, li, in, con));
-		map.put(new AutoState(Position.RIGHT, Scoring.SWITCH, "RR"), new RightOwnedSwitch(oi, dt, sh, navx, li, in, con));
-		map.put(new AutoState(Position.RIGHT, Scoring.SCALE, "LL"), new RightUnownedScale(oi, dt, sh, navx, li, in, con));
-		map.put(new AutoState(Position.RIGHT, Scoring.SCALE, "LR"), new RightOwnedScale(oi, dt, sh, navx, li, in, con));
-		map.put(new AutoState(Position.RIGHT, Scoring.SCALE, "RL"), new RightUnownedScale(oi, dt, sh, navx, li, in, con));
-		map.put(new AutoState(Position.RIGHT, Scoring.SCALE, "RR"), new RightOwnedScale(oi, dt, sh, navx, li, in, con));
+		map.put(new AutoState(Position.RIGHT, Scoring.SWITCH, "LL"), new RightUnownedSwitch(oi, dt, sh, navx, li, in));
+		map.put(new AutoState(Position.RIGHT, Scoring.SWITCH, "LR"), new RightUnownedSwitch(oi, dt, sh, navx, li, in));
+		map.put(new AutoState(Position.RIGHT, Scoring.SWITCH, "RL"), new RightOwnedSwitch(oi, dt, sh, navx, li, in));
+		map.put(new AutoState(Position.RIGHT, Scoring.SWITCH, "RR"), new RightOwnedSwitch(oi, dt, sh, navx, li, in));
+		map.put(new AutoState(Position.RIGHT, Scoring.SCALE, "LL"), new RightUnownedScale(oi, dt, sh, navx, li, in));
+		map.put(new AutoState(Position.RIGHT, Scoring.SCALE, "LR"), new RightOwnedScale(oi, dt, sh, navx, li, in));
+		map.put(new AutoState(Position.RIGHT, Scoring.SCALE, "RL"), new RightUnownedScale(oi, dt, sh, navx, li, in));
+		map.put(new AutoState(Position.RIGHT, Scoring.SCALE, "RR"), new RightOwnedScale(oi, dt, sh, navx, li, in));
 		map.put(new AutoState(Position.RIGHT, Scoring.AUTO_LEFT, "LL"), new RightAuto(oi, dt, sh, navx, li, in));
 		map.put(new AutoState(Position.RIGHT, Scoring.AUTO_LEFT, "LR"), new RightAuto(oi, dt, sh, navx, li, in));
 		map.put(new AutoState(Position.RIGHT, Scoring.AUTO_LEFT, "RL"), new RightAuto(oi, dt, sh, navx, li, in));
@@ -72,10 +72,10 @@ public class AutoChooser {
 		map.put(new AutoState(Position.RIGHT, Scoring.AUTO_RIGHT, "RL"), new RightAuto(oi, dt, sh, navx, li, in));
 		map.put(new AutoState(Position.RIGHT, Scoring.AUTO_RIGHT, "RR"), new RightAuto(oi, dt, sh, navx, li, in));
 		
-		map.put(new AutoState(Position.CENTER, Scoring.SWITCH, "LL"), new CenterLeftSwitch(oi, dt, sh, navx, li, in, con));
-		map.put(new AutoState(Position.CENTER, Scoring.SWITCH, "LR"), new CenterLeftSwitch(oi, dt, sh, navx, li, in, con));
-		map.put(new AutoState(Position.CENTER, Scoring.SWITCH, "RL"), new CenterRightSwitch(oi, dt, sh, navx, li, in, con));
-		map.put(new AutoState(Position.CENTER, Scoring.SWITCH, "RR"), new CenterRightSwitch(oi, dt, sh, navx, li, in, con));
+		map.put(new AutoState(Position.CENTER, Scoring.SWITCH, "LL"), new CenterLeftSwitch(oi, dt, sh, navx, li, in));
+		map.put(new AutoState(Position.CENTER, Scoring.SWITCH, "LR"), new CenterLeftSwitch(oi, dt, sh, navx, li, in));
+		map.put(new AutoState(Position.CENTER, Scoring.SWITCH, "RL"), new CenterRightSwitch(oi, dt, sh, navx, li, in));
+		map.put(new AutoState(Position.CENTER, Scoring.SWITCH, "RR"), new CenterRightSwitch(oi, dt, sh, navx, li, in));
 		map.put(new AutoState(Position.CENTER, Scoring.SCALE, "LL"), new CenterLeftAuto(oi, dt, sh, navx, li, in));
 		map.put(new AutoState(Position.CENTER, Scoring.SCALE, "LR"), new CenterLeftAuto(oi, dt, sh, navx, li, in));
 		map.put(new AutoState(Position.CENTER, Scoring.SCALE, "RL"), new CenterLeftAuto(oi, dt, sh, navx, li, in));

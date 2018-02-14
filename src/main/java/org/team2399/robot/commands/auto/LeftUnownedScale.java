@@ -1,6 +1,5 @@
 package org.team2399.robot.commands.auto;
 
-import org.team2399.robot.Console;
 import org.team2399.robot.OI;
 import org.team2399.robot.RobotMap;
 import org.team2399.robot.commands.DriveDistance;
@@ -16,7 +15,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class LeftUnownedScale extends CommandGroup {
-	public LeftUnownedScale(OI oi, DriveTrain dt, Shifter sh, AHRS navx, Lift li, Intake in, Console con) {
+	public LeftUnownedScale(OI oi, DriveTrain dt, Shifter sh, AHRS navx, Lift li, Intake in) {
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.BACK_WALL_TO_PLATFORM_ZONE + RobotMap.Auto.FieldMeasurements.CUBE_LENGTH));
 		addSequential(new TurnAngle(dt, sh, navx, RobotMap.Auto.LONG_RIGHT_TURN, TurnAngle.EndAngleMeaning.RELATIVE));
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.FieldMeasurements.PLATFORM_WIDTH + 
@@ -25,7 +24,7 @@ public class LeftUnownedScale extends CommandGroup {
 		addSequential(new TurnAngle(dt, sh, navx, RobotMap.Auto.LONG_LEFT_TURN, TurnAngle.EndAngleMeaning.RELATIVE));
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.PLATFORM_TO_SCALE));
 		//LIFT ELEVATOR TO ??
-		addSequential(new EjectCube(in, oi, con));
+		addSequential(new EjectCube(in, oi));
 	}
 
 }
