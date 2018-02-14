@@ -1,5 +1,6 @@
 package org.team2399.robot.commands;
 
+import org.team2399.robot.Console;
 import org.team2399.robot.OI;
 import org.team2399.robot.subsystems.DriveTrain;
 
@@ -12,8 +13,9 @@ public class TankDrive extends Command {
 
 	DriveTrain dt;
 	OI oi;
+	Console con;
 	
-	public TankDrive(DriveTrain dt, OI oi) {
+	public TankDrive(DriveTrain dt, OI oi, Console con) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	this.dt = dt;
@@ -29,7 +31,7 @@ public class TankDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	dt.drivePercent(oi.getLeftStickY(), oi.getRightStickY());
+    	dt.drivePercent(con.tankPercentLeft, con.tankPercentRight);
     }
 
     // Make this return true when this Command no longer needs to run execute()

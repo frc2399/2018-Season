@@ -1,5 +1,6 @@
 package org.team2399.robot.commands.intake;
 
+import org.team2399.robot.Console;
 import org.team2399.robot.OI;
 import org.team2399.robot.subsystems.Intake;
 
@@ -9,10 +10,14 @@ public class EjectCube extends Command{
 
 	Intake in;
 	OI oi;
+	Console con;
 	
-	public EjectCube(Intake in, OI oi) {
+	private double speed;
+	
+	public EjectCube(Intake in, OI oi, Console con) {
 		this.in = in;
 		this.oi = oi;
+		this.con = con;
 		requires(this.in);
 	}
 	
@@ -27,7 +32,14 @@ public class EjectCube extends Command{
 
 	@Override
 	protected void execute() {
-		in.setSpeed(oi.getRightThrottle());
+		
+		speed = con.intakeSpeed;
+		
+		if(speed < 0.0) {
+			speed = 0.0;
+		}
+		
+		in.setSpeed(speed);
 	}
 
 	@Override

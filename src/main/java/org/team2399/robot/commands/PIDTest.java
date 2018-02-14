@@ -1,5 +1,6 @@
 package org.team2399.robot.commands;
 
+import org.team2399.robot.Console;
 import org.team2399.robot.OI;
 import org.team2399.robot.subsystems.DriveTrain;
 
@@ -9,8 +10,9 @@ public class PIDTest extends Command {
 
 	private DriveTrain dt;
 	private OI oi;
+	private Console con;
 	
-	public PIDTest(DriveTrain dt, OI oi) {
+	public PIDTest(DriveTrain dt, OI oi, Console con) {
 		requires(dt);
 		setInterruptible(true);
 		
@@ -23,7 +25,7 @@ public class PIDTest extends Command {
 	}
 	
 	protected void execute() {
-		dt.driveVelocity(oi.getLeftStickY() * 500, oi.getLeftStickY() * 500);
+		dt.driveVelocity(con.tankPercentLeft * 500, con.tankPercentRight * 500);
 	}
 	
 	@Override

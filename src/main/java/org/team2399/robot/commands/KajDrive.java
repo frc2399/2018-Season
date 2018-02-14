@@ -1,5 +1,6 @@
 package org.team2399.robot.commands;
 
+import org.team2399.robot.Console;
 import org.team2399.robot.OI;
 import org.team2399.robot.Utility;
 import org.team2399.robot.subsystems.DriveTrain;
@@ -13,12 +14,14 @@ public class KajDrive extends Command {
 
 	DriveTrain dt;
 	OI oi;
+	Console con;
 	
-	public KajDrive(DriveTrain dt, OI oi) {
+	public KajDrive(DriveTrain dt, OI oi, Console con) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	this.dt = dt;
     	this.oi = oi;
+    	this.con = con;
     	requires(this.dt);
 		setInterruptible(true);
     }
@@ -30,8 +33,8 @@ public class KajDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-	    	double forward = oi.getLeftStickY();
-	    	double turn = oi.getRightStickX();
+	    	double forward = con.kajPercentForward;
+	    	double turn = con.kajPercentTurn;
 	    	
 	    	double leftSideSpeed = (forward + turn * (Math.abs(forward)));
 		double rightSideSpeed = (forward - turn * (Math.abs(forward)));
@@ -43,12 +46,12 @@ public class KajDrive extends Command {
 		}
 			
 		
-		if (oi.getLeftShoulder()) {
+		if (con.leftShoulder) {
 			leftSideSpeed = -1;
 			rightSideSpeed = 1;
 		}
 		
-		if (oi.getRightShoulder()) {
+		if (con.rightShoulder) {
 			leftSideSpeed = 1;
 			rightSideSpeed = -1;
 		}

@@ -43,6 +43,7 @@ public class Robot extends TimedRobot {
 	
 	private DriveTrain dt;
 	private OI oi;
+	private Console con;
 	private Shifter sh;
 	private Intake in;
 	private Lift li;
@@ -79,10 +80,11 @@ public class Robot extends TimedRobot {
 		dt = new DriveTrain();
 		sh = new Shifter();
 		in = new Intake();
-		oi = new OI(sh, dt, in, navx);
-		auto = new AutoChooser(oi, dt, sh, navx, li, in);
+		oi = new OI(sh, dt, in, navx, con);
+		con = new Console(oi, 0);
+		auto = new AutoChooser(oi, dt, sh, navx, li, in, con);
 		
-		dt.defaultCommand(new KajDrive(dt, oi));
+		dt.defaultCommand(new KajDrive(dt, oi, con));
 		sh.defaultCommand(new Shift(sh, Shift.State.SLOW));
 		UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture();
 		UsbCamera cam2 = CameraServer.getInstance().startAutomaticCapture();
