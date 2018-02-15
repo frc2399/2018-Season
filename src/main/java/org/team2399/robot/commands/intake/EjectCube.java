@@ -1,6 +1,7 @@
 package org.team2399.robot.commands.intake;
 
-import org.team2399.robot.OI;
+import java.util.function.DoubleSupplier;
+
 import org.team2399.robot.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -8,11 +9,11 @@ import edu.wpi.first.wpilibj.command.Command;
 public class EjectCube extends Command{
 
 	Intake in;
-	OI oi;
+	DoubleSupplier speed;
 	
-	public EjectCube(Intake in, OI oi) {
+	public EjectCube(Intake in, DoubleSupplier speed) {
 		this.in = in;
-		this.oi = oi;
+		this.speed = speed;
 		requires(this.in);
 	}
 	
@@ -27,7 +28,7 @@ public class EjectCube extends Command{
 
 	@Override
 	protected void execute() {
-		in.setSpeed(oi.getRightThrottle());
+		in.setSpeed(speed.getAsDouble());
 	}
 
 	@Override

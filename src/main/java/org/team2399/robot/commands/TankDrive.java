@@ -1,6 +1,8 @@
 package org.team2399.robot.commands;
 
-import org.team2399.robot.OI;
+import java.util.function.DoubleSupplier;
+
+import org.team2399.robot.GamepadOI;
 import org.team2399.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -11,13 +13,15 @@ import edu.wpi.first.wpilibj.command.Command;
 public class TankDrive extends Command {
 
 	DriveTrain dt;
-	OI oi;
+	DoubleSupplier leftPercent, rightPercent;
 	
-	public TankDrive(DriveTrain dt, OI oi) {
+	public TankDrive(DriveTrain dt, DoubleSupplier leftPercent, DoubleSupplier rightPercent) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	this.dt = dt;
-    	this.oi = oi;
+    	this.leftPercent = leftPercent;
+    	this.rightPercent = rightPercent;
+    	
     	requires(this.dt);
 		setInterruptible(true);
     }
@@ -29,7 +33,7 @@ public class TankDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	dt.drivePercent(oi.getLeftStickY(), oi.getRightStickY());
+    	dt.drivePercent(leftPercent.getAsDouble(), rightPercent.getAsDouble());
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -66,5 +66,6 @@ public class RobotMap {
 	}
 
 	public static final double ANGLE_TOLERANCE = 0.75;
+	public static final double EJECT_SPEED = 1;
 	
 }

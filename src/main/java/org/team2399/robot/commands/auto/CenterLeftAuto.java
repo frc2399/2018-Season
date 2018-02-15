@@ -15,7 +15,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class CenterLeftAuto extends CommandGroup {
-	public CenterLeftAuto(OI oi, DriveTrain dt, Shifter sh, AHRS navx, Lift li, Intake in) {
+	public CenterLeftAuto(DriveTrain dt, Shifter sh, AHRS navx, Lift li, Intake in) {
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.CENTER_FORWARD));
 		addSequential(new TurnAngle(dt, sh, navx, RobotMap.Auto.SHORT_LEFT_TURN, TurnAngle.EndAngleMeaning.RELATIVE));
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.CENTER_AUTO));

@@ -15,7 +15,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class RightAuto extends CommandGroup {
-	public RightAuto(OI oi, DriveTrain dt, Shifter sh, AHRS navx, Lift li, Intake in) {
+	public RightAuto(DriveTrain dt, Shifter sh, AHRS navx, Lift li, Intake in) {
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.BACK_WALL_TO_SWITCH));	
 	}
 }
