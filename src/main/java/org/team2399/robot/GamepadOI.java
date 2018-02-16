@@ -42,8 +42,8 @@ public class GamepadOI extends OI {
 		
 		BooleanSupplier rightShoulder = ()->(gamepad.getRawButton(6));
 		BooleanSupplier leftShoulder = ()->(gamepad.getRawButton(5));
-		DoubleSupplier rightX = ()->(gamepad.getRawAxis(4));
-		DoubleSupplier rightY = ()->(gamepad.getRawAxis(5) * -1);
+		DoubleSupplier rightX = ()->(gamepad.getRawAxis(2));
+		DoubleSupplier rightY = ()->(gamepad.getRawAxis(3) * -1);
 		DoubleSupplier leftY = ()->(gamepad.getRawAxis(1) * -1);
 		
 		kajDrive = new KajDrive(dt, leftY, rightX, leftShoulder, rightShoulder);

@@ -79,7 +79,7 @@ public class Robot extends TimedRobot {
 		dt = new DriveTrain();
 		sh = new Shifter();
 		in = new Intake();
-		oi = new GamepadOI(sh, dt, in, navx);
+		oi = new XBoxOI(sh, dt, in, navx);
 		auto = new AutoChooser(dt, sh, navx, li, in);
 		
 		dt.defaultCommand(oi.defaultDrive());

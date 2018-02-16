@@ -21,10 +21,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class TwoJoystickOI extends OI {
+public class ThreeJoystickOI extends OI {
 
-	Joystick leftJoy, rightJoy;
-	Button[] leftJoyButtons, rightJoyButtons;
+	Joystick leftJoy, rightJoy, controlJoy;
+	Button[] leftJoyButtons, rightJoyButtons, controlJoyButtons;
 	
 	final int THROTTLEAXIS = 1;
 	
@@ -32,20 +32,23 @@ public class TwoJoystickOI extends OI {
 	private Command defaultShift;
 	private KajDrive kajDrive;
 	
-	public TwoJoystickOI(Shifter sh, DriveTrain dt, Intake in, AHRS navx) {
+	
+	public ThreeJoystickOI(Shifter sh, DriveTrain dt, Intake in, AHRS navx) {
 		leftJoy = new Joystick(0);
 		rightJoy = new Joystick(1);
+		controlJoy = new Joystick(2);
 		
-		DoubleSupplier rightThrottle = ()->(throttleToPositiveRange(rightJoy.getRawAxis(THROTTLEAXIS) * -1));
+		DoubleSupplier controlThrottle = ()->(throttleToPositiveRange(controlJoy.getRawAxis(THROTTLEAXIS) * -1));
 		DoubleSupplier rightX = ()->(rightJoy.getRawAxis(0));
 		DoubleSupplier rightY = ()->(rightJoy.getRawAxis(1) * -1);
-		DoubleSupplier leftY = ()->(leftJoy.getRawAxis(1) * -1);
+		DoubleSupplier leftY = ()->(leftJoy.getRawAxis(1) * -1); 
 		
 		kajDrive = new KajDrive(dt, leftY, rightX, ()->false, ()->false);
 		TankDrive tankDrive = new TankDrive(dt, leftY, rightY);
 		
 		leftJoyButtons = getButtons(leftJoy);
 		rightJoyButtons = getButtons(rightJoy);
+		controlJoyButtons = getButtons(controlJoy);
 		
 		defaultShift = new Shift(sh, Shift.State.SLOW);
 		defaultDrive = kajDrive;
@@ -62,11 +65,12 @@ public class TwoJoystickOI extends OI {
 		leftJoyButtons[9].whenPressed(new DriveDistance(dt, sh, navx, 40.0));
 		leftJoyButtons[10].whenPressed(new DriveDistance(dt, sh, navx, 100.0));
 		
-		leftJoyButtons[1].whileHeld(new GrabCube(in));
-		leftJoyButtons[2].whenPressed(new OpenArms(in));
+		controlJoyButtons[1].whileHeld(new GrabCube(in));
+		controlJoyButtons[2].whenPressed(new OpenArms(in));
 		
-		rightJoyButtons[3].whileHeld(new EjectCube(in, rightThrottle));
-		rightJoyButtons[4].whenPressed(new ExtendRetract(in));
+		controlJoyButtons[3].whileHeld(new EjectCube(in, controlThrottle));
+		controlJoyButtons[4].whenPressed(new ExtendRetract(in));
+		
 	}
 
 	@Override
