@@ -18,9 +18,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
+import org.team2399.robot.AutoChooser.Position;
+import org.team2399.robot.AutoChooser.Scoring;
 import org.team2399.robot.commands.KajDrive;
 import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
+import org.team2399.robot.commands.auto.CenterLeftAuto;
 import org.team2399.robot.subsystems.DriveTrain;
 import org.team2399.robot.subsystems.Intake;
 import org.team2399.robot.subsystems.Lift;
@@ -124,6 +127,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		autoCommand = auto.makeAutoCommand(Position.RIGHT, Scoring.SCALE, "RL");
+		autoCommand.start();
 	}
 
 	/**

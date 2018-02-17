@@ -15,10 +15,9 @@ public class TurnAngle extends Command {
 	private static final double ANGLE_RATE_TOLERANCE = .1;
 	private static final double ANGLE_TOLERANCE = 1;
 	private static final double MAX_I_CONTRIB = 0.3;
-	private static final double P_GAIN = 0.03;
-	private static final double I_GAIN = 0.02;
-	private static final double D_GAIN = 0.35;
-
+	private static final double P_GAIN = 0.005;
+	private static final double I_GAIN = 0.01;
+	private static final double D_GAIN = 0.45;
 	
 	private double tempP;
 	private double tempI;

@@ -16,11 +16,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class LeftUnownedScale extends CommandGroup {
 	public LeftUnownedScale(DriveTrain dt, Shifter sh, AHRS navx, Lift li, Intake in) {
-		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.BACK_WALL_TO_PLATFORM_ZONE + RobotMap.Auto.FieldMeasurements.CUBE_LENGTH));
+		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.BACK_WALL_TO_PLATFORM_ZONE));
 		addSequential(new TurnAngle(dt, sh, navx, RobotMap.Auto.LONG_RIGHT_TURN, TurnAngle.EndAngleMeaning.RELATIVE));
-		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.FieldMeasurements.PLATFORM_WIDTH + 
-													  RobotMap.Auto.FieldMeasurements.SCALE_STICK_OUT_FROM_PLATFORM + 
-													  RobotMap.Auto.FieldMeasurements.SCALE_STICK_OUT_FROM_PLATFORM));
+		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.THROUGH_PLATFORM_ZONE));
 		addSequential(new TurnAngle(dt, sh, navx, RobotMap.Auto.LONG_LEFT_TURN, TurnAngle.EndAngleMeaning.RELATIVE));
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.PLATFORM_TO_SCALE));
 		//LIFT ELEVATOR TO ??

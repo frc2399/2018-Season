@@ -36,7 +36,7 @@ public class DriveTrain extends Subsystem {
 	private static final double DRIVETRAIN_FAST_KF = 0.1;
 	
 	
-	private static final int CAN_TIMEOUT = 0;
+	private static final int CAN_TIMEOUT = 10;
 	
 	private double desiredLeftVelPrev;
 	private double desiredRightVelPrev;
@@ -58,13 +58,21 @@ public class DriveTrain extends Subsystem {
 	
     public DriveTrain() {
     	
-    	leftFront = new TalonSRX(14);
-    	leftMiddle = new VictorSPX(13);
-    	leftBack = new VictorSPX(15);
+//    	leftFront = new TalonSRX(14);
+//    	leftMiddle = new VictorSPX(13);
+//    	leftBack = new VictorSPX(15);
+//    	
+//    	rightFront = new TalonSRX(21);
+//    	rightMiddle = new VictorSPX(20);
+//    	rightBack = new VictorSPX(22);
     	
-    	rightFront = new TalonSRX(21);
-    	rightMiddle = new VictorSPX(20);
-    	rightBack = new VictorSPX(22);
+    	leftFront = new TalonSRX(8);
+    	leftMiddle = new TalonSRX(7);
+    	leftBack = new TalonSRX(3);
+    	
+    	rightFront = new TalonSRX(1);
+    	rightMiddle = new TalonSRX(2);
+    	rightBack = new TalonSRX(5);
     	
     	IMotorController[] allMotorControllers = {leftFront, leftMiddle, leftBack, rightFront, rightMiddle, rightBack};
     	this.allMotorControllers = allMotorControllers;
@@ -100,6 +108,11 @@ public class DriveTrain extends Subsystem {
 		rightFront.config_kP(0, DRIVETRAIN_FAST_KP, CAN_TIMEOUT);
 		rightFront.config_kI(0, DRIVETRAIN_FAST_KI, CAN_TIMEOUT);
 		rightFront.config_kD(0, DRIVETRAIN_FAST_KD, CAN_TIMEOUT);
+		
+		for(IMotorController talon : allMotorControllers) {
+    		talon.configClosedloopRamp(0.15, CAN_TIMEOUT);
+    		talon.configOpenloopRamp(0.15, CAN_TIMEOUT);
+    	}
 		
 		enableVoltageComp();
 		brakeMode();

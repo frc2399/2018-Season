@@ -94,8 +94,6 @@ public class DriveDistance extends Command {
 			velocity = MAX_VELOCITY_IN_S;
 		} else if (time < endTime) {
 			velocity = (endTime - time) * MAX_VELOCITY_IN_S / MAX_ACCELERATION_TIME_SEC;
-		} else if (time < endTime + 1) {
-			velocity = 0;
 		} else {
 			velocity = 0;
 			isFinished = true;

@@ -20,12 +20,15 @@ public class RobotMap {
 	}
 	
 	public static class PCM {
-		public static final int SHIFTER_SlOW = 0;
-		public static final int SHIFTER_FAST = 1;
+//		public static final int SHIFTER_SlOW = 0;
+//		public static final int SHIFTER_FAST = 1;
+		public static final int SHIFTER_SlOW = 2;
+		public static final int SHIFTER_FAST = 3;
 		public static final int EXTENDER_OUT = 5;
 		public static final int EXTENDER_IN = 4;
-		public static final int GRABBER_OUT = 2;
-		public static final int GRABBER_IN = 3;
+		public static final int GRABBER_OUT = 1;
+		public static final int GRABBER_IN = 0;
+		
 	}
 	
 	public static class Physical {
@@ -49,17 +52,20 @@ public class RobotMap {
 		public static final int SHORT_RIGHT_TURN = 45;
 		public static final int LONG_RIGHT_TURN = 90;
 		
-		public static final double BACK_WALL_TO_SWITCH = 140.0;
-		public static final double BACK_WALL_TO_SCALE = 299.65;
-		public static final double BACK_WALL_TO_PLATFORM_ZONE = 196.0;
+		public static final double BACK_WALL_TO_SWITCH = 105.0;
+		public static final double BACK_WALL_TO_SCALE = 260.0;
+		public static final double BACK_WALL_TO_PLATFORM_ZONE = 211.0;
 		public static final double PLATFORM_TO_SCALE = 38.18;
 		
-		public static final double CENTER_FORWARD = 36.0;
-		public static final double CENTER_AUTO = 132.0;
+		public static final double THROUGH_PLATFORM_ZONE = 186;
+		
+		public static final double CENTER_FORWARD = 15.0;
+		public static final double CENTER_AUTO = 120.0;
 		
 		public static class FieldMeasurements{
 			public static final double CUBE_LENGTH = 13.0;	
 			public static final double FIELD_WIDTH = 323.38;
+			public static final double FIELD_LENGTH = 648.0;
 			public static final double PLATFORM_WIDTH = 132.88;
 			public static final double SCALE_STICK_OUT_FROM_PLATFORM = 23.68;	
 		}	

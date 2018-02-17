@@ -6,6 +6,7 @@ import java.util.function.DoubleSupplier;
 import org.team2399.robot.commands.KajDrive;
 import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
+import org.team2399.robot.commands.TurnAngle;
 import org.team2399.robot.subsystems.DriveTrain;
 import org.team2399.robot.subsystems.Intake;
 import org.team2399.robot.subsystems.Shifter;
@@ -29,8 +30,8 @@ public class XBoxOI extends OI {
 		
 		XBox = new Joystick(0);
 		
-		BooleanSupplier rightShoulder = ()->(XBox.getRawButton(6));
-		BooleanSupplier leftShoulder = ()->(XBox.getRawButton(5));
+		BooleanSupplier rightShoulder = thresholdDoubleSupplier(()->(XBox.getRawAxis(3)), 0.25);
+		BooleanSupplier leftShoulder = thresholdDoubleSupplier(()->(XBox.getRawAxis(2)), 0.25);
 		DoubleSupplier rightX = ()->(XBox.getRawAxis(4));
 		DoubleSupplier rightY = ()->(XBox.getRawAxis(5) * -1);
 		DoubleSupplier leftY = ()->(XBox.getRawAxis(1) * -1);
@@ -48,6 +49,12 @@ public class XBoxOI extends OI {
 	     
 		xBoxButtons[7].whenPressed(tankDrive); 
 		xBoxButtons[8].whenPressed(kajDrive);
+		xBoxButtons[1].whenPressed(new TurnAngle(dt, sh, navx, 90, TurnAngle.EndAngleMeaning.RELATIVE));
+	}
+	
+	public static BooleanSupplier thresholdDoubleSupplier(DoubleSupplier d, double threshold) {
+		
+		return () -> d.getAsDouble() > threshold;
 	}
 
 	@Override
