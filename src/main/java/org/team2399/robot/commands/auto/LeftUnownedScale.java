@@ -22,7 +22,7 @@ public class LeftUnownedScale extends CommandGroup {
 		addSequential(new TurnAngle(dt, sh, navx, RobotMap.Auto.LONG_LEFT_TURN, TurnAngle.EndAngleMeaning.RELATIVE));
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.PLATFORM_TO_SCALE));
 		//LIFT ELEVATOR TO ??
-		addSequential(new EjectCube(in, ()-> RobotMap.EJECT_SPEED));
+		addSequential(new EjectCube(in, dt, ()-> RobotMap.EJECT_SPEED));
 	}
 
 }

@@ -65,7 +65,7 @@ public class TwoJoystickOI extends OI {
 		leftJoyButtons[1].whileHeld(new GrabCube(in));
 		leftJoyButtons[2].whenPressed(new OpenArms(in));
 		
-		rightJoyButtons[3].whileHeld(new EjectCube(in, rightThrottle));
+		rightJoyButtons[3].whileHeld(new EjectCube(in, dt, rightThrottle));
 		rightJoyButtons[4].whenPressed(new ExtendRetract(in));
 	}
 

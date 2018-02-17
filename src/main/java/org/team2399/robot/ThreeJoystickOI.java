@@ -68,7 +68,7 @@ public class ThreeJoystickOI extends OI {
 		controlJoyButtons[1].whileHeld(new GrabCube(in));
 		controlJoyButtons[2].whenPressed(new OpenArms(in));
 		
-		controlJoyButtons[3].whileHeld(new EjectCube(in, controlThrottle));
+		controlJoyButtons[3].whileHeld(new EjectCube(in, dt, controlThrottle));
 		controlJoyButtons[4].whenPressed(new ExtendRetract(in));
 		
 	}

@@ -24,6 +24,7 @@ import org.team2399.robot.commands.KajDrive;
 import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
 import org.team2399.robot.commands.auto.CenterLeftAuto;
+import org.team2399.robot.commands.intake.DoNothing;
 import org.team2399.robot.subsystems.DriveTrain;
 import org.team2399.robot.subsystems.Intake;
 import org.team2399.robot.subsystems.Lift;
@@ -87,6 +88,7 @@ public class Robot extends TimedRobot {
 		
 		dt.defaultCommand(oi.defaultDrive());
 		sh.defaultCommand(oi.defaultShift());
+		in.defaultCommand(new DoNothing(in));
 		UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture();
 		UsbCamera cam2 = CameraServer.getInstance().startAutomaticCapture();
 		cam1.setResolution(CAMERA_WIDTH, CAMERA_HEIGHT);

@@ -7,6 +7,10 @@ import org.team2399.robot.commands.KajDrive;
 import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
 import org.team2399.robot.commands.TurnAngle;
+import org.team2399.robot.commands.intake.EjectCube;
+import org.team2399.robot.commands.intake.ExtendRetract;
+import org.team2399.robot.commands.intake.GrabCube;
+import org.team2399.robot.commands.intake.OpenArms;
 import org.team2399.robot.subsystems.DriveTrain;
 import org.team2399.robot.subsystems.Intake;
 import org.team2399.robot.subsystems.Shifter;
@@ -19,7 +23,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class XBoxOI extends OI {
 	
-	Joystick XBox; 
+	Joystick xBox; 
 	Button [] xBoxButtons;
 	
 	private Command defaultDrive;
@@ -28,13 +32,14 @@ public class XBoxOI extends OI {
 
 	public XBoxOI(Shifter sh, DriveTrain dt, Intake in, AHRS navx) {
 		
-		XBox = new Joystick(0);
+		xBox = new Joystick(0);
 		
-		BooleanSupplier rightShoulder = thresholdDoubleSupplier(()->(XBox.getRawAxis(3)), 0.25);
-		BooleanSupplier leftShoulder = thresholdDoubleSupplier(()->(XBox.getRawAxis(2)), 0.25);
-		DoubleSupplier rightX = ()->(XBox.getRawAxis(4));
-		DoubleSupplier rightY = ()->(XBox.getRawAxis(5) * -1);
-		DoubleSupplier leftY = ()->(XBox.getRawAxis(1) * -1);
+		BooleanSupplier rightShoulder = thresholdDoubleSupplier(()->(xBox.getRawAxis(3)), 0.25);
+		BooleanSupplier leftShoulder = thresholdDoubleSupplier(()->(xBox.getRawAxis(2)), 0.25);
+		DoubleSupplier leftThrottle = ()->(throttleToPositiveRange(xBox.getRawAxis(1) * -1));
+		DoubleSupplier rightX = ()->(xBox.getRawAxis(4));
+		DoubleSupplier rightY = ()->(xBox.getRawAxis(5) * -1);
+		DoubleSupplier leftY = ()->(xBox.getRawAxis(1) * -1);
 		
 		kajDrive = new KajDrive(dt, leftY, rightX, leftShoulder, rightShoulder);
 		TankDrive tankDrive = new TankDrive(dt, leftY, rightY);
@@ -42,14 +47,18 @@ public class XBoxOI extends OI {
 		defaultShift = new Shift(sh, Shift.State.SLOW);
 		defaultDrive = kajDrive;
 		
-		xBoxButtons = getButtons(XBox);
+		xBoxButtons = getButtons(xBox);
 			     
 		xBoxButtons[5].whenPressed(new Shift(sh, Shift.State.SLOW)); 
 		xBoxButtons[6].whenPressed(new Shift(sh, Shift.State.FAST)); 
 	     
 		xBoxButtons[7].whenPressed(tankDrive); 
 		xBoxButtons[8].whenPressed(kajDrive);
-		xBoxButtons[1].whenPressed(new TurnAngle(dt, sh, navx, 90, TurnAngle.EndAngleMeaning.RELATIVE));
+		
+		xBoxButtons[1].whileHeld(new GrabCube(in));
+		xBoxButtons[2].whileHeld(new EjectCube(in, dt, leftThrottle));
+		xBoxButtons[3].whenPressed(new OpenArms(in));
+		xBoxButtons[4].whenPressed(new ExtendRetract(in));
 	}
 	
 	public static BooleanSupplier thresholdDoubleSupplier(DoubleSupplier d, double threshold) {

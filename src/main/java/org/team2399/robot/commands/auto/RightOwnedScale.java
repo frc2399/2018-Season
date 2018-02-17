@@ -19,6 +19,6 @@ public class RightOwnedScale extends CommandGroup {
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.BACK_WALL_TO_SCALE));
 		addSequential(new TurnAngle(dt, sh, navx, RobotMap.Auto.SHORT_LEFT_TURN, TurnAngle.EndAngleMeaning.RELATIVE));
 		//LIFT ELEVATOR TO ??
-		addSequential(new EjectCube(in, ()-> RobotMap.EJECT_SPEED));		
+		addSequential(new EjectCube(in, dt, ()-> RobotMap.EJECT_SPEED));		
 	}
 }

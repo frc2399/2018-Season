@@ -30,7 +30,6 @@ public class GrabCube extends Command{
 
 	@Override
 	protected void end() {
-		in.setSpeed(0);
 	}
 
 	@Override
