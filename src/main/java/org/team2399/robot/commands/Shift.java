@@ -25,8 +25,6 @@ public class Shift extends Command {
 
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
-		super.initialize();
 	}
 
 	@Override

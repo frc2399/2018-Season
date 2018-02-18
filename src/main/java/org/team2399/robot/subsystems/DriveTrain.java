@@ -30,10 +30,10 @@ public class DriveTrain extends Subsystem {
 	private static final double DRIVETRAIN_KP = 0.3;
 	private static final double DRIVETRAIN_KF = 0.33;
 	
-	private static final double DRIVETRAIN_FAST_KP = 0.8;
-	private static final double DRIVETRAIN_FAST_KI = 0.004;
-	private static final double DRIVETRAIN_FAST_KD = 35;
-	private static final double DRIVETRAIN_FAST_KF = 0.1;
+	public static final double DRIVETRAIN_FAST_KP = 0.8;
+	public static final double DRIVETRAIN_FAST_KI = 0.004;
+	public static final double DRIVETRAIN_FAST_KD = 35;
+	public static final double DRIVETRAIN_FAST_KF = 0.1;
 	
 	
 	private static final int CAN_TIMEOUT = 10;
@@ -58,21 +58,21 @@ public class DriveTrain extends Subsystem {
 	
     public DriveTrain() {
     	
-//    	leftFront = new TalonSRX(14);
-//    	leftMiddle = new VictorSPX(13);
-//    	leftBack = new VictorSPX(15);
+    	leftFront = new TalonSRX(14);
+    	leftMiddle = new VictorSPX(13);
+    	leftBack = new VictorSPX(15);
+    	
+    	rightFront = new TalonSRX(21);
+    	rightMiddle = new VictorSPX(20);
+    	rightBack = new VictorSPX(22);
+    	
+//    	leftFront = new TalonSRX(8);
+//    	leftMiddle = new TalonSRX(7);
+//    	leftBack = new TalonSRX(3);
 //    	
-//    	rightFront = new TalonSRX(21);
-//    	rightMiddle = new VictorSPX(20);
-//    	rightBack = new VictorSPX(22);
-    	
-    	leftFront = new TalonSRX(8);
-    	leftMiddle = new TalonSRX(7);
-    	leftBack = new TalonSRX(3);
-    	
-    	rightFront = new TalonSRX(1);
-    	rightMiddle = new TalonSRX(2);
-    	rightBack = new TalonSRX(5);
+//    	rightFront = new TalonSRX(1);
+//    	rightMiddle = new TalonSRX(2);
+//    	rightBack = new TalonSRX(5);
     	
     	IMotorController[] allMotorControllers = {leftFront, leftMiddle, leftBack, rightFront, rightMiddle, rightBack};
     	this.allMotorControllers = allMotorControllers;
@@ -89,25 +89,7 @@ public class DriveTrain extends Subsystem {
     	rightFront.setSensorPhase(false);
     	
     	// timeout constants
-		leftFront.configNominalOutputForward(0, CAN_TIMEOUT);
-		leftFront.configNominalOutputReverse(0, CAN_TIMEOUT);
-		leftFront.configPeakOutputForward(1, CAN_TIMEOUT);
-		leftFront.configPeakOutputReverse(-1, CAN_TIMEOUT);
-
-		leftFront.config_kF(0, DRIVETRAIN_FAST_KF, CAN_TIMEOUT);
-		leftFront.config_kP(0, DRIVETRAIN_FAST_KP, CAN_TIMEOUT);
-		leftFront.config_kI(0, DRIVETRAIN_FAST_KI, CAN_TIMEOUT);
-		leftFront.config_kD(0, DRIVETRAIN_FAST_KD, CAN_TIMEOUT);
-		
-		rightFront.configNominalOutputForward(0, CAN_TIMEOUT);
-		rightFront.configNominalOutputReverse(0, CAN_TIMEOUT);
-		rightFront.configPeakOutputForward(1, CAN_TIMEOUT);
-		rightFront.configPeakOutputReverse(-1, CAN_TIMEOUT);
-
-		rightFront.config_kF(0, DRIVETRAIN_FAST_KF, CAN_TIMEOUT);
-		rightFront.config_kP(0, DRIVETRAIN_FAST_KP, CAN_TIMEOUT);
-		rightFront.config_kI(0, DRIVETRAIN_FAST_KI, CAN_TIMEOUT);
-		rightFront.config_kD(0, DRIVETRAIN_FAST_KD, CAN_TIMEOUT);
+		setConstants(DRIVETRAIN_FAST_KP, DRIVETRAIN_FAST_KI, DRIVETRAIN_FAST_KD, DRIVETRAIN_FAST_KF);
 		
 		for(IMotorController talon : allMotorControllers) {
     		talon.configClosedloopRamp(0.15, CAN_TIMEOUT);
@@ -212,6 +194,28 @@ public class DriveTrain extends Subsystem {
     	for(IMotorController talon : allMotorControllers) {
     		talon.setNeutralMode(NeutralMode.Coast);
     	}
+    }
+    
+    public void setConstants(double p, double i, double d, double f) {
+    	leftFront.configNominalOutputForward(0, CAN_TIMEOUT);
+		leftFront.configNominalOutputReverse(0, CAN_TIMEOUT);
+		leftFront.configPeakOutputForward(1, CAN_TIMEOUT);
+		leftFront.configPeakOutputReverse(-1, CAN_TIMEOUT);
+
+		leftFront.config_kF(0, f, CAN_TIMEOUT);
+		leftFront.config_kP(0, p, CAN_TIMEOUT);
+		leftFront.config_kI(0, i, CAN_TIMEOUT);
+		leftFront.config_kD(0, d, CAN_TIMEOUT);
+		
+		rightFront.configNominalOutputForward(0, CAN_TIMEOUT);
+		rightFront.configNominalOutputReverse(0, CAN_TIMEOUT);
+		rightFront.configPeakOutputForward(1, CAN_TIMEOUT);
+		rightFront.configPeakOutputReverse(-1, CAN_TIMEOUT);
+
+		rightFront.config_kF(0, f, CAN_TIMEOUT);
+		rightFront.config_kP(0, p, CAN_TIMEOUT);
+		rightFront.config_kI(0, i, CAN_TIMEOUT);
+		rightFront.config_kD(0, d, CAN_TIMEOUT);
     }
     
     private void flipFuzz() {
