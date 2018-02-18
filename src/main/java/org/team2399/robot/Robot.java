@@ -83,23 +83,24 @@ public class Robot extends TimedRobot {
 		dt = new DriveTrain();
 		sh = new Shifter();
 		in = new Intake();
-		oi = new XBoxOI(sh, dt, in, navx);
+		li = new Lift();
+		oi = new XBoxOI(sh, dt, in, li, navx);
 		auto = new AutoChooser(dt, sh, navx, li, in);
 		
 		dt.defaultCommand(oi.defaultDrive());
 		sh.defaultCommand(oi.defaultShift());
 		in.defaultCommand(new DoNothing(in));
-		UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture();
-		UsbCamera cam2 = CameraServer.getInstance().startAutomaticCapture();
-		cam1.setResolution(CAMERA_WIDTH, CAMERA_HEIGHT);
-		cam2.setResolution(CAMERA_WIDTH, CAMERA_HEIGHT);
-		
+//		UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture();
+//		UsbCamera cam2 = CameraServer.getInstance().startAutomaticCapture();
+//		cam1.setResolution(CAMERA_WIDTH, CAMERA_HEIGHT);
+//		cam2.setResolution(CAMERA_WIDTH, CAMERA_HEIGHT);
+//		
 		NetworkTableInstance.getDefault().setUpdateRate(NETWORK_TABLE_UPDATE_RATE);
 		
 		SmartDashboard.putData(dt);
 		SmartDashboard.putData(in);
 		
-		auto.test();
+//		auto.test();
 	}
 
 	/**

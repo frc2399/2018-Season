@@ -3,7 +3,9 @@ package org.team2399.robot;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
+import org.team2399.robot.commands.DriveDistance;
 import org.team2399.robot.commands.KajDrive;
+import org.team2399.robot.commands.ManualLift;
 import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
 import org.team2399.robot.commands.TurnAngle;
@@ -13,6 +15,7 @@ import org.team2399.robot.commands.intake.GrabCube;
 import org.team2399.robot.commands.intake.OpenArms;
 import org.team2399.robot.subsystems.DriveTrain;
 import org.team2399.robot.subsystems.Intake;
+import org.team2399.robot.subsystems.Lift;
 import org.team2399.robot.subsystems.Shifter;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -30,7 +33,7 @@ public class XBoxOI extends OI {
 	private Command defaultShift;
 	private KajDrive kajDrive;
 
-	public XBoxOI(Shifter sh, DriveTrain dt, Intake in, AHRS navx) {
+	public XBoxOI(Shifter sh, DriveTrain dt, Intake in, Lift li, AHRS navx) {
 		
 		xBox = new Joystick(0);
 		
@@ -55,10 +58,16 @@ public class XBoxOI extends OI {
 		xBoxButtons[7].whenPressed(tankDrive); 
 		xBoxButtons[8].whenPressed(kajDrive);
 		
-		xBoxButtons[1].whileHeld(new GrabCube(in));
-		xBoxButtons[2].whileHeld(new EjectCube(in, dt, leftThrottle));
-		xBoxButtons[3].whenPressed(new OpenArms(in));
-		xBoxButtons[4].whenPressed(new ExtendRetract(in));
+//		xBoxButtons[1].whileHeld(new GrabCube(in));
+//		xBoxButtons[2].whileHeld(new EjectCube(in, dt, leftThrottle));
+//		xBoxButtons[3].whenPressed(new OpenArms(in));
+		//xBoxButtons[4].whenPressed(new ExtendRetract(in));
+		
+		xBoxButtons[1].whenPressed(new DriveDistance(dt, sh, navx, 40.0));
+		xBoxButtons[2].whenPressed(new DriveDistance(dt, sh, navx, 100.0));
+		xBoxButtons[3].whenPressed(new TurnAngle(dt, sh, navx, 90, TurnAngle.EndAngleMeaning.RELATIVE));
+		
+		xBoxButtons[4].whileHeld(new ManualLift(li, dt, leftY));		
 	}
 	
 	public static BooleanSupplier thresholdDoubleSupplier(DoubleSupplier d, double threshold) {

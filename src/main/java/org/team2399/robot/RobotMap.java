@@ -44,6 +44,10 @@ public class RobotMap {
 			public static final double ROBOT_LENGTH = 34.5;
 			public static final double ROBOT_WIDTH = 29.25;
 		}
+		
+		public static class Lift{
+			public static final double LIFT_UP = 1;
+		}
 	}
 	
 	public static class Auto {
