@@ -11,10 +11,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveDistance extends Command {
 
-	private static final double MAX_VELOCITY_IN_S = 100;
-	private static final double MAX_ACCELERATION_TIME_SEC = 1.5;
+	private static final double VELOCITY_SCALING = .3;
+	private static final double MAX_VELOCITY_CONTRIB = 0.75;
+	
+	private static final double MAX_VELOCITY_IN_S = 80;
+	private static final double MAX_ACCELERATION_TIME_SEC = 1.25;
 	private static final double MAX_ACCELERATION_DISTANCE_IN = MAX_VELOCITY_IN_S * MAX_ACCELERATION_TIME_SEC / 2;
-	private static final double SCALE = (175.0/168.0);
+//	private static final double SCALE = (175.0/168.0);
 		
 	private Timer timer;
 	private Shifter sh;
@@ -27,6 +30,14 @@ public class DriveDistance extends Command {
 	private double totalDistance;
 	
 	private double startAngle;
+	
+	private double p;
+	private double i;
+	private double d;
+	private double f;
+	
+	private double velocityScaling;
+	private double maxVelocityContrib;
 	
 	private double fuzz;
 
@@ -41,7 +52,23 @@ public class DriveDistance extends Command {
 		requires(sh);
 		isFinished = false;	
 		
-		totalDistance = dist * SCALE;
+		totalDistance = dist;
+		
+		p = DriveTrain.DRIVETRAIN_FAST_KP;
+		i = DriveTrain.DRIVETRAIN_FAST_KI;
+		d = DriveTrain.DRIVETRAIN_FAST_KD;
+		f = DriveTrain.DRIVETRAIN_FAST_KF;
+		
+		velocityScaling = VELOCITY_SCALING;
+		maxVelocityContrib = MAX_VELOCITY_CONTRIB;
+		
+		SmartDashboard.putNumber("p", p);
+		SmartDashboard.putNumber("i", i);
+		SmartDashboard.putNumber("d", d);
+		SmartDashboard.putNumber("f", f);
+		
+		SmartDashboard.putNumber("velocityScaling", velocityScaling);
+		SmartDashboard.putNumber("maxVelocityContrib", maxVelocityContrib);
 		
 		if(totalDistance > MAX_ACCELERATION_DISTANCE_IN * 2) {
 			accelerationDistance = MAX_ACCELERATION_DISTANCE_IN; 
@@ -68,6 +95,23 @@ public class DriveDistance extends Command {
 		startAngle = navx.getAngle();
 		isFinished = false;
 		fuzz = .001;
+		
+		p = SmartDashboard.getNumber("p", p);
+		i = SmartDashboard.getNumber("i", i);
+		d = SmartDashboard.getNumber("d", d);
+		f = SmartDashboard.getNumber("f", f);
+		
+		dt.setConstants(p, i, d, f);
+		System.out.println(p);
+		System.out.println(i);
+		System.out.println(d);
+		System.out.println(f);
+		
+		velocityScaling = SmartDashboard.getNumber("velocityScaling", velocityScaling);
+		maxVelocityContrib = SmartDashboard.getNumber("maxVelocityContrib", maxVelocityContrib);
+		
+		System.out.println(maxVelocityContrib);
+		System.out.println(velocityScaling);
 	}
 
 	@Override
@@ -104,8 +148,8 @@ public class DriveDistance extends Command {
 		double angleRateArr[] = {angleRate, fuzz};
 		
 		SmartDashboard.putNumberArray("angleRate", angleRateArr);
-		
-		velocityDifference = relativeAngle * .75 * Math.abs(velocity) / (MAX_VELOCITY_IN_S * .3);		
+	
+		velocityDifference = relativeAngle * maxVelocityContrib * Math.abs(velocity) / (MAX_VELOCITY_IN_S * velocityScaling);		
 		dt.driveVelocity(velocity - velocityDifference, velocity + velocityDifference);
 		
 		

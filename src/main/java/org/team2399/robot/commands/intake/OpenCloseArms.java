@@ -4,11 +4,12 @@ import org.team2399.robot.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class OpenArms extends Command{
+public class OpenCloseArms extends Command{
 
-	Intake in;
+	private Intake in;
+	private boolean isOpen;
 	
-	public OpenArms(Intake in) {
+	public OpenCloseArms(Intake in) {
 		this.in = in;
 		requires(this.in);
 	}
@@ -20,12 +21,19 @@ public class OpenArms extends Command{
 
 	@Override
 	protected void initialize() {
+		isOpen = in.isOpen;
 	}
 
 	@Override
 	protected void execute() {
-		in.release();
-		in.setSpeed(0);
+		if(isOpen) {
+			in.release();
+			in.setSpeed(0);
+		}
+		if(!isOpen) {
+			in.grab();
+			in.setSpeed(0);
+		}
 	}
 
 	@Override
