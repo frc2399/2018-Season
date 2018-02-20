@@ -15,16 +15,20 @@ public class Intake extends Subsystem{
 
 	private IMotorController left, right;
 	private DoubleSolenoid extender, grabber;
-	public boolean isExtended;
+	public boolean isExtended, isOpen;
 	
 	//factor later
 	public Intake() {
-		left = new VictorSPX(9);
-		right = new VictorSPX(10);
+		left = new VictorSPX(RobotMap.Physical.Intake.LEFT_ID);
+		right = new VictorSPX(RobotMap.Physical.Intake.RIGHT_ID);
+		
+		right.setInverted(true);
+		right.follow(left);
 		
 		extender = new DoubleSolenoid(RobotMap.CAN.PCM, RobotMap.PCM.EXTENDER_OUT, RobotMap.PCM.EXTENDER_IN);
 		grabber = new DoubleSolenoid(RobotMap.CAN.PCM, RobotMap.PCM.GRABBER_OUT, RobotMap.PCM.GRABBER_IN);
 		isExtended = false;
+		isOpen = false;
 	}
 	
 	// forward is positive, backwards is negative, -1 to 1
@@ -45,10 +49,12 @@ public class Intake extends Subsystem{
 	
 	public void grab() {
 		grabber.set(DoubleSolenoid.Value.kForward);
+		isOpen = true;
 	}
 	
 	public void release() {
 		grabber.set(DoubleSolenoid.Value.kReverse);
+		isOpen = false;
 	}
 	
 	public void defaultCommand(Command c) {

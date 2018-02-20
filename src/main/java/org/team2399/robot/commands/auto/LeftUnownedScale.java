@@ -3,6 +3,7 @@ package org.team2399.robot.commands.auto;
 import org.team2399.robot.GamepadOI;
 import org.team2399.robot.RobotMap;
 import org.team2399.robot.commands.DriveDistance;
+import org.team2399.robot.commands.LiftToHeight;
 import org.team2399.robot.commands.TurnAngle;
 import org.team2399.robot.commands.intake.EjectCube;
 import org.team2399.robot.subsystems.DriveTrain;
@@ -21,8 +22,8 @@ public class LeftUnownedScale extends CommandGroup {
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.THROUGH_PLATFORM_ZONE));
 		addSequential(new TurnAngle(dt, sh, navx, RobotMap.Auto.LONG_LEFT_TURN, TurnAngle.EndAngleMeaning.RELATIVE));
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.PLATFORM_TO_SCALE));
-		//LIFT ELEVATOR TO ??
-		addSequential(new EjectCube(in, dt, ()-> RobotMap.EJECT_SPEED));
+		addSequential(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.MAX_SCALE));
+		addSequential(new EjectCube(in, RobotMap.EJECT_SPEED));
 	}
 
 }

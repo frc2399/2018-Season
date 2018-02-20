@@ -13,18 +13,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class TurnAngle extends Command {
 
 	private static final double ANGLE_RATE_TOLERANCE = .1;
-	private static final double ANGLE_TOLERANCE = 1;
+	private static final double ANGLE_TOLERANCE = 0.5;
 	private static final double MAX_I_CONTRIB = 0.3;
-	private static final double P_GAIN = 0.005;
-	private static final double I_GAIN = 0.01;
-	private static final double D_GAIN = 0.45;
+	private static final double P_GAIN = 0.007;
+	private static final double I_GAIN = 0.025;
+	private static final double D_GAIN = 0.2;
 	
 	private double tempP;
 	private double tempI;
 	private double tempD;
 	private double tempMaxIContrib;
-	// 243
-	private static final int ANGULAR_RATE = 240;
+	private static final int ANGULAR_RATE = 160;
 	private Timer timer;
 	private Shifter sh;
 	private DriveTrain dt;

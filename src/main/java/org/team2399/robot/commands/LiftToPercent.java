@@ -2,37 +2,30 @@ package org.team2399.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
-import org.team2399.robot.subsystems.DriveTrain;
 import org.team2399.robot.subsystems.Lift;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class ManualLift extends Command {
+public class LiftToPercent extends Command{
 
-	Lift li;
-	
+	private Lift li;
 	private DoubleSupplier height;
 	
-	public ManualLift(Lift li, DoubleSupplier height) {
+	public LiftToPercent(Lift li, DoubleSupplier height) {
 		this.li = li;
 		this.height = height;
 		requires(li);
-		
-		setInterruptible(true);
 	}
-
-	@Override
-	protected boolean isFinished() {
-		return false;
-	}
-
+	
 	@Override
 	protected void initialize() {
+		
 	}
 
 	@Override
 	protected void execute() {
-		li.manualControl(height.getAsDouble());
+		li.setVarHeight(height.getAsDouble() * li.LIFT_MAX_HEIGHT_INCHES);
 	}
 
 	@Override
@@ -41,7 +34,11 @@ public class ManualLift extends Command {
 
 	@Override
 	protected void interrupted() {
+	}
 
+	@Override
+	protected boolean isFinished() {
+		return false;
 	}
 
 }

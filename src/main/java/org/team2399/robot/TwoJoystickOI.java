@@ -10,7 +10,7 @@ import org.team2399.robot.commands.TurnAngle;
 import org.team2399.robot.commands.intake.EjectCube;
 import org.team2399.robot.commands.intake.ExtendRetract;
 import org.team2399.robot.commands.intake.GrabCube;
-import org.team2399.robot.commands.intake.OpenArms;
+import org.team2399.robot.commands.intake.OpenCloseArms;
 import org.team2399.robot.subsystems.DriveTrain;
 import org.team2399.robot.subsystems.Intake;
 import org.team2399.robot.subsystems.Shifter;
@@ -41,7 +41,7 @@ public class TwoJoystickOI extends OI {
 		DoubleSupplier rightY = ()->(rightJoy.getRawAxis(1) * -1);
 		DoubleSupplier leftY = ()->(leftJoy.getRawAxis(1) * -1);
 		
-		kajDrive = new KajDrive(dt, leftY, rightX, ()->false, ()->false);
+		//kajDrive = new KajDrive(dt, leftY, rightX, ()->false, ()->false);
 		TankDrive tankDrive = new TankDrive(dt, leftY, rightY);
 		
 		leftJoyButtons = getButtons(leftJoy);
@@ -63,9 +63,9 @@ public class TwoJoystickOI extends OI {
 		leftJoyButtons[10].whenPressed(new DriveDistance(dt, sh, navx, 100.0));
 		
 		leftJoyButtons[1].whileHeld(new GrabCube(in));
-		leftJoyButtons[2].whenPressed(new OpenArms(in));
+		leftJoyButtons[2].whenPressed(new OpenCloseArms(in));
 		
-		rightJoyButtons[3].whileHeld(new EjectCube(in, dt, rightThrottle));
+		rightJoyButtons[3].whileHeld(new EjectCube(in, 1));
 		rightJoyButtons[4].whenPressed(new ExtendRetract(in));
 	}
 

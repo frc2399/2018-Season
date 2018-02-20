@@ -35,7 +35,7 @@ public class DriveTrain extends Subsystem {
 	public static final double DRIVETRAIN_FAST_KD = 35;
 	public static final double DRIVETRAIN_FAST_KF = 0.1;
 	
-	
+	private static final int PID_IDX = 0;
 	private static final int CAN_TIMEOUT = 10;
 	
 	private double desiredLeftVelPrev;
@@ -58,13 +58,13 @@ public class DriveTrain extends Subsystem {
 	
     public DriveTrain() {
     	
-    	leftFront = new TalonSRX(14);
-    	leftMiddle = new VictorSPX(13);
-    	leftBack = new VictorSPX(15);
+    	leftFront = new TalonSRX(RobotMap.Physical.DriveTrain.LEFT_FRONT_ID);
+    	leftMiddle = new VictorSPX(RobotMap.Physical.DriveTrain.LEFT_MIDDLE_ID);
+    	leftBack = new VictorSPX(RobotMap.Physical.DriveTrain.LEFT_BACK_ID);
     	
-    	rightFront = new TalonSRX(21);
-    	rightMiddle = new VictorSPX(20);
-    	rightBack = new VictorSPX(22);
+    	rightFront = new TalonSRX(RobotMap.Physical.DriveTrain.RIGHT_FRONT_ID);
+    	rightMiddle = new VictorSPX(RobotMap.Physical.DriveTrain.RIGHT_MIDDLE_ID);
+    	rightBack = new VictorSPX(RobotMap.Physical.DriveTrain.RIGHT_BACK_ID);
     	
 //    	leftFront = new TalonSRX(8);
 //    	leftMiddle = new TalonSRX(7);
@@ -83,8 +83,8 @@ public class DriveTrain extends Subsystem {
 		rightBack.follow(rightFront);
     	
     	// timeout constants
-    	leftFront.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, CAN_TIMEOUT);
-    	rightFront.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, CAN_TIMEOUT);
+    	leftFront.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, PID_IDX, CAN_TIMEOUT);
+    	rightFront.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, PID_IDX, CAN_TIMEOUT);
     	leftFront.setSensorPhase(false);
     	rightFront.setSensorPhase(false);
     	

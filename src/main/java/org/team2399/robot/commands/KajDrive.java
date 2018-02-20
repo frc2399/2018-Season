@@ -16,9 +16,9 @@ public class KajDrive extends Command {
 
 	DriveTrain dt;
 	DoubleSupplier forwardPercent, turnPercent;
-	BooleanSupplier leftTurn, rightTurn;
+	DoubleSupplier leftTurn, rightTurn;
 	
-	public KajDrive(DriveTrain dt, DoubleSupplier forwardPercent, DoubleSupplier turnPercent, BooleanSupplier leftTurn, BooleanSupplier rightTurn) {
+	public KajDrive(DriveTrain dt, DoubleSupplier forwardPercent, DoubleSupplier turnPercent, DoubleSupplier leftTurn, DoubleSupplier rightTurn) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	this.dt = dt;
@@ -51,14 +51,24 @@ public class KajDrive extends Command {
 		}
 			
 		
-		if (leftTurn.getAsBoolean()) {
-			leftSideSpeed = -1;
-			rightSideSpeed = 1;
+//		if (leftTurn.getAsBoolean()) {
+//			leftSideSpeed = -1;
+//			rightSideSpeed = 1;
+//		}
+//		
+//		if (rightTurn.getAsBoolean()) {
+//			leftSideSpeed = 1;
+//			rightSideSpeed = -1;
+//		}
+		
+		if (leftTurn.getAsDouble() > 0.25) {
+			leftSideSpeed = -1 * leftTurn.getAsDouble();
+			rightSideSpeed = leftTurn.getAsDouble();
 		}
 		
-		if (rightTurn.getAsBoolean()) {
-			leftSideSpeed = 1;
-			rightSideSpeed = -1;
+		if (rightTurn.getAsDouble() > 0.25) {
+			leftSideSpeed = rightTurn.getAsDouble();
+			rightSideSpeed = -1 * rightTurn.getAsDouble();
 		}
 		
 		dt.drivePercent(leftSideSpeed, rightSideSpeed);

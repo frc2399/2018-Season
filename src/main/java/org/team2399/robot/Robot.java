@@ -10,6 +10,7 @@ package org.team2399.robot;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -21,6 +22,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import org.team2399.robot.AutoChooser.Position;
 import org.team2399.robot.AutoChooser.Scoring;
 import org.team2399.robot.commands.KajDrive;
+import org.team2399.robot.commands.ManualLift;
 import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
 import org.team2399.robot.commands.auto.CenterLeftAuto;
@@ -45,6 +47,7 @@ public class Robot extends TimedRobot {
 	private static final int CAMERA_HEIGHT = 120;
 	private static final int CAMERA_WIDTH = 160;
 	
+	private PowerDistributionPanel pdp;
 	private DriveTrain dt;
 	private OI oi;
 	private Shifter sh;
@@ -63,6 +66,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		pdp = new PowerDistributionPanel(RobotMap.CAN.PDP);
 		navx = new AHRS(Port.kMXP);	
 		Timer timer = new Timer();
 		timer.start();
@@ -83,13 +87,14 @@ public class Robot extends TimedRobot {
 		dt = new DriveTrain();
 		sh = new Shifter();
 		in = new Intake();
-		li = new Lift();
-		oi = new XBoxOI(sh, dt, in, li, navx);
+		li = new Lift(pdp);
+		oi = new XBoxJoystickOI(sh, dt, in, li, navx);
 		auto = new AutoChooser(dt, sh, navx, li, in);
 		
 		dt.defaultCommand(oi.defaultDrive());
 		sh.defaultCommand(oi.defaultShift());
 		in.defaultCommand(new DoNothing(in));
+		li.defaultCommand(new ManualLift(li, ()->0));
 //		UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture();
 //		UsbCamera cam2 = CameraServer.getInstance().startAutomaticCapture();
 //		cam1.setResolution(CAMERA_WIDTH, CAMERA_HEIGHT);

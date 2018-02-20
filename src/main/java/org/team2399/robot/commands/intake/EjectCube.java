@@ -10,15 +10,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public class EjectCube extends Command{
 
 	Intake in;
-	DriveTrain dt;
-	DoubleSupplier speed;
+	double speed;
 	
-	public EjectCube(Intake in, DriveTrain dt, DoubleSupplier speed) {
+	public EjectCube(Intake in, double speed) {
 		this.in = in;
-		this.dt = dt;
 		this.speed = speed;
 		requires(this.in);
-		requires(this.dt);
 	}
 	
 	@Override
@@ -32,7 +29,7 @@ public class EjectCube extends Command{
 
 	@Override
 	protected void execute() {
-		in.setSpeed(speed.getAsDouble());
+		in.setSpeed(speed);
 	}
 
 	@Override

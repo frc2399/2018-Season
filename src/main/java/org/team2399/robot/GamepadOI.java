@@ -46,7 +46,7 @@ public class GamepadOI extends OI {
 		DoubleSupplier rightY = ()->(gamepad.getRawAxis(3) * -1);
 		DoubleSupplier leftY = ()->(gamepad.getRawAxis(1) * -1);
 		
-		kajDrive = new KajDrive(dt, leftY, rightX, leftShoulder, rightShoulder);
+		//kajDrive = new KajDrive(dt, leftY, rightX, leftShoulder, rightShoulder);
 		TankDrive tankDrive = new TankDrive(dt, leftY, rightY);
 		
 		defaultShift = new Shift(sh, Shift.State.SLOW);
