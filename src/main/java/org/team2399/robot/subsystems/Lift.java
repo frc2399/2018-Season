@@ -80,6 +80,9 @@ public class Lift extends Subsystem {
 		talon.configForwardSoftLimitThreshold(LIFT_MAX_HEIGHT_ENCODERS, CAN_TIMEOUT);
 		talon.configForwardSoftLimitEnable(true, CAN_TIMEOUT);
 		
+		talon.configReverseSoftLimitThreshold(0, CAN_TIMEOUT);
+		talon.configReverseSoftLimitEnable(true, CAN_TIMEOUT);
+		
 		setConstants(LIFT_KP, LIFT_KI, LIFT_KD, LIFT_KF);
 		
 		filter = new double[20];
