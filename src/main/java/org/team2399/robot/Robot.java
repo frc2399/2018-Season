@@ -25,7 +25,7 @@ import org.team2399.robot.commands.KajDrive;
 import org.team2399.robot.commands.ManualLift;
 import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
-import org.team2399.robot.commands.auto.CenterLeftAuto;
+import org.team2399.robot.commands.autoGroups.CenterLeftAuto;
 import org.team2399.robot.commands.intake.DoNothing;
 import org.team2399.robot.subsystems.DriveTrain;
 import org.team2399.robot.subsystems.Intake;
@@ -94,7 +94,7 @@ public class Robot extends TimedRobot {
 		dt.defaultCommand(oi.defaultDrive());
 		sh.defaultCommand(oi.defaultShift());
 		in.defaultCommand(new DoNothing(in));
-		li.defaultCommand(new ManualLift(li, ()->0));
+//		li.defaultCommand(new ManualLift(li, ()->0));
 //		UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture();
 //		UsbCamera cam2 = CameraServer.getInstance().startAutomaticCapture();
 //		cam1.setResolution(CAMERA_WIDTH, CAMERA_HEIGHT);
@@ -135,8 +135,16 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autoCommand = auto.makeAutoCommand(Position.RIGHT, Scoring.SCALE, "RL");
-		autoCommand.start();
+		String gameData = DriverStation.getInstance().getGameSpecificMessage();
+		
+		if(gameData != null && gameData.length() > 0) {
+			//left = 0, right = 1, center = 2
+			//switch = 0, scale = 1, auto left = 2, auto right = 3
+			int pos = Integer.parseInt(gameData.substring(3, 4));
+			int scoring = Integer.parseInt(gameData.substring(4, 5));
+			autoCommand = auto.makeAutoCommand(Position.values()[pos], Scoring.values()[scoring], gameData.substring(0, 2));
+			autoCommand.start();
+		}
 	}
 
 	/**

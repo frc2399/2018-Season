@@ -84,7 +84,9 @@ public class RobotMap {
 		public static final double THROUGH_PLATFORM_ZONE = 186;
 		
 		public static final double CENTER_FORWARD = 15.0;
-		public static final double CENTER_AUTO = 70.0;	
+		public static final double CENTER_SHORT_FORWARD = 24.0;
+		public static final double CENTER_AUTO = 80.0;	
+		
 	}
 
 	public static class FieldMeasurements{
@@ -99,7 +101,7 @@ public class RobotMap {
 			public static final double MIN_SCALE = 53.0; //actual = 51.5 in
 			public static final double MED_SCALE = 65.0; //actual = 63.5 in
 			public static final double MAX_SCALE = 78.0; //actual = 75.5 in
-			public static final double SWITCH_PORTAL = 20.0; //switch actual = 18.75 in, portal actual = 20 in
+			public static final double SWITCH_PORTAL = 30.0; //switch actual = 18.75 in, portal actual = 20 in
 		}	
 	}
 	

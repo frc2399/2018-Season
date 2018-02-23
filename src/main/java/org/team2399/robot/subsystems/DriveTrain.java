@@ -23,7 +23,7 @@ public class DriveTrain extends Subsystem {
 	private static final double CLOSED_LOOP_VOLTAGE_SATURATION = 10;
 	private static final int WHEEL_DIAMETER = 4;
 	private static final int ENCODER_TICKS_PER_REVOLUTION = 4096;
-	private static final double GEAR_RATIO = 24.0 / 60.0;
+	private static final double GEAR_RATIO = 1.0 / 1.0;
 	private static final int TALON_100MS_IN_1S = 10;
 	private static final double DRIVETRAIN_KD = 15.0;
 	private static final double DRIVETRAIN_KI = 0.001;
@@ -127,7 +127,7 @@ public class DriveTrain extends Subsystem {
     
     public double toNativeTalonFromInPerSec(double inPerSec) {
     	// 60.0 / 24.0
-    	return inPerSec * (4096.0 / (4.0 * Math.PI)) * (1.79) * (1.0 / 10.0);
+    	return inPerSec * (4096.0 / (4.0 * Math.PI)) * (1.0 / 10.0);
     }
 
     public void driveVelocity(double leftVelocity, double rightVelocity) {
