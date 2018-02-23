@@ -4,6 +4,7 @@ import org.team2399.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.IMotorController;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
@@ -17,6 +18,9 @@ public class Intake extends Subsystem{
 	private DoubleSolenoid extender, grabber;
 	public boolean isExtended, isOpen;
 	
+	private static final int CAN_TIMEOUT = 10;
+	private static final double CLOSED_LOOP_VOLTAGE_SATURATION = 10;
+	
 	//factor later
 	public Intake() {
 		left = new VictorSPX(RobotMap.Physical.Intake.LEFT_ID);
@@ -27,6 +31,15 @@ public class Intake extends Subsystem{
 		
 		extender = new DoubleSolenoid(RobotMap.CAN.PCM, RobotMap.PCM.EXTENDER_OUT, RobotMap.PCM.EXTENDER_IN);
 		grabber = new DoubleSolenoid(RobotMap.CAN.PCM, RobotMap.PCM.GRABBER_OUT, RobotMap.PCM.GRABBER_IN);
+		
+		left.setNeutralMode(NeutralMode.Brake);
+		right.setNeutralMode(NeutralMode.Brake);
+		
+		left.configVoltageCompSaturation(CLOSED_LOOP_VOLTAGE_SATURATION, CAN_TIMEOUT);
+		left.enableVoltageCompensation(true);
+		right.configVoltageCompSaturation(CLOSED_LOOP_VOLTAGE_SATURATION, CAN_TIMEOUT);
+		right.enableVoltageCompensation(true);
+		
 		isExtended = false;
 		isOpen = false;
 	}

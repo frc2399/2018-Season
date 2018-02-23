@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.IMotorController;
 import com.ctre.phoenix.motorcontrol.IMotorControllerEnhanced;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
@@ -63,6 +64,15 @@ public class Lift extends Subsystem {
 		talon.configNominalOutputReverse(0, CAN_TIMEOUT);
 		talon.configPeakOutputForward(1, CAN_TIMEOUT);
 		talon.configPeakOutputReverse(-1, CAN_TIMEOUT);
+		
+		talon.setNeutralMode(NeutralMode.Brake);
+		victor.setNeutralMode(NeutralMode.Brake);
+		
+		talon.configVoltageCompSaturation(CLOSED_LOOP_VOLTAGE_SATURATION, CAN_TIMEOUT);
+		talon.enableVoltageCompensation(true);
+		victor.configVoltageCompSaturation(CLOSED_LOOP_VOLTAGE_SATURATION, CAN_TIMEOUT);
+		victor.enableVoltageCompensation(true);
+		
 		
 		victor.follow(talon);
 		victor.setInverted(true);
