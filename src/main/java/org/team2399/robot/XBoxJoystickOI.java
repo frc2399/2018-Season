@@ -3,14 +3,14 @@ package org.team2399.robot;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
-import org.team2399.robot.commands.DriveDistance;
 import org.team2399.robot.commands.KajDrive;
 import org.team2399.robot.commands.LiftToHeight;
 import org.team2399.robot.commands.LiftToPercent;
 import org.team2399.robot.commands.ManualLift;
 import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
-import org.team2399.robot.commands.TurnAngle;
+import org.team2399.robot.commands.auto.DriveDistance;
+import org.team2399.robot.commands.auto.TurnAngle;
 import org.team2399.robot.commands.intake.EjectCube;
 import org.team2399.robot.commands.intake.ExtendRetract;
 import org.team2399.robot.commands.intake.GrabCube;
@@ -59,6 +59,8 @@ public class XBoxJoystickOI extends OI {
 		
 		xBoxButtons = getButtons(xBox);
 		stickButtons = getButtons(stick);
+		
+		xBoxButtons[1].whenPressed(new TurnAngle(dt, sh, navx, 90, TurnAngle.EndAngleMeaning.RELATIVE));
 			     
 		xBoxButtons[5].whenPressed(new Shift(sh, Shift.State.SLOW)); 
 		xBoxButtons[6].whenPressed(new Shift(sh, Shift.State.FAST)); 
@@ -77,7 +79,7 @@ public class XBoxJoystickOI extends OI {
 		stickButtons[10].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.MED_SCALE));
 		stickButtons[11].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.MAX_SCALE));
 		stickButtons[6].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.SWITCH_PORTAL));
-		stickButtons[2].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.GROUND));
+		stickButtons[8].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.GROUND));
 		
 		// 9 = minimum scale
 		// 10 = medium scale

@@ -1,4 +1,4 @@
-package org.team2399.robot.commands;
+package org.team2399.robot.commands.auto;
 
 import org.team2399.robot.Utility;
 import org.team2399.robot.subsystems.DriveTrain;

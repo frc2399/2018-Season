@@ -2,11 +2,11 @@ package org.team2399.robot;
 
 import java.util.function.DoubleSupplier;
 
-import org.team2399.robot.commands.DriveDistance;
 import org.team2399.robot.commands.KajDrive;
 import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
-import org.team2399.robot.commands.TurnAngle;
+import org.team2399.robot.commands.auto.DriveDistance;
+import org.team2399.robot.commands.auto.TurnAngle;
 import org.team2399.robot.commands.intake.EjectCube;
 import org.team2399.robot.commands.intake.ExtendRetract;
 import org.team2399.robot.commands.intake.GrabCube;
