@@ -135,16 +135,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		String gameData = DriverStation.getInstance().getGameSpecificMessage();
-		
-		if(gameData != null && gameData.length() > 0) {
-			//left = 0, right = 1, center = 2
-			//switch = 0, scale = 1, auto left = 2, auto right = 3
-			int pos = Integer.parseInt(gameData.substring(3, 4));
-			int scoring = Integer.parseInt(gameData.substring(4, 5));
-			autoCommand = auto.makeAutoCommand(Position.values()[pos], Scoring.values()[scoring], gameData.substring(0, 2));
-			autoCommand.start();
-		}
 	}
 
 	/**
@@ -152,6 +142,20 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		
+		String gameData = DriverStation.getInstance().getGameSpecificMessage();
+		boolean autoRan = false;
+		
+		if(gameData != null && gameData.length() == 3 && !autoRan) {
+			//left = 0, right = 1, center = 2
+			//switch = 0, scale = 1, auto left = 2, auto right = 3
+			int pos = Integer.parseInt(gameData.substring(3, 4));
+			int scoring = Integer.parseInt(gameData.substring(4, 5));
+			autoCommand = auto.makeAutoCommand(Position.values()[pos], Scoring.values()[scoring], gameData.substring(0, 2));
+			autoCommand.start();
+			autoRan = true;
+		}
+		
 		Scheduler.getInstance().run();
 	}
 
