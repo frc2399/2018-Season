@@ -22,6 +22,8 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import org.team2399.robot.AutoChooser.Position;
 import org.team2399.robot.AutoChooser.Scoring;
 import org.team2399.robot.commands.KajDrive;
+import org.team2399.robot.commands.LiftHold;
+import org.team2399.robot.commands.LiftToHeight;
 import org.team2399.robot.commands.ManualLift;
 import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
@@ -46,6 +48,8 @@ public class Robot extends TimedRobot {
 	private static final double NETWORK_TABLE_UPDATE_RATE = 1.0/20;
 	private static final int CAMERA_HEIGHT = 120;
 	private static final int CAMERA_WIDTH = 160;
+	
+	private static final int PITCH_MAX_RATE = 50;
 	
 	private PowerDistributionPanel pdp;
 	private DriveTrain dt;
@@ -173,6 +177,10 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("gyro angle", navx.getAngle());
+		
+		if(navx.getRawGyroX() > PITCH_MAX_RATE) {
+			new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.GROUND).start();
+		}
 	}
 
 	/**
