@@ -55,6 +55,7 @@ public class Robot extends TimedRobot {
 	private Lift li;
 	private AHRS navx;
 	private AutoChooser auto;
+	private Dial dialPos, dialScoring;
 	
 	Command autoCommand;
 	
@@ -90,6 +91,8 @@ public class Robot extends TimedRobot {
 		li = new Lift(pdp);
 		oi = new XBoxJoystickOI(sh, dt, in, li, navx);
 		auto = new AutoChooser(dt, sh, navx, li, in);
+		dialPos = new Dial(0, 4);
+		dialScoring = new Dial(4, 4);
 		
 		dt.defaultCommand(oi.defaultDrive());
 		sh.defaultCommand(oi.defaultShift());
@@ -147,10 +150,10 @@ public class Robot extends TimedRobot {
 		boolean autoRan = false;
 		
 		if(gameData != null && gameData.length() == 3 && !autoRan) {
-			//left = 0, right = 1, center = 2
-			//switch = 0, scale = 1, auto left = 2, auto right = 3
-			int pos = Integer.parseInt(gameData.substring(3, 4));
-			int scoring = Integer.parseInt(gameData.substring(4, 5));
+			
+			int pos = dialPos.getPosition(0);
+			int scoring = dialScoring.getPosition(0);
+			
 			autoCommand = auto.makeAutoCommand(Position.values()[pos], Scoring.values()[scoring], gameData.substring(0, 2));
 			autoCommand.start();
 			autoRan = true;
