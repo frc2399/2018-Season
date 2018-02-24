@@ -70,7 +70,7 @@ public class XBoxJoystickOI extends OI {
 		
 		stickButtons[3].whenPressed(new OpenCloseArms(in));
 		stickButtons[4].whileHeld(new GrabCube(in));
-		stickButtons[5].whileHeld(new EjectCube(in, 1));
+		stickButtons[5].whileHeld(new EjectCube(in));
 		
 		stickButtons[1].whileHeld(new ManualLift(li, stickY));
 		stickButtons[7].whileHeld(new LiftToPercent(li, stickThrottle));

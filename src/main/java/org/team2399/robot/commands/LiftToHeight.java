@@ -38,7 +38,7 @@ public class LiftToHeight extends Command{
 
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 
 }

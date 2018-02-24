@@ -23,6 +23,6 @@ public class CenterLeftSwitch extends CommandGroup {
 		addSequential(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.SWITCH_PORTAL));
 		addSequential(new TurnAngle(dt, sh, navx, RobotMap.Auto.SHORT_RIGHT_TURN, TurnAngle.EndAngleMeaning.RELATIVE));
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.CENTER_SHORT_FORWARD));
-		addSequential(new EjectCube(in, RobotMap.EJECT_SPEED));		
+		addSequential(new EjectCube(in), 1);		
 	}
 }
