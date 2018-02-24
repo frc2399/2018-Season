@@ -35,9 +35,7 @@ public class TwoJoystickOI extends OI {
 	public TwoJoystickOI(Shifter sh, DriveTrain dt, Intake in, AHRS navx) {
 		leftJoy = new Joystick(0);
 		rightJoy = new Joystick(1);
-		
-		DoubleSupplier rightThrottle = ()->(throttleToPositiveRange(rightJoy.getRawAxis(THROTTLEAXIS) * -1));
-		DoubleSupplier rightX = ()->(rightJoy.getRawAxis(0));
+
 		DoubleSupplier rightY = ()->(rightJoy.getRawAxis(1) * -1);
 		DoubleSupplier leftY = ()->(leftJoy.getRawAxis(1) * -1);
 		

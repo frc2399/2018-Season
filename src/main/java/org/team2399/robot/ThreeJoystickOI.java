@@ -38,8 +38,6 @@ public class ThreeJoystickOI extends OI {
 		rightJoy = new Joystick(1);
 		controlJoy = new Joystick(2);
 		
-		DoubleSupplier controlThrottle = ()->(throttleToPositiveRange(controlJoy.getRawAxis(THROTTLEAXIS) * -1));
-		DoubleSupplier rightX = ()->(rightJoy.getRawAxis(0));
 		DoubleSupplier rightY = ()->(rightJoy.getRawAxis(1) * -1);
 		DoubleSupplier leftY = ()->(leftJoy.getRawAxis(1) * -1); 
 		

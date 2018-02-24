@@ -1,6 +1,5 @@
 package org.team2399.robot.commands.intake;
 
-import org.team2399.robot.GamepadOI;
 import org.team2399.robot.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.command.Command;

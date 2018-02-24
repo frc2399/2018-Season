@@ -25,10 +25,6 @@ public class DriveTrain extends Subsystem {
 	private static final int ENCODER_TICKS_PER_REVOLUTION = 4096;
 	private static final double GEAR_RATIO = 1.0 / 1.0;
 	private static final int TALON_100MS_IN_1S = 10;
-	private static final double DRIVETRAIN_KD = 15.0;
-	private static final double DRIVETRAIN_KI = 0.001;
-	private static final double DRIVETRAIN_KP = 0.3;
-	private static final double DRIVETRAIN_KF = 0.33;
 	
 	public static final double DRIVETRAIN_FAST_KP = 0.8;
 	public static final double DRIVETRAIN_FAST_KI = 0.004;

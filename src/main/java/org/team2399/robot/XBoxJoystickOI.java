@@ -9,10 +9,8 @@ import org.team2399.robot.commands.LiftToPercent;
 import org.team2399.robot.commands.ManualLift;
 import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
-import org.team2399.robot.commands.auto.DriveDistance;
 import org.team2399.robot.commands.auto.TurnAngle;
 import org.team2399.robot.commands.intake.EjectCube;
-import org.team2399.robot.commands.intake.ExtendRetract;
 import org.team2399.robot.commands.intake.GrabCube;
 import org.team2399.robot.commands.intake.OpenCloseArms;
 import org.team2399.robot.subsystems.DriveTrain;
@@ -40,11 +38,8 @@ public class XBoxJoystickOI extends OI {
 		xBox = new Joystick(0);
 		stick = new Joystick(1);
 		
-//		BooleanSupplier rightShoulder = thresholdDoubleSupplier(()->(xBox.getRawAxis(3)), 0.25);
-//		BooleanSupplier leftShoulder = thresholdDoubleSupplier(()->(xBox.getRawAxis(2)), 0.25);
 		DoubleSupplier rightShoulder = ()->xBox.getRawAxis(3);
 		DoubleSupplier leftShoulder = ()->(xBox.getRawAxis(2));
-		DoubleSupplier leftThrottle = ()->(throttleToPositiveRange(xBox.getRawAxis(1) * -1));
 		DoubleSupplier rightX = ()->(xBox.getRawAxis(4));
 		DoubleSupplier rightY = ()->(xBox.getRawAxis(5) * -1);
 		DoubleSupplier leftY = ()->(xBox.getRawAxis(1) * -1);
@@ -85,7 +80,7 @@ public class XBoxJoystickOI extends OI {
 		// 10 = medium scale
 		// 11 = maximum scale
 		// 6 = switch/portal
-		// 2 = ground
+		// 8 = ground
 		
 	}
 	

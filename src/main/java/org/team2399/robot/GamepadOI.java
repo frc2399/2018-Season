@@ -7,7 +7,6 @@
 
 package org.team2399.robot;
 
-import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import org.team2399.robot.commands.KajDrive;
@@ -40,9 +39,6 @@ public class GamepadOI extends OI {
 		
 		gamepad = new Joystick(0);
 		
-		BooleanSupplier rightShoulder = ()->(gamepad.getRawButton(6));
-		BooleanSupplier leftShoulder = ()->(gamepad.getRawButton(5));
-		DoubleSupplier rightX = ()->(gamepad.getRawAxis(2));
 		DoubleSupplier rightY = ()->(gamepad.getRawAxis(3) * -1);
 		DoubleSupplier leftY = ()->(gamepad.getRawAxis(1) * -1);
 		

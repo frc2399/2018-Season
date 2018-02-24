@@ -178,16 +178,9 @@ public class TurnAngle extends Command {
 		flipFuzz();
 		
 		double currentAngle = navx.getAngle();
-		double relativeAngle = currentAngle - startAngle;
-		double relativeAngleArr[] = {relativeAngle, fuzz};
-		double angleRate = navx.getRate();
-		double angleRateArr[] = {angleRate, fuzz};
 		
 		double time = timer.get();
 		double endTime = (endAngle - startAngle) / angularVelocity;
-		
-//		SmartDashboard.putNumberArray("relativeAngleTurn", relativeAngleArr);
-//		SmartDashboard.putNumberArray("angleTurnRate", angleRateArr);
 		
 		// what the angle should be at the current time
 		double desiredAngle = angularVelocity * time + startAngle;

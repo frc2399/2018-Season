@@ -2,7 +2,6 @@ package org.team2399.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
-import org.team2399.robot.GamepadOI;
 import org.team2399.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;

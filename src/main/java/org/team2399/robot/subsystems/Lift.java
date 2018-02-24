@@ -1,7 +1,5 @@
 package org.team2399.robot.subsystems;
 
-import java.util.Arrays;
-
 import org.team2399.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -12,11 +10,9 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.hal.PDPJNI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Lift extends Subsystem {
@@ -101,7 +97,6 @@ public class Lift extends Subsystem {
 		
 		flipFuzz();
 		setHeight();
-		double[] currentArr = {talon.getOutputCurrent(), victor.getOutputCurrent()};
 		
 		double[] inputCurrentArr = {pdp.getCurrent(3), pdp.getCurrent(12), fuzz};
 		double inputVoltage = pdp.getVoltage();
@@ -117,12 +112,8 @@ public class Lift extends Subsystem {
 		}
 		outputCurrentCalc[2] = fuzz;
 		
-		//SmartDashboard.putNumberArray("inputLiftCurrent", currentArr);
 		SmartDashboard.putNumberArray("liftPos", liftPosArr);
-		//SmartDashboard.putNumberArray("outputLiftCurrent", outputCurrentCalc);
 		SmartDashboard.putNumberArray("percent", percentArr);
-		
-//		System.out.println(isManual);
 	}
 	 
 	private void setHeight() {

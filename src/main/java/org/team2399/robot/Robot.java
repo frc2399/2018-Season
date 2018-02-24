@@ -16,18 +16,12 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 import org.team2399.robot.AutoChooser.Position;
 import org.team2399.robot.AutoChooser.Scoring;
-import org.team2399.robot.commands.KajDrive;
 import org.team2399.robot.commands.LiftHold;
 import org.team2399.robot.commands.LiftToHeight;
-import org.team2399.robot.commands.ManualLift;
-import org.team2399.robot.commands.Shift;
-import org.team2399.robot.commands.TankDrive;
-import org.team2399.robot.commands.autoGroups.CenterLeftAuto;
 import org.team2399.robot.commands.intake.DoNothing;
 import org.team2399.robot.subsystems.DriveTrain;
 import org.team2399.robot.subsystems.Intake;

@@ -5,7 +5,6 @@ import java.util.function.DoubleSupplier;
 import org.team2399.robot.subsystems.Lift;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class LiftToPercent extends Command{
 
@@ -25,7 +24,7 @@ public class LiftToPercent extends Command{
 
 	@Override
 	protected void execute() {
-		li.setVarHeight(height.getAsDouble() * li.LIFT_MAX_HEIGHT_INCHES);
+		li.setVarHeight(height.getAsDouble() * Lift.LIFT_MAX_HEIGHT_INCHES);
 	}
 
 	@Override

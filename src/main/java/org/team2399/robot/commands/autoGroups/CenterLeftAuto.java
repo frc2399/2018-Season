@@ -1,10 +1,8 @@
 package org.team2399.robot.commands.autoGroups;
 
-import org.team2399.robot.OI;
 import org.team2399.robot.RobotMap;
 import org.team2399.robot.commands.auto.DriveDistance;
 import org.team2399.robot.commands.auto.TurnAngle;
-import org.team2399.robot.commands.intake.EjectCube;
 import org.team2399.robot.subsystems.DriveTrain;
 import org.team2399.robot.subsystems.Intake;
 import org.team2399.robot.subsystems.Lift;
