@@ -80,7 +80,7 @@ public class Robot extends TimedRobot {
 				e.printStackTrace();
 			}
 			if(timer.get() >= 5.0) {
-				break;
+				System.exit(1);
 			}
 		}
 		navx.reset();
@@ -97,7 +97,7 @@ public class Robot extends TimedRobot {
 		dt.defaultCommand(oi.defaultDrive());
 		sh.defaultCommand(oi.defaultShift());
 		in.defaultCommand(new DoNothing(in));
-//		li.defaultCommand(new ManualLift(li, ()->0));
+		li.defaultCommand(new LiftHold(li));
 //		UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture();
 //		UsbCamera cam2 = CameraServer.getInstance().startAutomaticCapture();
 //		cam1.setResolution(CAMERA_WIDTH, CAMERA_HEIGHT);
