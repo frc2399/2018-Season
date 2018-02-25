@@ -1,6 +1,7 @@
 package org.team2399.robot.commands.autoGroups;
 
 import org.team2399.robot.RobotMap;
+import org.team2399.robot.commands.LiftToHeight;
 import org.team2399.robot.commands.auto.DriveDistance;
 import org.team2399.robot.commands.auto.TurnAngle;
 import org.team2399.robot.commands.intake.EjectCube;
@@ -16,8 +17,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class LeftOwnedScale extends CommandGroup {
 	public LeftOwnedScale(DriveTrain dt, Shifter sh, AHRS navx, Lift li, Intake in) {
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.BACK_WALL_TO_SCALE));
+		addSequential(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.MAX_SCALE));
 		addSequential(new TurnAngle(dt, sh, navx, RobotMap.Auto.SHORT_RIGHT_TURN, TurnAngle.EndAngleMeaning.RELATIVE));
-//		addSequential(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.MAX_SCALE));
 		addSequential(new EjectCube(in), 1);		
 	}
 }

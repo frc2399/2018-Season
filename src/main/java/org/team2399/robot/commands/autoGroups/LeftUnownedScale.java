@@ -21,8 +21,8 @@ public class LeftUnownedScale extends CommandGroup {
 		addSequential(new TurnAngle(dt, sh, navx, RobotMap.Auto.LONG_RIGHT_TURN, TurnAngle.EndAngleMeaning.RELATIVE));
 		addSequential(new DriveDistance(dt, sh, navx, 190.0));
 		addSequential(new WaitCommand(1));
+		addSequential(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.MAX_SCALE));
 		addSequential(new TurnAngle(dt, sh, navx, RobotMap.Auto.LONG_LEFT_TURN, TurnAngle.EndAngleMeaning.RELATIVE));
-		//addSequential(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.MAX_SCALE));
 		addSequential(new DriveDistance(dt, sh, navx, 25.0));
 		addSequential(new EjectCube(in), 1);	
 	}

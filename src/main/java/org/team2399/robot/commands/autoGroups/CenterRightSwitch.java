@@ -1,6 +1,7 @@
 package org.team2399.robot.commands.autoGroups;
 
 import org.team2399.robot.RobotMap;
+import org.team2399.robot.commands.LiftToHeight;
 import org.team2399.robot.commands.auto.DriveDistance;
 import org.team2399.robot.commands.auto.TurnAngle;
 import org.team2399.robot.commands.intake.EjectCube;
@@ -18,8 +19,8 @@ public class CenterRightSwitch extends CommandGroup {
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.CENTER_FORWARD));
 		addSequential(new TurnAngle(dt, sh, navx, RobotMap.Auto.SHORT_RIGHT_TURN, TurnAngle.EndAngleMeaning.RELATIVE));
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.CENTER_AUTO));
+		addSequential(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.SWITCH_PORTAL));
 		addSequential(new TurnAngle(dt, sh, navx, RobotMap.Auto.SHORT_LEFT_TURN, TurnAngle.EndAngleMeaning.RELATIVE));
-//		addSequential(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.SWITCH_PORTAL));
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.CENTER_SHORT_FORWARD));
 		addSequential(new EjectCube(in), 1);		
 	}
