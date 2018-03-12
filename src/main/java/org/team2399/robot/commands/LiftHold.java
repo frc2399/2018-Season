@@ -19,7 +19,7 @@ public class LiftHold extends Command{
 
 	@Override
 	protected void execute() {
-		li.setVarHeight(li.getHeight());
+		li.setVarHeight(li.getDesiredHeight());
 	}
 
 	@Override

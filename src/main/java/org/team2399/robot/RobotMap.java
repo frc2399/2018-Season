@@ -22,10 +22,8 @@ public class RobotMap {
 	public static class PCM {
 		public static final int SHIFTER_SlOW = 0;
 		public static final int SHIFTER_FAST = 1;
-//		public static final int SHIFTER_SlOW = 2;
-//		public static final int SHIFTER_FAST = 3;
-		public static final int EXTENDER_OUT = 5;
-		public static final int EXTENDER_IN = 4;
+		public static final int EXTENDER_OUT = 7;
+		public static final int EXTENDER_IN = 6;
 		public static final int GRABBER_OUT = 2;
 		public static final int GRABBER_IN = 3;
 		
@@ -79,11 +77,26 @@ public class RobotMap {
 		public static final double BACK_WALL_TO_PLATFORM_ZONE = 211.0;
 		public static final double PLATFORM_TO_SCALE = 38.18;
 		
-		public static final double THROUGH_PLATFORM_ZONE = 186;
+		//
+		
+		public static final double UNOWNED_SCALE_TURN = 121;
 		
 		public static final double CENTER_FORWARD = 15.0;
-		public static final double CENTER_SHORT_FORWARD = 24.0;
-		public static final double CENTER_AUTO = 80.0;	
+		public static final double CENTER_CROSS_BASELINE = 135.0;
+		public static final double CENTER_SWITCH_CROSS = 80.0;
+		public static final double CENTER_SWITCH_FORWARD = 24.0;
+		
+		public static final double SIDE_CROSS_BASELINE = 105.0;
+		public static final double SIDE_OWNED_SCALE_FORWARD = 260.0;
+		public static final double SIDE_OWNED_SWITCH_FORWARD = 105.0;
+		public static final double SIDE_UNOWNED_SCALE_FORWARD = 230.0;
+		public static final double SIDE_FORWARD_TO_SCALE = 30.0;
+		public static final double SIDE_UNOWNED_SWITCH_FORWARD = 220.0;
+		public static final double SIDE_FORWARD_TO_SWITCH = 45.0;
+		
+		
+		public static final double SCALE_THROUGH_PLATFORM_ZONE = 205.0;
+		public static final double SWITCH_THROUGH_PLATFORM_ZONE = 168.0;
 		
 	}
 
@@ -98,7 +111,7 @@ public class RobotMap {
 			public static final double GROUND = 0.0;
 			public static final double MIN_SCALE = 53.0; //actual = 51.5 in
 			public static final double MED_SCALE = 65.0; //actual = 63.5 in
-			public static final double MAX_SCALE = 78.0; //actual = 75.5 in
+			public static final double MAX_SCALE = 76.0; //actual = 75.5 in
 			public static final double SWITCH_PORTAL = 30.0; //switch actual = 18.75 in, portal actual = 20 in
 		}	
 	}

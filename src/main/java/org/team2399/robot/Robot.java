@@ -55,6 +55,8 @@ public class Robot extends TimedRobot {
 	private AutoChooser auto;
 	private Dial dialPos, dialScoring;
 	
+	private boolean autoRan;
+	
 	Command autoCommand;
 	
 	final int NAVX_SLEEPMILLISECONDS = 50;
@@ -67,6 +69,7 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		pdp = new PowerDistributionPanel(RobotMap.CAN.PDP);
 		navx = new AHRS(Port.kMXP);	
+		autoRan = false;
 		Timer timer = new Timer();
 		timer.start();
 		while(navx.isCalibrating()) {
@@ -89,18 +92,18 @@ public class Robot extends TimedRobot {
 		li = new Lift(pdp);
 		oi = new XBoxJoystickOI(sh, dt, in, li, navx);
 		auto = new AutoChooser(dt, sh, navx, li, in);
-		dialPos = new Dial(0, 4);
-		dialScoring = new Dial(4, 4);
+		dialPos = new Dial(0, 3);
+		dialScoring = new Dial(3, 4);
 		
 		dt.defaultCommand(oi.defaultDrive());
 		sh.defaultCommand(oi.defaultShift());
 		in.defaultCommand(new DoNothing(in));
 		li.defaultCommand(new LiftHold(li));
-//		UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture();
-//		UsbCamera cam2 = CameraServer.getInstance().startAutomaticCapture();
-//		cam1.setResolution(CAMERA_WIDTH, CAMERA_HEIGHT);
-//		cam2.setResolution(CAMERA_WIDTH, CAMERA_HEIGHT);
-//		
+		UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture();
+		//UsbCamera cam2 = CameraServer.getInstance().startAutomaticCapture();
+		cam1.setResolution(CAMERA_WIDTH, CAMERA_HEIGHT);
+		//cam2.setResolution(CAMERA_WIDTH, CAMERA_HEIGHT);
+		
 		NetworkTableInstance.getDefault().setUpdateRate(NETWORK_TABLE_UPDATE_RATE);
 		
 		SmartDashboard.putData(dt);
@@ -121,6 +124,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		
+		System.out.println("Position: " + Position.values()[dialPos.getPosition(0)]);
+		System.out.println("Scoring: " + Scoring.values()[dialScoring.getPosition(0)]);
 	}
 
 	/**
@@ -136,6 +142,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		autoRan = false;
 	}
 
 	/**
@@ -145,7 +152,6 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
-		boolean autoRan = false;
 		
 		if(gameData != null && gameData.length() == 3 && !autoRan) {
 			
@@ -172,9 +178,9 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("gyro angle", navx.getAngle());
 		
-		if(navx.getRawGyroX() > PITCH_MAX_RATE) {
-			new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.GROUND).start();
-		}
+//		if(navx.getRawGyroX() > PITCH_MAX_RATE) {
+//			new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.GROUND).start();
+//		}
 	}
 
 	/**

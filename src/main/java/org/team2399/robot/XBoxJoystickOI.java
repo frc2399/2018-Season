@@ -11,6 +11,7 @@ import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
 import org.team2399.robot.commands.auto.TurnAngle;
 import org.team2399.robot.commands.intake.EjectCube;
+import org.team2399.robot.commands.intake.ExtendRetract;
 import org.team2399.robot.commands.intake.GrabCube;
 import org.team2399.robot.commands.intake.OpenCloseArms;
 import org.team2399.robot.subsystems.DriveTrain;
@@ -55,7 +56,7 @@ public class XBoxJoystickOI extends OI {
 		xBoxButtons = getButtons(xBox);
 		stickButtons = getButtons(stick);
 		
-		xBoxButtons[1].whenPressed(new TurnAngle(dt, sh, navx, 90, TurnAngle.EndAngleMeaning.RELATIVE));
+		xBoxButtons[1].whenPressed(new ExtendRetract(in));
 			     
 		xBoxButtons[5].whenPressed(new Shift(sh, Shift.State.SLOW)); 
 		xBoxButtons[6].whenPressed(new Shift(sh, Shift.State.FAST)); 
@@ -67,20 +68,22 @@ public class XBoxJoystickOI extends OI {
 		stickButtons[4].whileHeld(new GrabCube(in));
 		stickButtons[5].whileHeld(new EjectCube(in));
 		
-		stickButtons[1].whileHeld(new ManualLift(li, stickY));
 		stickButtons[7].whileHeld(new LiftToPercent(li, stickThrottle));
+		stickButtons[1].whileHeld(new ManualLift(li, stickY));
 		
 		stickButtons[9].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.MIN_SCALE));
 		stickButtons[10].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.MED_SCALE));
 		stickButtons[11].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.MAX_SCALE));
 		stickButtons[6].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.SWITCH_PORTAL));
 		stickButtons[8].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.GROUND));
+		//stickButtons[7].whenPressed(new LiftToHeight(li, 1));
 		
 		// 9 = minimum scale
 		// 10 = medium scale
 		// 11 = maximum scale
 		// 6 = switch/portal
 		// 8 = ground
+		// 7 = inch off the ground
 		
 	}
 	

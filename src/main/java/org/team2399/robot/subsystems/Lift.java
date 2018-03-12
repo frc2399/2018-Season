@@ -36,8 +36,8 @@ public class Lift extends Subsystem {
 	//change can timeout
 	private static final int CAN_TIMEOUT = 10;
 	private static final double LIFT_KP = 0.15;
-	private static final double LIFT_KI = 0.0001;
-	private static final double LIFT_KD = 2.5;
+	private static final double LIFT_KI = 0.00002;
+	private static final double LIFT_KD = 5.0;
 	private static final double LIFT_KF = 0;
 	
 	public Lift(PowerDistributionPanel pdp) {
@@ -117,25 +117,9 @@ public class Lift extends Subsystem {
 	}
 	 
 	private void setHeight() {
-		
-		 filter[filterIndex] = desiredHeight;
-		 filterIndex = (filterIndex + 1) % filter.length;
-		 
-		 double filterOut = 0;
-		 
-		 for(double filterBin : filter)
-			 filterOut += filterBin;
-		
-		 filterOut /= (double)filter.length;
-		 
-		 if(!isManual) {
-			 talon.set(ControlMode.Position, inchesToEncoderTicks(filterOut));
-		 }
-		 else
-		 {
-			 for(int i = 0; i < filter.length; i++)
-				 filter[i] = encoderTicksToInches(desiredHeight);
-		 }
+		if(!isManual){
+			talon.set(ControlMode.Position, inchesToEncoderTicks(desiredHeight));
+		}
 	}
 	
 	public void setVarHeight(double desiredHeight) {
@@ -146,6 +130,10 @@ public class Lift extends Subsystem {
 	public void manualControl(double percent) {
 		isManual = true;
 		talon.set(ControlMode.PercentOutput, percent * RobotMap.Physical.Lift.LIFT_UP);
+	}
+	
+	public double getDesiredHeight() {
+		return desiredHeight;
 	}
 	
 	public boolean isManual() {
