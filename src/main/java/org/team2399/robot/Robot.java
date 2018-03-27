@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
+import org.team2399.robot.AutoChooser.NumberCubes;
 import org.team2399.robot.AutoChooser.Position;
 import org.team2399.robot.AutoChooser.Scoring;
 import org.team2399.robot.commands.LiftHold;
@@ -53,7 +54,7 @@ public class Robot extends TimedRobot {
 	private Lift li;
 	private AHRS navx;
 	private AutoChooser auto;
-	private Dial dialPos, dialScoring;
+	private Dial dialPos, dialScoring, dialNum;
 	
 	private boolean autoRan;
 	
@@ -94,6 +95,7 @@ public class Robot extends TimedRobot {
 		auto = new AutoChooser(dt, sh, navx, li, in);
 		dialPos = new Dial(0, 3);
 		dialScoring = new Dial(3, 4);
+		dialNum = new Dial(4, 3);
 		
 		dt.defaultCommand(oi.defaultDrive());
 		sh.defaultCommand(oi.defaultShift());
@@ -127,6 +129,7 @@ public class Robot extends TimedRobot {
 		
 		System.out.println("Position: " + Position.values()[dialPos.getPosition(0)]);
 		System.out.println("Scoring: " + Scoring.values()[dialScoring.getPosition(0)]);
+		System.out.println("Number of Cubes: " + NumberCubes.values()[dialNum.getPosition(0)]);
 	}
 
 	/**
@@ -157,8 +160,9 @@ public class Robot extends TimedRobot {
 			
 			int pos = dialPos.getPosition(0);
 			int scoring = dialScoring.getPosition(0);
+			int num = dialNum.getPosition(0);
 			
-			autoCommand = auto.makeAutoCommand(Position.values()[pos], Scoring.values()[scoring], gameData.substring(0, 2));
+			autoCommand = auto.makeAutoCommand(Position.values()[pos], Scoring.values()[scoring], NumberCubes.values()[num], gameData.substring(0, 2));
 			autoCommand.start();
 			autoRan = true;
 		}

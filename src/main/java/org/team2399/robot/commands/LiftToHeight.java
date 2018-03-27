@@ -1,5 +1,6 @@
 package org.team2399.robot.commands;
 
+import org.team2399.robot.Utility;
 import org.team2399.robot.subsystems.Lift;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -8,6 +9,8 @@ public class LiftToHeight extends Command{
 
 	private Lift li;
 	private double height;
+	
+	private static final double HEIGHT_TOLERANCE = 1;
 	
 	public LiftToHeight(Lift li, double height) {
 		this.li = li;
@@ -36,6 +39,7 @@ public class LiftToHeight extends Command{
 	@Override
 	protected boolean isFinished() {
 		return true;
+		//return Utility.inRange(height, li.getDesiredHeight(), HEIGHT_TOLERANCE)
 	}
 
 }
