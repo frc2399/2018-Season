@@ -22,11 +22,11 @@ public class RightUnownedScale extends CommandGroup {
 		addSequential(new DriveDistance(dt, sh, navx, 220));
 		addSequential(new TurnAngle(dt, sh, navx, RobotMap.Auto.LONG_LEFT_TURN, TurnAngle.EndAngleMeaning.RELATIVE));
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.SCALE_THROUGH_PLATFORM_ZONE));
-		addSequential(new TurnAngle(dt, sh, navx, RobotMap.Auto.UNOWNED_SCALE_TURN, TurnAngle.EndAngleMeaning.RELATIVE));
+		addSequential(new TurnAngle(dt, sh, navx, 100, TurnAngle.EndAngleMeaning.RELATIVE));
 		addSequential(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.MAX_SCALE));
-		addSequential(new DriveDistance(dt, sh, navx, 50));
+		addSequential(new DriveDistance(dt, sh, navx, 65));
 		addSequential(new EjectCube(in), 1);
-		addSequential(new DriveDistance(dt, sh, navx, -50));
+		addSequential(new DriveDistance(dt, sh, navx, -20));
 		addSequential(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.GROUND));
 
 	}

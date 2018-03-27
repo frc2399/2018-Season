@@ -21,7 +21,7 @@ public class RightOwnedScale extends CommandGroup {
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.SIDE_OWNED_SCALE_FORWARD));
 		addSequential(new TurnAngle(dt, sh, navx, RobotMap.Auto.SHORT_LEFT_TURN, TurnAngle.EndAngleMeaning.RELATIVE));
 		addSequential(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.MAX_SCALE));
-		addSequential(new DriveDistance(dt, sh, navx, 20));
+		addSequential(new DriveDistance(dt, sh, navx, 35));
 		addSequential(new EjectCube(in), 1);
 		addSequential(new DriveDistance(dt, sh, navx, -20));
 		addSequential(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.GROUND));
