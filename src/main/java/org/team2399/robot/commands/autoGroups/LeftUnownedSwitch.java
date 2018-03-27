@@ -28,5 +28,7 @@ public class LeftUnownedSwitch extends CommandGroup {
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.SIDE_FORWARD_TO_SWITCH));
 		addSequential(new DeployIntake(in));
 		addSequential(new EjectCube(in), 1);
+		addSequential(new DriveDistance(dt, sh, navx, -20));
+		addSequential(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.GROUND));
 	}
 }

@@ -19,15 +19,14 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 public class LeftUnownedScale extends CommandGroup {
 	public LeftUnownedScale(DriveTrain dt, Shifter sh, AHRS navx, Lift li, Intake in) {
 		addSequential(new DeployIntake(in));
-		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.SIDE_UNOWNED_SCALE_FORWARD));
+		addSequential(new DriveDistance(dt, sh, navx, 220));
 		addSequential(new TurnAngle(dt, sh, navx, RobotMap.Auto.LONG_RIGHT_TURN, TurnAngle.EndAngleMeaning.RELATIVE));
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.SCALE_THROUGH_PLATFORM_ZONE));
+		addSequential(new TurnAngle(dt, sh, navx, -100, TurnAngle.EndAngleMeaning.RELATIVE));
 		addSequential(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.MAX_SCALE));
-		addSequential(new WaitCommand(1));
-		addSequential(new TurnAngle(dt, sh, navx, -1 * RobotMap.Auto.UNOWNED_SCALE_TURN, TurnAngle.EndAngleMeaning.RELATIVE));
-		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.SIDE_FORWARD_TO_SCALE));
+		addSequential(new DriveDistance(dt, sh, navx, 50));
 		addSequential(new EjectCube(in), 1);	
-		addSequential(new DriveDistance(dt, sh, navx, -1 * RobotMap.Auto.SIDE_FORWARD_TO_SCALE));
+		addSequential(new DriveDistance(dt, sh, navx, -50));
 		addSequential(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.GROUND));
 	}
 
