@@ -57,6 +57,7 @@ public class XBoxJoystickOI extends OI {
 		stickButtons = getButtons(stick);
 		
 		xBoxButtons[1].whenPressed(new ExtendRetract(in));
+		xBoxButtons[2].whileHeld(new LiftToPercent(li, stickThrottle));
 			     
 		xBoxButtons[5].whenPressed(new Shift(sh, Shift.State.SLOW)); 
 		xBoxButtons[6].whenPressed(new Shift(sh, Shift.State.FAST)); 
@@ -64,19 +65,28 @@ public class XBoxJoystickOI extends OI {
 		xBoxButtons[7].whenPressed(tankDrive); 
 		xBoxButtons[8].whenPressed(kajDrive);
 		
+		// --------------------------------------------------------------------------------------------------------------------
+		
 		stickButtons[3].whenPressed(new OpenCloseArms(in));
 		stickButtons[4].whileHeld(new GrabCube(in));
 		stickButtons[5].whileHeld(new EjectCube(in));
 		
-		stickButtons[7].whileHeld(new LiftToPercent(li, stickThrottle));
+		//if(stickButtons[6].get() && stickButtons[7].get()) {
+		//	stickButtons[6].whileHeld(new LiftToPercent(li, stickThrottle));
+		//} else {
+		//	stickButtons[6].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.SWITCH_PORTAL));
+		//	stickButtons[7].whenPressed(new LiftToHeight(li, 2));
+		//}
+		
 		stickButtons[1].whileHeld(new ManualLift(li, stickY));
+		stickButtons[2].whenPressed(new ExtendRetract(in));
 		
 		stickButtons[9].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.MIN_SCALE));
 		stickButtons[10].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.MED_SCALE));
 		stickButtons[11].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.MAX_SCALE));
 		stickButtons[6].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.SWITCH_PORTAL));
 		stickButtons[8].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.GROUND));
-		//stickButtons[7].whenPressed(new LiftToHeight(li, 1));
+		stickButtons[7].whenPressed(new LiftToHeight(li, 2));
 		
 		// 9 = minimum scale
 		// 10 = medium scale
