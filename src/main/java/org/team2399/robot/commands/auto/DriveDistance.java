@@ -28,6 +28,7 @@ public class DriveDistance extends Command {
 	private double coastDistance;
 	private double accelerationDistance;
 	private double totalDistance;
+	private double distanceDirection;
 	
 	private double startAngle;
 	
@@ -52,7 +53,13 @@ public class DriveDistance extends Command {
 		requires(sh);
 		isFinished = false;	
 		
-		totalDistance = dist;
+		if(dist >= 0) {
+			totalDistance = dist;
+			distanceDirection = 1;
+		} else {
+			totalDistance = Math.abs(dist);
+			distanceDirection = -1;
+		}
 		
 		p = DriveTrain.DRIVETRAIN_FAST_KP;
 		i = DriveTrain.DRIVETRAIN_FAST_KI;
@@ -150,7 +157,7 @@ public class DriveDistance extends Command {
 		SmartDashboard.putNumberArray("angleRate", angleRateArr);
 	
 		velocityDifference = relativeAngle * maxVelocityContrib * Math.abs(velocity) / (MAX_VELOCITY_IN_S * velocityScaling);		
-		dt.driveVelocity(velocity - velocityDifference, velocity + velocityDifference);
+		dt.driveVelocity((velocity - velocityDifference) * distanceDirection, (velocity + velocityDifference) * distanceDirection);
 		
 		
 		/**
