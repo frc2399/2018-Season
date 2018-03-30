@@ -215,26 +215,16 @@ public class AutoChooser {
 	}
 	
 	public static class AutoState {
-		public final Position pos;
-		public final Scoring score;
-		public final NumberCubes num;
-		public final String gameData;
-		public AutoState (Position pos, Scoring score, NumberCubes num, String gameData) {
-			this.pos = pos;
-			this.score = score;
-			this.num = num;
-			this.gameData = gameData;
-		}
 		@Override
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
 			result = prime * result + ((gameData == null) ? 0 : gameData.hashCode());
+			result = prime * result + ((num == null) ? 0 : num.hashCode());
 			result = prime * result + ((pos == null) ? 0 : pos.hashCode());
 			result = prime * result + ((score == null) ? 0 : score.hashCode());
 			return result;
 		}
-		
 		@Override
 		public boolean equals(Object obj) {
 			if (this == obj)
@@ -249,12 +239,25 @@ public class AutoChooser {
 					return false;
 			} else if (!gameData.equals(other.gameData))
 				return false;
+			if (num != other.num)
+				return false;
 			if (pos != other.pos)
 				return false;
 			if (score != other.score)
 				return false;
 			return true;
-		}	
+		}
+		public final Position pos;
+		public final Scoring score;
+		public final NumberCubes num;
+		public final String gameData;
+		public AutoState (Position pos, Scoring score, NumberCubes num, String gameData) {
+			this.pos = pos;
+			this.score = score;
+			this.num = num;
+			this.gameData = gameData;
+		}
+		
 	}
 	
 	public Command makeAutoCommand (Position p, Scoring s, NumberCubes n) {		

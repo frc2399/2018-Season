@@ -95,7 +95,7 @@ public class Robot extends TimedRobot {
 		auto = new AutoChooser(dt, sh, navx, li, in);
 		dialPos = new Dial(0, 3);
 		dialScoring = new Dial(3, 4);
-		dialNum = new Dial(4, 3);
+		dialNum = new Dial(7, 3);
 		
 		dt.defaultCommand(oi.defaultDrive());
 		sh.defaultCommand(oi.defaultShift());
@@ -127,9 +127,9 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		
-		System.out.println("Position: " + Position.values()[dialPos.getPosition(0)]);
-		System.out.println("Scoring: " + Scoring.values()[dialScoring.getPosition(0)]);
-		System.out.println("Number of Cubes: " + NumberCubes.values()[dialNum.getPosition(0)]);
+		//System.out.println("Position: " + Position.values()[dialPos.getPosition(0)]);
+		//System.out.println("Scoring: " + Scoring.values()[dialScoring.getPosition(0)]);
+		//System.out.println("Number of Cubes: " + NumberCubes.values()[dialNum.getPosition(0)]);
 	}
 
 	/**
@@ -160,11 +160,14 @@ public class Robot extends TimedRobot {
 			
 			int pos = dialPos.getPosition(0);
 			int scoring = dialScoring.getPosition(0);
-			int num = dialNum.getPosition(0);
+			//int num = dialNum.getPosition(0);
+			int num = 0;
 			
 			autoCommand = auto.makeAutoCommand(Position.values()[pos], Scoring.values()[scoring], NumberCubes.values()[num], gameData.substring(0, 2));
 			autoCommand.start();
 			autoRan = true;
+			System.out.println(Position.values()[pos].toString() + Scoring.values()[scoring].toString() + NumberCubes.values()[num].toString() + gameData.substring(0, 2));
+			System.out.println(autoCommand);
 		}
 		
 		Scheduler.getInstance().run();

@@ -14,6 +14,7 @@ import org.team2399.robot.subsystems.Shifter;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class RightOwnedScale extends CommandGroup {
 	public RightOwnedScale(DriveTrain dt, Shifter sh, AHRS navx, Lift li, Intake in) {
@@ -21,9 +22,10 @@ public class RightOwnedScale extends CommandGroup {
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.SIDE_OWNED_SCALE_FORWARD));
 		addSequential(new TurnAngle(dt, sh, navx, RobotMap.Auto.SHORT_LEFT_TURN, TurnAngle.EndAngleMeaning.RELATIVE));
 		addSequential(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.MAX_SCALE));
-		addSequential(new DriveDistance(dt, sh, navx, 35));
+		addSequential(new WaitCommand(1));
+		addSequential(new DriveDistance(dt, sh, navx, 20));
 		addSequential(new EjectCube(in), 1);
-		addSequential(new DriveDistance(dt, sh, navx, -20));
+		addSequential(new DriveDistance(dt, sh, navx, -30));
 		addSequential(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.GROUND));
 	}
 }

@@ -9,6 +9,7 @@ import org.team2399.robot.commands.LiftToPercent;
 import org.team2399.robot.commands.ManualLift;
 import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
+import org.team2399.robot.commands.auto.DeployIntake;
 import org.team2399.robot.commands.auto.TurnAngle;
 import org.team2399.robot.commands.intake.EjectCube;
 import org.team2399.robot.commands.intake.ExtendRetract;
@@ -56,9 +57,12 @@ public class XBoxJoystickOI extends OI {
 		xBoxButtons = getButtons(xBox);
 		stickButtons = getButtons(stick);
 		
-		xBoxButtons[1].whenPressed(new ExtendRetract(in));
+		
+		//Pit testing
+		xBoxButtons[1].whenPressed(new DeployIntake(in));
 		xBoxButtons[2].whileHeld(new LiftToPercent(li, stickThrottle));
-			     
+		
+		//Match testing
 		xBoxButtons[5].whenPressed(new Shift(sh, Shift.State.SLOW)); 
 		xBoxButtons[6].whenPressed(new Shift(sh, Shift.State.FAST)); 
 	     

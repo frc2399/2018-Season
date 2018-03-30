@@ -42,8 +42,8 @@ public class DoubleLeftUnownedScale extends CommandGroup{
 		addSequential(new GrabCube(in), 3);
 		// close intake
 		addSequential(new CloseArms(in));
-		// drive backwards 70
-		addSequential(new DriveDistance(dt, sh, navx, -70));		
+		// drive backwards 85
+		addSequential(new DriveDistance(dt, sh, navx, -85));		
 		// lift intake max scale
 		addSequential(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.MAX_SCALE));
 		// rotate right 162

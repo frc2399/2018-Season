@@ -6,6 +6,7 @@ import org.team2399.robot.commands.auto.DeployIntake;
 import org.team2399.robot.commands.auto.DriveDistance;
 import org.team2399.robot.commands.auto.TurnAngle;
 import org.team2399.robot.commands.intake.EjectCube;
+import org.team2399.robot.commands.intake.SpinIn;
 import org.team2399.robot.subsystems.DriveTrain;
 import org.team2399.robot.subsystems.Intake;
 import org.team2399.robot.subsystems.Lift;
@@ -22,13 +23,13 @@ public class RightUnownedSwitch extends CommandGroup {
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.SIDE_UNOWNED_SWITCH_FORWARD));
 		addSequential(new TurnAngle(dt, sh, navx, RobotMap.Auto.LONG_LEFT_TURN, TurnAngle.EndAngleMeaning.RELATIVE));
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.SWITCH_THROUGH_PLATFORM_ZONE));
-		addSequential(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.SWITCH_PORTAL));
-		addSequential(new WaitCommand(1));
+		addParallel(new SpinIn(in), 1);
 		addSequential(new TurnAngle(dt, sh, navx, RobotMap.Auto.LONG_LEFT_TURN, TurnAngle.EndAngleMeaning.RELATIVE));
+		addSequential(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.SWITCH_PORTAL));
 		addSequential(new DriveDistance(dt, sh, navx, 40));
 		addSequential(new DeployIntake(in));
 		addSequential(new EjectCube(in), 1);
-		addSequential(new DriveDistance(dt, sh, navx, -20));
+		addSequential(new DriveDistance(dt, sh, navx, -30));
 		addSequential(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.GROUND));
 	}
 }
