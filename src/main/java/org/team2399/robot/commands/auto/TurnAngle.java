@@ -138,7 +138,10 @@ public class TurnAngle extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return timer.get() > endTime && Utility.inRange(navx.getAngle(), endAngle, ANGLE_TOLERANCE) && Utility.inRange(navx.getRate(), 0, ANGLE_RATE_TOLERANCE);
+		return timer.get() > endTime + 0.25
+				|| (timer.get() > endTime 
+				&& Utility.inRange(navx.getAngle(), endAngle, ANGLE_TOLERANCE) 
+				&& Utility.inRange(navx.getRate(), 0, ANGLE_RATE_TOLERANCE));
 	}
 
 	@Override
@@ -180,7 +183,6 @@ public class TurnAngle extends Command {
 		double currentAngle = navx.getAngle();
 		
 		double time = timer.get();
-		double endTime = (endAngle - startAngle) / angularVelocity;
 		
 		// what the angle should be at the current time
 		double desiredAngle = angularVelocity * time + startAngle;

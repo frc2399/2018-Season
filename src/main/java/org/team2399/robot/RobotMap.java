@@ -87,7 +87,7 @@ public class RobotMap {
 		public static final double CENTER_SWITCH_FORWARD = 24.0;
 		
 		public static final double SIDE_CROSS_BASELINE = 105.0;
-		public static final double SIDE_OWNED_SCALE_FORWARD = 260.0;
+		public static final double SIDE_OWNED_SCALE_FORWARD = 255.0;
 		public static final double SIDE_OWNED_SWITCH_FORWARD = 105.0;
 		public static final double SIDE_UNOWNED_SCALE_FORWARD = 230.0;
 		public static final double SIDE_FORWARD_TO_SCALE = 30.0;

@@ -60,9 +60,11 @@ public class AutoChooser {
 		map.put(new AutoState(Position.LEFT, Scoring.SWITCH, NumberCubes.SINGLE, "RL"), new LeftUnownedSwitch(dt, sh, navx, li, in));
 		map.put(new AutoState(Position.LEFT, Scoring.SWITCH, NumberCubes.SINGLE, "RR"), new LeftUnownedSwitch(dt, sh, navx, li, in));
 		map.put(new AutoState(Position.LEFT, Scoring.SCALE, NumberCubes.SINGLE, "LL"), new LeftOwnedScale(dt, sh, navx, li, in));
-		map.put(new AutoState(Position.LEFT, Scoring.SCALE, NumberCubes.SINGLE, "LR"), new LeftUnownedScale(dt, sh, navx, li, in));
+		//map.put(new AutoState(Position.LEFT, Scoring.SCALE, NumberCubes.SINGLE, "LR"), new LeftUnownedScale(dt, sh, navx, li, in));
+		map.put(new AutoState(Position.LEFT, Scoring.SCALE, NumberCubes.SINGLE, "LR"), new LeftAuto(dt, sh, navx, li, in));
 		map.put(new AutoState(Position.LEFT, Scoring.SCALE, NumberCubes.SINGLE, "RL"), new LeftOwnedScale(dt, sh, navx, li, in));
-		map.put(new AutoState(Position.LEFT, Scoring.SCALE, NumberCubes.SINGLE, "RR"), new LeftUnownedScale(dt, sh, navx, li, in));
+		//map.put(new AutoState(Position.LEFT, Scoring.SCALE, NumberCubes.SINGLE, "RR"), new LeftUnownedScale(dt, sh, navx, li, in));
+		map.put(new AutoState(Position.LEFT, Scoring.SCALE, NumberCubes.SINGLE, "RR"), new LeftAuto(dt, sh, navx, li, in));
 		map.put(new AutoState(Position.LEFT, Scoring.AUTO_LEFT, NumberCubes.SINGLE, "LL"), new LeftAuto(dt, sh, navx, li, in));
 		map.put(new AutoState(Position.LEFT, Scoring.AUTO_LEFT, NumberCubes.SINGLE, "LR"), new LeftAuto(dt, sh, navx, li, in));
 		map.put(new AutoState(Position.LEFT, Scoring.AUTO_LEFT, NumberCubes.SINGLE, "RL"), new LeftAuto(dt, sh, navx, li, in));
@@ -76,9 +78,11 @@ public class AutoChooser {
 		map.put(new AutoState(Position.RIGHT, Scoring.SWITCH, NumberCubes.SINGLE, "LR"), new RightUnownedSwitch(dt, sh, navx, li, in));
 		map.put(new AutoState(Position.RIGHT, Scoring.SWITCH, NumberCubes.SINGLE, "RL"), new RightOwnedSwitch(dt, sh, navx, li, in));
 		map.put(new AutoState(Position.RIGHT, Scoring.SWITCH, NumberCubes.SINGLE, "RR"), new RightOwnedSwitch(dt, sh, navx, li, in));
-		map.put(new AutoState(Position.RIGHT, Scoring.SCALE, NumberCubes.SINGLE, "LL"), new RightUnownedScale(dt, sh, navx, li, in));
+		//map.put(new AutoState(Position.RIGHT, Scoring.SCALE, NumberCubes.SINGLE, "LL"), new RightUnownedScale(dt, sh, navx, li, in));
+		map.put(new AutoState(Position.RIGHT, Scoring.SCALE, NumberCubes.SINGLE, "LL"), new RightAuto(dt, sh, navx, li, in));
 		map.put(new AutoState(Position.RIGHT, Scoring.SCALE, NumberCubes.SINGLE, "LR"), new RightOwnedScale(dt, sh, navx, li, in));
-		map.put(new AutoState(Position.RIGHT, Scoring.SCALE, NumberCubes.SINGLE, "RL"), new RightUnownedScale(dt, sh, navx, li, in));
+		//map.put(new AutoState(Position.RIGHT, Scoring.SCALE, NumberCubes.SINGLE, "RL"), new RightUnownedScale(dt, sh, navx, li, in));
+		map.put(new AutoState(Position.RIGHT, Scoring.SCALE, NumberCubes.SINGLE, "RL"), new RightAuto(dt, sh, navx, li, in));
 		map.put(new AutoState(Position.RIGHT, Scoring.SCALE, NumberCubes.SINGLE, "RR"), new RightOwnedScale(dt, sh, navx, li, in));
 		map.put(new AutoState(Position.RIGHT, Scoring.AUTO_LEFT, NumberCubes.SINGLE, "LL"), new RightAuto(dt, sh, navx, li, in));
 		map.put(new AutoState(Position.RIGHT, Scoring.AUTO_LEFT, NumberCubes.SINGLE, "LR"), new RightAuto(dt, sh, navx, li, in));

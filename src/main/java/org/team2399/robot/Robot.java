@@ -23,6 +23,8 @@ import org.team2399.robot.AutoChooser.Position;
 import org.team2399.robot.AutoChooser.Scoring;
 import org.team2399.robot.commands.LiftHold;
 import org.team2399.robot.commands.LiftToHeight;
+import org.team2399.robot.commands.auto.DriveDistance;
+import org.team2399.robot.commands.intake.DeployIntake;
 import org.team2399.robot.commands.intake.DoNothing;
 import org.team2399.robot.subsystems.DriveTrain;
 import org.team2399.robot.subsystems.Intake;
@@ -101,9 +103,9 @@ public class Robot extends TimedRobot {
 		sh.defaultCommand(oi.defaultShift());
 		in.defaultCommand(new DoNothing(in));
 		li.defaultCommand(new LiftHold(li));
-		UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture();
+		//UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture();
 		//UsbCamera cam2 = CameraServer.getInstance().startAutomaticCapture();
-		cam1.setResolution(CAMERA_WIDTH, CAMERA_HEIGHT);
+		//cam1.setResolution(CAMERA_WIDTH, CAMERA_HEIGHT);
 		//cam2.setResolution(CAMERA_WIDTH, CAMERA_HEIGHT);
 		
 		NetworkTableInstance.getDefault().setUpdateRate(NETWORK_TABLE_UPDATE_RATE);
@@ -127,9 +129,9 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		
-		//System.out.println("Position: " + Position.values()[dialPos.getPosition(0)]);
-		//System.out.println("Scoring: " + Scoring.values()[dialScoring.getPosition(0)]);
-		//System.out.println("Number of Cubes: " + NumberCubes.values()[dialNum.getPosition(0)]);
+		System.out.println("Position: " + Position.values()[dialPos.getPosition(0)]);
+		System.out.println("Scoring: " + Scoring.values()[dialScoring.getPosition(0)]);
+		System.out.println("Number of Cubes: " + NumberCubes.values()[dialNum.getPosition(0)]);
 	}
 
 	/**
@@ -164,6 +166,7 @@ public class Robot extends TimedRobot {
 			int num = 0;
 			
 			autoCommand = auto.makeAutoCommand(Position.values()[pos], Scoring.values()[scoring], NumberCubes.values()[num], gameData.substring(0, 2));
+			//autoCommand = new DriveDistance(dt, sh, navx, -1000);
 			autoCommand.start();
 			autoRan = true;
 			System.out.println(Position.values()[pos].toString() + Scoring.values()[scoring].toString() + NumberCubes.values()[num].toString() + gameData.substring(0, 2));
@@ -175,6 +178,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		new DeployIntake(in).start();
 	}
 
 	/**

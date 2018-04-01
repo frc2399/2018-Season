@@ -1,4 +1,4 @@
-package org.team2399.robot.commands.auto;
+package org.team2399.robot.commands.intake;
 
 import org.team2399.robot.subsystems.Intake;
 

@@ -2,9 +2,9 @@ package org.team2399.robot.commands.autoGroups;
 
 import org.team2399.robot.RobotMap;
 import org.team2399.robot.commands.LiftToHeight;
-import org.team2399.robot.commands.auto.DeployIntake;
 import org.team2399.robot.commands.auto.DriveDistance;
 import org.team2399.robot.commands.auto.TurnAngle;
+import org.team2399.robot.commands.intake.DeployIntake;
 import org.team2399.robot.commands.intake.EjectCube;
 import org.team2399.robot.commands.intake.SpinIn;
 import org.team2399.robot.subsystems.DriveTrain;
@@ -20,6 +20,8 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 public class RightUnownedSwitch extends CommandGroup {
 	
 	public RightUnownedSwitch(DriveTrain dt, Shifter sh, AHRS navx, Lift li, Intake in) {
+		addSequential(new DeployIntake(in));
+		addSequential(new LiftToHeight(li, 2));
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.SIDE_UNOWNED_SWITCH_FORWARD));
 		addSequential(new TurnAngle(dt, sh, navx, RobotMap.Auto.LONG_LEFT_TURN, TurnAngle.EndAngleMeaning.RELATIVE));
 		addSequential(new DriveDistance(dt, sh, navx, RobotMap.Auto.SWITCH_THROUGH_PLATFORM_ZONE));

@@ -9,12 +9,13 @@ import org.team2399.robot.commands.LiftToPercent;
 import org.team2399.robot.commands.ManualLift;
 import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
-import org.team2399.robot.commands.auto.DeployIntake;
 import org.team2399.robot.commands.auto.TurnAngle;
+import org.team2399.robot.commands.intake.DeployIntake;
 import org.team2399.robot.commands.intake.EjectCube;
 import org.team2399.robot.commands.intake.ExtendRetract;
 import org.team2399.robot.commands.intake.GrabCube;
 import org.team2399.robot.commands.intake.OpenCloseArms;
+import org.team2399.robot.commands.intake.RetractIntake;
 import org.team2399.robot.subsystems.DriveTrain;
 import org.team2399.robot.subsystems.Intake;
 import org.team2399.robot.subsystems.Lift;
@@ -59,8 +60,9 @@ public class XBoxJoystickOI extends OI {
 		
 		
 		//Pit testing
-		xBoxButtons[1].whenPressed(new DeployIntake(in));
+		//xBoxButtons[1].whenPressed(new DeployIntake(in));
 		xBoxButtons[2].whileHeld(new LiftToPercent(li, stickThrottle));
+		//xBoxButtons[3].whenPressed(new TurnAngle(dt, sh, navx, 90, TurnAngle.EndAngleMeaning.RELATIVE));
 		
 		//Match testing
 		xBoxButtons[5].whenPressed(new Shift(sh, Shift.State.SLOW)); 
@@ -83,7 +85,8 @@ public class XBoxJoystickOI extends OI {
 		//}
 		
 		stickButtons[1].whileHeld(new ManualLift(li, stickY));
-		stickButtons[2].whenPressed(new ExtendRetract(in));
+		stickButtons[2].whileHeld(new RetractIntake(in));
+		stickButtons[2].whenReleased(new DeployIntake(in));
 		
 		stickButtons[9].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.MIN_SCALE));
 		stickButtons[10].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.MED_SCALE));
