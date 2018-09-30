@@ -27,11 +27,11 @@ public class OpenCloseArms extends Command{
 	@Override
 	protected void execute() {
 		if(isOpen) {
-			in.release();
+			in.grab();
 			in.setSpeed(0);
 		}
 		if(!isOpen) {
-			in.grab();
+			in.release();
 			in.setSpeed(0);
 		}
 	}

@@ -23,8 +23,10 @@ public class KajDrive extends Command {
     	this.dt = dt;
     	this.forwardPercent = forwardPercent;
     	this.turnPercent = turnPercent;
-    	this.leftTurn = leftTurn;
-    	this.rightTurn = rightTurn;
+    	//this.leftTurn = leftTurn;
+    	//this.rightTurn = rightTurn;
+    	this.leftTurn = ()->(0.0);
+    	this.rightTurn = ()->(0.0);
     	
     	requires(this.dt);
 		setInterruptible(true);

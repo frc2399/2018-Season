@@ -10,12 +10,15 @@ import org.team2399.robot.commands.ManualLift;
 import org.team2399.robot.commands.Shift;
 import org.team2399.robot.commands.TankDrive;
 import org.team2399.robot.commands.auto.TurnAngle;
+import org.team2399.robot.commands.intake.CloseArms;
 import org.team2399.robot.commands.intake.DeployIntake;
 import org.team2399.robot.commands.intake.EjectCube;
 import org.team2399.robot.commands.intake.ExtendRetract;
 import org.team2399.robot.commands.intake.GrabCube;
+import org.team2399.robot.commands.intake.OpenArms;
 import org.team2399.robot.commands.intake.OpenCloseArms;
 import org.team2399.robot.commands.intake.RetractIntake;
+import org.team2399.robot.commands.intake.XBoxShoulders;
 import org.team2399.robot.subsystems.DriveTrain;
 import org.team2399.robot.subsystems.Intake;
 import org.team2399.robot.subsystems.Lift;
@@ -58,24 +61,42 @@ public class XBoxJoystickOI extends OI {
 		xBoxButtons = getButtons(xBox);
 		stickButtons = getButtons(stick);
 		
+		XBoxShoulders leftS = new XBoxShoulders(leftShoulder);
+		XBoxShoulders rightS = new XBoxShoulders(rightShoulder);
+		
 		
 		//Pit testing
 		//xBoxButtons[1].whenPressed(new DeployIntake(in));
-		xBoxButtons[2].whileHeld(new LiftToPercent(li, stickThrottle));
+		//xBoxButtons[2].whileHeld(new LiftToPercent(li, stickThrottle));
 		//xBoxButtons[3].whenPressed(new TurnAngle(dt, sh, navx, 90, TurnAngle.EndAngleMeaning.RELATIVE));
 		
 		//Match testing
-		xBoxButtons[5].whenPressed(new Shift(sh, Shift.State.SLOW)); 
-		xBoxButtons[6].whenPressed(new Shift(sh, Shift.State.FAST)); 
+//		xBoxButtons[5].whenPressed(new Shift(sh, Shift.State.SLOW)); 
+//		xBoxButtons[6].whenPressed(new Shift(sh, Shift.State.FAST)); 
 	     
 		xBoxButtons[7].whenPressed(tankDrive); 
 		xBoxButtons[8].whenPressed(kajDrive);
 		
+		//5 + 6
+		
+		xBoxButtons[5].whileHeld(new GrabCube(in));
+		xBoxButtons[6].whileHeld(new EjectCube(in));
+		
+		xBoxButtons[1].whenPressed(new DeployIntake(in));
+		xBoxButtons[2].whenPressed(new RetractIntake(in));
+		xBoxButtons[3].whenPressed(new OpenArms(in));
+		xBoxButtons[4].whenPressed(new CloseArms(in));
+		
+		leftS.whenPressed(new OpenCloseArms(in));
+		rightS.whenPressed(new ExtendRetract(in));
+		
 		// --------------------------------------------------------------------------------------------------------------------
 		
-		stickButtons[3].whenPressed(new OpenCloseArms(in));
-		stickButtons[4].whileHeld(new GrabCube(in));
-		stickButtons[5].whileHeld(new EjectCube(in));
+		
+		//stickButtons[11].whileHeld(new LiftToPercent(li, stickThrottle));
+		
+//		stickButtons[5].whenPressed(new Shift(sh, Shift.State.SLOW)); 
+//		stickButtons[6].whenPressed(new Shift(sh, Shift.State.FAST));
 		
 		//if(stickButtons[6].get() && stickButtons[7].get()) {
 		//	stickButtons[6].whileHeld(new LiftToPercent(li, stickThrottle));
@@ -85,15 +106,14 @@ public class XBoxJoystickOI extends OI {
 		//}
 		
 		stickButtons[1].whileHeld(new ManualLift(li, stickY));
-		stickButtons[2].whileHeld(new RetractIntake(in));
-		stickButtons[2].whenReleased(new DeployIntake(in));
 		
+		stickButtons[6].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.SWITCH_PORTAL));
+		stickButtons[7].whenPressed(new LiftToHeight(li, 2));
+		stickButtons[8].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.GROUND));
 		stickButtons[9].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.MIN_SCALE));
 		stickButtons[10].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.MED_SCALE));
 		stickButtons[11].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.MAX_SCALE));
-		stickButtons[6].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.SWITCH_PORTAL));
-		stickButtons[8].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.GROUND));
-		stickButtons[7].whenPressed(new LiftToHeight(li, 2));
+
 		
 		// 9 = minimum scale
 		// 10 = medium scale
@@ -102,6 +122,11 @@ public class XBoxJoystickOI extends OI {
 		// 8 = ground
 		// 7 = inch off the ground
 		
+	}
+	
+	public boolean deadmanActive() {
+		return stickButtons[1].get();
+		//return true;
 	}
 	
 	public static BooleanSupplier thresholdDoubleSupplier(DoubleSupplier d, double threshold) {
@@ -120,3 +145,4 @@ public class XBoxJoystickOI extends OI {
 	}
 
 }
+

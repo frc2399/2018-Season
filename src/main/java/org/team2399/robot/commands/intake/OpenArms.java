@@ -24,7 +24,7 @@ public class OpenArms extends Command{
 
 	@Override
 	protected void execute() {
-		in.grab();
+		in.release();
 		in.setSpeed(0);	
 	}
 

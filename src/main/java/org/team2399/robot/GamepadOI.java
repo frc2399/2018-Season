@@ -56,6 +56,10 @@ public class GamepadOI extends OI {
 	    gamepadButtons[9].whenPressed(tankDrive); 
 	    gamepadButtons[10].whenPressed(kajDrive);
 	}
+	
+	public boolean deadmanActive() {
+		return gamepadButtons[1].get();
+	}
 
 	@Override
 	public Command defaultDrive() {

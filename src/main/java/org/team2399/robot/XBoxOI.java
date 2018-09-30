@@ -64,6 +64,10 @@ public class XBoxOI extends OI {
 		xBoxButtons[4].whileHeld(new TankDrive(dt, ()-> 0, ()-> 0));		
 	}
 	
+	public boolean deadmanActive() {
+		return xBoxButtons[1].get();
+	}
+	
 	public static BooleanSupplier thresholdDoubleSupplier(DoubleSupplier d, double threshold) {
 		
 		return () -> d.getAsDouble() > threshold;

@@ -71,6 +71,10 @@ public class ThreeJoystickOI extends OI {
 		
 	}
 
+	public boolean deadmanActive() {
+		return controlJoyButtons[1].get();
+	}
+	
 	@Override
 	public Command defaultDrive() {
 		return defaultDrive;

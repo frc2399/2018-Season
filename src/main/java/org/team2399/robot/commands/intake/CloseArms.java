@@ -24,7 +24,7 @@ public class CloseArms extends Command{
 
 	@Override
 	protected void execute() {
-		in.release();
+		in.grab();
 		in.setSpeed(0);	
 	}
 

@@ -31,6 +31,8 @@ public abstract class OI {
 		}
 		return controllerButtons;
 	}
+	
+	public abstract boolean deadmanActive();
 
 	public OI() {
 		super();

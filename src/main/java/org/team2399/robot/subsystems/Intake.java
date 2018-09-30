@@ -59,12 +59,12 @@ public class Intake extends Subsystem{
 		isExtended = false;
 	}
 	
-	public void grab() {
+	public void release() {
 		grabber.set(DoubleSolenoid.Value.kForward);
 		isOpen = true;
 	}
 	
-	public void release() {
+	public void grab() {
 		grabber.set(DoubleSolenoid.Value.kReverse);
 		isOpen = false;
 	}

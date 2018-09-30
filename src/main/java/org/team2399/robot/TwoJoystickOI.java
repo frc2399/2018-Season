@@ -66,6 +66,10 @@ public class TwoJoystickOI extends OI {
 		rightJoyButtons[3].whileHeld(new EjectCube(in));
 		rightJoyButtons[4].whenPressed(new ExtendRetract(in));
 	}
+	
+	public boolean deadmanActive() {
+		return leftJoyButtons[1].get();
+	}
 
 	@Override
 	public Command defaultDrive() {

@@ -35,10 +35,12 @@ public class Lift extends Subsystem {
 
 	//change can timeout
 	private static final int CAN_TIMEOUT = 10;
-	private static final double LIFT_KP = 0.15;
-	private static final double LIFT_KI = 0.00002;
+	private static final double LIFT_KP = 0.16;
+	private static final double LIFT_KI = 0.00001;
 	private static final double LIFT_KD = 5.0;
 	private static final double LIFT_KF = 0;
+	
+	private double pLift, iLift, dLift, fLift;
 	
 	public Lift(PowerDistributionPanel pdp) {
 		desiredHeight = 0;
@@ -79,7 +81,17 @@ public class Lift extends Subsystem {
 		talon.configReverseSoftLimitThreshold(0, CAN_TIMEOUT);
 		talon.configReverseSoftLimitEnable(true, CAN_TIMEOUT);
 		
-		setConstants(LIFT_KP, LIFT_KI, LIFT_KD, LIFT_KF);
+		pLift = LIFT_KP;
+		iLift = LIFT_KI;
+		dLift = LIFT_KD;
+		fLift = LIFT_KF;
+		
+		setConstants(pLift, iLift, dLift, fLift);
+		
+		SmartDashboard.putNumber("pLift", pLift);
+		SmartDashboard.putNumber("iLift", iLift);
+		SmartDashboard.putNumber("dLift", dLift);
+		SmartDashboard.putNumber("fLift", fLift);
 		
 		filter = new double[20];
 		filterIndex = 0;
@@ -114,6 +126,14 @@ public class Lift extends Subsystem {
 		
 		SmartDashboard.putNumberArray("liftPos", liftPosArr);
 		SmartDashboard.putNumberArray("percent", percentArr);
+		
+		pLift = SmartDashboard.getNumber("pLift", 0);
+		iLift = SmartDashboard.getNumber("iLift", 0);
+		dLift = SmartDashboard.getNumber("dLift", 0);
+		fLift = SmartDashboard.getNumber("fLift", 0);
+		
+		setConstants(pLift, iLift, dLift, fLift);
+		
 	}
 	 
 	private void setHeight() {

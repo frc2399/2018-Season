@@ -94,6 +94,10 @@ public class XBoxJoystickOIMoreButtons extends OI {
 		
 		return () -> d.getAsDouble() > threshold;
 	}
+	
+	public boolean deadmanActive() {
+		return stickButtons[1].get();
+	}
 
 	@Override
 	public Command defaultDrive() {

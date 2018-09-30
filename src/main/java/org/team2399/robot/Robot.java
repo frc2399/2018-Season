@@ -192,6 +192,16 @@ public class Robot extends TimedRobot {
 //		if(navx.getRawGyroX() > PITCH_MAX_RATE) {
 //			new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.GROUND).start();
 //		}
+		
+		// if controller button x is not active
+		// then throw new RuntimeException("");
+		
+		if(!(oi.deadmanActive())) {
+			throw new RuntimeException("Deadman's switch");
+		}
+		
+		
+		
 	}
 
 	/**
