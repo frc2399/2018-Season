@@ -105,7 +105,7 @@ public class XBoxJoystickOI extends OI {
 		//	stickButtons[7].whenPressed(new LiftToHeight(li, 2));
 		//}
 		
-		stickButtons[1].whileHeld(new ManualLift(li, stickY));
+		stickButtons[3].whileHeld(new ManualLift(li, stickThrottle));
 		
 		stickButtons[6].whenPressed(new LiftToHeight(li, RobotMap.FieldMeasurements.Heights.SWITCH_PORTAL));
 		stickButtons[7].whenPressed(new LiftToHeight(li, 2));
